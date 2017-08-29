@@ -33,6 +33,7 @@ void myInit(void)
 void resetPointCount() {
 	NoOfPts = 0;
 	pointIndex = 0;
+	resetRectOnNextClick = false;
 }
 
 void myMouse(int button, int state, int x, int y)
@@ -45,7 +46,6 @@ void myMouse(int button, int state, int x, int y)
 	// Reset point count and point index on this click if needed.
 	if (resetRectOnNextClick) {
 		resetPointCount();
-		resetRectOnNextClick = false;
 	}
 
 	// Set point based on mouse coordinates.
