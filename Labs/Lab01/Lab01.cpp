@@ -36,6 +36,20 @@ void resetPointCount() {
 	resetRectOnNextClick = false;
 }
 
+/// <summary>Helper method for generating a random float between 0.0 and 1.0.</summary>
+float randomFloat() {
+	return (float)rand() / RAND_MAX;
+}
+
+/// <summary>Helper method for drawing the rectangle.</summary>
+void drawRectangle(GLenum mode) {
+	glBegin(mode);
+	for (int i = 0; i < NoOfPts; i++) {
+		glVertex2d(pts[i].x, pts[i].y);
+	}
+	glEnd();
+}
+
 void myMouse(int button, int state, int x, int y)
 {
 	// Only do something if only the left or right button was released.
@@ -73,8 +87,7 @@ void myKeyboard(unsigned char theKey, int mouseX, int mouseY)
 {
 	switch (theKey) {
 	case 'c':
-		// TODO Generate random color.
-		glClearColor(1.0, 0.0, 0.0, 0.0);
+		glClearColor(randomFloat(), randomFloat(), randomFloat(), 1.0);
 		break;
 	case 'p':
 		drawRect = false;
@@ -94,11 +107,11 @@ void myDisplay(void)
 
 	// Draw polygon
 	if (drawRect) {
-		glBegin(GL_POLYGON);
-		for (int i = 0; i < NoOfPts; i++) {
-			glVertex2d(pts[i].x, pts[i].y);
-		}
-		glEnd();
+		drawRectangle(GL_POLYGON);
+
+		// Not required.
+		drawRectangle(GL_POINTS);
+		drawRectangle(GL_LINE_LOOP);
 	}
 
 	// Draw cosine
