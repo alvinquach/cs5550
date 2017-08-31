@@ -52,8 +52,8 @@ void drawRectangle(GLenum mode) {
 
 void myMouse(int button, int state, int x, int y)
 {
-	// Only do something if only the left or right button was released.
-	if (state != 1 || (button != 0 && button != 2)) {
+	// Only do something if only the left or right button was pushed down (don't do anything if button was released).
+	if (state != GLUT_DOWN || (button != GLUT_LEFT_BUTTON && button != GLUT_RIGHT_BUTTON)) {
 		return;
 	}
 
@@ -75,7 +75,7 @@ void myMouse(int button, int state, int x, int y)
 	NoOfPts += NoOfPts < 4 ? 1 : 0;
 
 	// If right clicked, reset point count and point index on next click.
-	if (button == 2) {
+	if (button == GLUT_RIGHT_BUTTON) {
 		resetRectOnNextClick = true;
 	}
 
