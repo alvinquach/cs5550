@@ -106,7 +106,6 @@ void myMotion(int x, int y) {
 
 void mySpecialKeyboard(int theKey, int mouseX, int mouseY)
 {
-	float dist;
 	switch (theKey) {
 	case GLUT_KEY_UP:
 		pan(0, -panFactor);
