@@ -9,8 +9,11 @@
 const int screenWidth = 500;
 const int screenHeight = 500;
 
-// Multiplier for zooming in and out.
+///	<summary>Multiplier for zooming in and out.</summary>
 const float zoomFactor = 0.8;
+
+///	<summary>Distance to pan the windows when using arrow keys as a percentage of the window dimensions.</summary>
+const float panFactor = 0.1;
 
 // left, right, bottom, top
 float lt, rt, bt, tp;
@@ -18,21 +21,28 @@ float lt, rt, bt, tp;
 // Used to track mouse movement.
 int lastX, lastY;
 
-///	<summary>Helper method for zooming in and out.</summary>
-///	<param name='in'>If true, then zoom in. Else, zoom out.</param>
-void zoom(bool in) {
-	if (in) {
-		lt *= zoomFactor;
-		rt *= zoomFactor;
-		bt *= zoomFactor;
-		tp *= zoomFactor;
-	}
-	else {
-		lt /= zoomFactor;
-		rt /= zoomFactor;
-		bt /= zoomFactor;
-		tp /= zoomFactor;
-	}
+///	<summary>Helper function for zooming in and out.</summary>
+///	<param name='factor'>The multiplicative factor to zoom by.</param>
+void zoom(float factor) {
+	lt *= factor;
+	rt *= factor;
+	bt *= factor;
+	tp *= factor;
+}
+
+///	<summary>
+///		Helper function for panning the window.
+///		Inputs are percentages of the current window dimensions.
+///	</summary>
+///	<param nam ='x'>The percentage of the current window's width to pan by.</param>
+///	<param name='y'>The percentage of the current window's height to pan by.</param>
+void pan(float x, float y) {
+	float distX = (rt - lt) * x;
+	float distY = (tp - bt) * y;
+	lt += distX;
+	rt += distX;
+	bt += distY;
+	tp += distY;
 }
 
 void myInit(void)
@@ -47,16 +57,17 @@ void myInit(void)
 	tp = 10;
 	gluOrtho2D(lt, rt, bt, tp);	// set the world window
 }
+
 void myKeyboard(unsigned char theKey, int mouseX, int mouseY)
 {
 	switch (theKey) {
 	case 'z':
 		// zoom-in
-		zoom(true);
+		zoom(zoomFactor);
 		break;
 	case 'Z':
 		// zoom-out
-		zoom(false);
+		zoom(1 / zoomFactor);
 		break;
 	default:
 		break;		      // do nothing
@@ -65,7 +76,6 @@ void myKeyboard(unsigned char theKey, int mouseX, int mouseY)
 }
 
 void myMouse(int button, int state, int x, int y) {
-	std::cout << button << std::endl;
 	if (state == GLUT_DOWN) {
 		if (button == GLUT_LEFT_BUTTON) {
 			lastX = x;
@@ -75,24 +85,18 @@ void myMouse(int button, int state, int x, int y) {
 		// For zooming using mouse wheel.
 		// Doesn't work with GLUT 3.7.6 and/or my mouse.
 		else if (button == 3) {
-			zoom(true);
+			zoom(zoomFactor);
 		}
 		else if (button == 4) {
-			zoom(false);
+			zoom(1 / zoomFactor);
 		}
 	}
 }
 
 void myMotion(int x, int y) {
-	double diffX = lastX - x;
-	double distX = (diffX / screenWidth) * (rt - lt);
-	rt += distX;
-	lt += distX;
-
-	double diffY = y - lastY;
-	double distY = (diffY / screenHeight) * (tp - bt);
-	tp += distY;
-	bt += distY;
+	float distX = (float)(lastX - x) / screenWidth;
+	float distY = (float)(y - lastY) / screenWidth;
+	pan(distX, distY);
 
 	lastX = x;
 	lastY = y;
@@ -102,27 +106,19 @@ void myMotion(int x, int y) {
 
 void mySpecialKeyboard(int theKey, int mouseX, int mouseY)
 {
-	double dist;
+	float dist;
 	switch (theKey) {
 	case GLUT_KEY_UP:
-		dist = (tp - bt) * 0.1;
-		bt -= dist;
-		tp -= dist;
+		pan(0, -panFactor);
 		break;
 	case GLUT_KEY_DOWN:
-		dist = (tp - bt) * 0.1;
-		bt += dist;
-		tp += dist;
+		pan(0, panFactor);
 		break;
 	case GLUT_KEY_LEFT:
-		dist = (rt - lt) * 0.1;
-		lt += dist;
-		rt += dist;
+		pan(panFactor, 0);
 		break;
 	case GLUT_KEY_RIGHT:
-		dist = (rt - lt) * 0.1;
-		lt -= dist;
-		rt -= dist;
+		pan(-panFactor, 0);
 		break;
 	default:
 		break;		      // do nothing
