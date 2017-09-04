@@ -24,10 +24,16 @@ int lastX, lastY;
 ///	<summary>Helper function for zooming in and out.</summary>
 ///	<param name='factor'>The multiplicative factor to zoom by.</param>
 void zoom(float factor) {
-	lt *= factor;
-	rt *= factor;
-	bt *= factor;
-	tp *= factor;
+
+	// Find horizontal and vertical midpoints of current window relative to the world.
+	float midX = (lt + rt) / 2;
+	float midY = (tp + bt) / 2;
+
+	// Zoom about the window midpoint.
+	lt = (lt - midX) * factor + midX;
+	rt = (rt - midX) * factor + midX;
+	bt = (bt - midY) * factor + midY;
+	tp = (tp - midY) * factor + midY;
 }
 
 ///	<summary>
