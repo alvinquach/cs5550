@@ -6,11 +6,11 @@
 #include "glut.h"
 #include <iostream>
 
-const int screenWidth = 500;
-const int screenHeight = 500;
+const int screenWidth = 640;
+const int screenHeight = 480;
 
 ///	<summary>Multiplier for zooming in and out.</summary>
-const float zoomFactor = 0.8;
+const float zoomFactor = 0.1;
 
 ///	<summary>Distance to pan the windows when using arrow keys as a percentage of the window dimensions.</summary>
 const float panFactor = 0.1;
@@ -25,15 +25,15 @@ int lastX, lastY;
 ///	<param name='factor'>The multiplicative factor to zoom by.</param>
 void zoom(float factor) {
 
-	// Find horizontal and vertical midpoints of current window relative to the world.
-	float midX = (lt + rt) / 2;
-	float midY = (tp + bt) / 2;
+	// Find the current dimensions of the window.
+	float dimX = lt - rt;
+	float dimY = tp - bt;
 
-	// Zoom about the window midpoint.
-	lt = (lt - midX) * factor + midX;
-	rt = (rt - midX) * factor + midX;
-	bt = (bt - midY) * factor + midY;
-	tp = (tp - midY) * factor + midY;
+	// Scale the window based on current dimensions.
+	lt -= dimX * factor;
+	rt += dimX * factor;
+	tp -= dimY * factor;
+	bt += dimY * factor;
 }
 
 ///	<summary>
@@ -57,10 +57,10 @@ void myInit(void)
 	glColor3f(0.0f, 0.0f, 0.0f);         // drawing color is black
 	glMatrixMode(GL_PROJECTION); 	   // set "camera shape"
 	glLoadIdentity();
-	lt = -10;
-	rt = 10;
-	bt = -10;
-	tp = 10;
+	lt = -4;
+	rt = 4;
+	bt = -3;
+	tp = 3;
 	gluOrtho2D(lt, rt, bt, tp);	// set the world window
 }
 
@@ -73,7 +73,7 @@ void myKeyboard(unsigned char theKey, int mouseX, int mouseY)
 		break;
 	case 'Z':
 		// zoom-out
-		zoom(1 / zoomFactor);
+		zoom(-zoomFactor);
 		break;
 	default:
 		break;		      // do nothing
@@ -94,7 +94,7 @@ void myMouse(int button, int state, int x, int y) {
 			zoom(zoomFactor);
 		}
 		else if (button == 4) {
-			zoom(1 / zoomFactor);
+			zoom(-zoomFactor);
 		}
 	}
 }

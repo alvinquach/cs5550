@@ -47,15 +47,15 @@ int lastX, lastY;
 ///	<param name='factor'>The multiplicative factor to zoom by.</param>
 void zoom(float factor) {
 
-	// Find horizontal and vertical midpoints of current window relative to the world.
-	float midX = (lt + rt) / 2;
-	float midY = (tp + bt) / 2;
+	// Find the current dimensions of the window.
+	float dimX = lt - rt;
+	float dimY = tp - bt;
 
-	// Zoom about the window midpoint.
-	lt = (lt - midX) * factor + midX;
-	rt = (rt - midX) * factor + midX;
-	bt = (bt - midY) * factor + midY;
-	tp = (tp - midY) * factor + midY;
+	// Scale the window based on current dimensions.
+	lt -= dimX * factor;
+	rt += dimX * factor;
+	tp -= dimY * factor;
+	bt += dimY * factor;
 }
 
 ///	<summary>
@@ -97,7 +97,7 @@ void myKeyboard(unsigned char theKey, int mouseX, int mouseY)
 
 	// Zoom out
 	case 'Z':
-		zoom(1 / zoomFactor);
+		zoom(-zoomFactor);
 		break;
 
 	// Toggle outline style
@@ -149,7 +149,7 @@ void myMouse(int button, int state, int x, int y) {
 			zoom(zoomFactor);
 		}
 		else if (button == 4) {
-			zoom(1 / zoomFactor);
+			zoom(-zoomFactor);
 		}
 	}
 }
