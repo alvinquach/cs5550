@@ -14,13 +14,17 @@ const int screenWidth = 500;
 const int screenHeight = 500;
 
 ///	<summary>How many vertices to use when drawing the ellipse.</summary>
-const int vertexCount = 256;
+const int vertexCount = 64;
 
-///	<summary>Multiplier for zooming in and out.</summary>
-const float zoomFactor = 0.8;
+///	<summary>
+///		Multiplier for zooming in and out.
+///		Bigger number will result in smaller zoom steps.
+///		Should be between 0 and 1.
+/// </summary>
+const float zoomFactor = 0.95;
 
 ///	<summary>Distance to pan the windows when using arrow keys as a percentage of the window dimensions.</summary>
-const float panFactor = 0.1;
+const float panFactor = 0.069;
 
 /// <summary>The width of the ellipse.</summary>
 float radius1 = 1.0;
@@ -52,10 +56,10 @@ void zoom(float factor) {
 	float dimY = tp - bt;
 
 	// Scale the window based on current dimensions.
-	lt -= dimX * factor;
-	rt += dimX * factor;
-	tp -= dimY * factor;
-	bt += dimY * factor;
+	lt -= dimX * (1 - factor);
+	rt += dimX * (1 - factor);
+	tp -= dimY * (1 - factor);
+	bt += dimY * (1 - factor);
 }
 
 ///	<summary>
@@ -97,7 +101,7 @@ void myKeyboard(unsigned char theKey, int mouseX, int mouseY)
 
 	// Zoom out
 	case 'Z':
-		zoom(-zoomFactor);
+		zoom(1 / zoomFactor);
 		break;
 
 	// Toggle outline style
@@ -149,7 +153,7 @@ void myMouse(int button, int state, int x, int y) {
 			zoom(zoomFactor);
 		}
 		else if (button == 4) {
-			zoom(-zoomFactor);
+			zoom(1 / zoomFactor);
 		}
 	}
 }
