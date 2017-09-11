@@ -19,8 +19,8 @@ const int screenHeight = 500;	   // height of screen window in pixels
 const float worldWidth = 500.0;
 const float worldHeight = 500.0; 
 
-GLfloatPoint2D line[2];
-GLdouble lineLength;
+GLfloatPoint2D line[6];
+GLfloat hexagonRadius;
 
 // Initial values
 GLdouble t = 0.0;
