@@ -116,12 +116,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="ColorRGB.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Point2f.cpp" />
     <ClCompile Include="Vector2f.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="ColorRGB.h" />
     <ClInclude Include="Point2f.h" />
     <ClInclude Include="Vector2f.h" />
   </ItemGroup>
