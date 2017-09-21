@@ -4,11 +4,14 @@
 
 const int Ball::VertexCount = 48;
 const float Ball::Density = 1.0;
+const float Ball::DefaultRadius = 6.9;
 
-Ball::Ball() {
+Ball::Ball(): Ball(DefaultRadius) {}
+
+Ball::Ball(float radius) {
 	position = Vector2f::Zero();
 	position = Vector2f::Zero();
-	radius = 1;
+	Ball::radius = radius;
 }
 
 Ball::~Ball() {

@@ -16,6 +16,7 @@ private:
 	static Scene Instance;
 	Scene();
 	vector<Ball> balls;
+	Ball& addBall();
 	Ball& addBall(float radius);
 };
 
