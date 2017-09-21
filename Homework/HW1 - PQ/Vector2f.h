@@ -12,16 +12,16 @@ public:
 	/// <summary>Shorthand for writing Vector2f(0, 1).</summary>
 	static Vector2f up();
 
-	///	<summary>Shorthand for writing Vector2f(1, 0).</summary>
+	/// <summary>Shorthand for writing Vector2f(1, 0).</summary>
 	static Vector2f right();
 
-	///	<summary>Shorthand for writing Vector2f(0, -1).</summary>
+	/// <summary>Shorthand for writing Vector2f(0, -1).</summary>
 	static Vector2f down();
 
-	///	<summary>Shorthand for writing Vector2f(-1, 0).</summary>
+	/// <summary>Shorthand for writing Vector2f(-1, 0).</summary>
 	static Vector2f left();
 
-	///	<summary>Shorthand for writing Vector2f(0, 0).</summary>
+	/// <summary>Shorthand for writing Vector2f(0, 0).</summary>
 	static Vector2f zero();
 
 	float getX();
@@ -32,7 +32,7 @@ public:
 
 
 	/// <summary>Scale the vector's magnitude by the specified amount.</summary>
-	///	<param name='scale'>The scaling factor.</param>
+	/// <param name='scale'>The scaling factor.</param>
 	void scale();
 
 };

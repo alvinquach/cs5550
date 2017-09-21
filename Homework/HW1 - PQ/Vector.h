@@ -8,7 +8,7 @@ class Vector {
 
 public:
 
-	///	<summary>Returns the dot product of a and b.</summary>
+	/// <summary>Returns the dot product of a and b.</summary>
 	static T Dot(Vector<T, SIZE> a, Vector<T, SIZE> b) {
 		T result = 0;
 		for (int i = 0; i < SIZE; i++) {
@@ -17,21 +17,21 @@ public:
 		return result;
 	}
 
-	///	<summary>Returns the distance between a and b.</summary>
+	/// <summary>Returns the distance between a and b.</summary>
 	static float Distance(Vector<T, SIZE> a, Vector<T, SIZE> b) {
 		Vector<T, SIZE> c = a - b;
 		return c.getMagnitude();
 	}
 
 	/// <summary>Scale the vector's magnitude by the specified amount.</summary>
-	///	<param name='scale'>The scaling factor.</param>
+	/// <param name='scale'>The scaling factor.</param>
 	void scale(T scale) {
 		for (int i = 0; i < SIZE; i++) {
 			components[i] *= scale;
 		}
 	}
 
-	///	<summary>Return the vector's current magnitude.</summary>
+	/// <summary>Return the vector's current magnitude.</summary>
 	float Vector<T, SIZE>::getMagnitude() {
 		T magnitudeSquared = 0;
 		for (int i = 0; i < SIZE; i++) {
@@ -41,17 +41,17 @@ public:
 	}
 
 	/// <summary>Make the vector have the specified magnitude.</summary>
-	///	<param name='magnitude'>The vector's new magnitude.</param>
+	/// <param name='magnitude'>The vector's new magnitude.</param>
 	void Vector<T, SIZE>::setMagnitude(T magnitude) {
 		scale(magnitude / getMagnitude());
 	}
 
-	///	<summary>Make the vector have a magnitude of 1.</summary>
+	/// <summary>Make the vector have a magnitude of 1.</summary>
 	void normalize() {
 		setMagnitude(1);
 	}
 
-	///	<summary>Returns a unit vector with the same direction as this vector.</summary>
+	/// <summary>Returns a unit vector with the same direction as this vector.</summary>
 	Vector<T, SIZE> unitVector() {
 		Vector<T, SIZE> result = Vector<T, SIZE>();
 		for (int i = 0; i < SIZE; i++) {
