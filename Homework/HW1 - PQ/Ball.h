@@ -7,6 +7,13 @@ public:
 	static const int VertexCount;
 	static const float Density;
 	static const float DefaultRadius;
+	static const float MinRadius;
+	static const float MaxRadius;
+	static const float MinInitialRadius;
+	static const float MaxInitialRadius;
+	static const float MinInitialMomentum;
+	static const float MaxInitialMomentum;
+	static Ball Random();
 	Ball();
 	Ball(float radius);
 	~Ball();

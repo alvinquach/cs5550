@@ -1,4 +1,5 @@
 #include "ColorRGB.h"
+#include "Random.h"
 
 vector<ColorRGB> ColorRGB::colors = {
 	ColorRGB(255, 0, 0),
@@ -10,7 +11,7 @@ vector<ColorRGB> ColorRGB::colors = {
 };
 
 ColorRGB ColorRGB::Random() {
-	ColorRGB color = colors[rand() * colors.size() / RAND_MAX];
+	ColorRGB color = colors[Random::RandomInt(0, colors.size())];
 	return color;
 }
 

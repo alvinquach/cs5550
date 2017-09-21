@@ -1,10 +1,27 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include "Random.h"
 #include "Ball.h"
 
 const int Ball::VertexCount = 48;
 const float Ball::Density = 1.0;
-const float Ball::DefaultRadius = 6.9;
+const float Ball::DefaultRadius = 5.0;
+const float Ball::MinRadius = 1.0;
+const float Ball::MaxRadius = 10.0;
+const float Ball::MinInitialRadius = 3.7;
+const float Ball::MaxInitialRadius = 6.9;
+const float Ball::MinInitialMomentum = 2000;
+const float Ball::MaxInitialMomentum = 4000;
+
+Ball Ball::Random() {
+	Ball ball = Ball(Random::RandomFloat(MinInitialRadius, MaxInitialRadius));
+	float mass = ball.getMass();
+	float speed = Random::RandomFloat(MinInitialMomentum / mass, MaxInitialMomentum / mass);
+	float direction = Random::RandomFloat(2 * M_PI);
+	ball.setVelocity(Vector2f(speed * cos(direction), speed * sin(direction)));
+	ball.setColor(ColorRGB::Random());
+	return ball;
+}
 
 Ball::Ball(): Ball(DefaultRadius) {}
 
@@ -48,6 +65,10 @@ ColorRGB& Ball::getColor() {
 
 void Ball::setColor(ColorRGB& color) {
 	Ball::color = color;
+}
+
+bool Ball::getLocked() {
+	return locked;
 }
 
 float Ball::getMass() {

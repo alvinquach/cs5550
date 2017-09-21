@@ -2,8 +2,8 @@
 #include "ColorRGB.h"
 
 //Global Variables
-const int screenWidth = 1280;	   // width of screen window in pixels
-const int screenHeight = 720;	   // height of screen window in pixels
+const int screenWidth = 960;	   // width of screen window in pixels
+const int screenHeight = 540;	   // height of screen window in pixels
 
 /// <summary>Initial screen position x.</summary>
 const int screenPositionX = 500;

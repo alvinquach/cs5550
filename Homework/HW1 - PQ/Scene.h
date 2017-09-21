@@ -6,17 +6,17 @@ using namespace std;
 
 class Scene {
 public:
+	static const int MaxBallCount;
 	static Scene& GetInstance();
 	static void Reset();
 	static vector<Ball>& GetBalls();
 	static Ball& AddBall();
-	static Ball& AddBall(float radius);
+	static void RemoveLastBall();
 
 private:
 	static Scene Instance;
 	Scene();
 	vector<Ball> balls;
 	Ball& addBall();
-	Ball& addBall(float radius);
 };
 

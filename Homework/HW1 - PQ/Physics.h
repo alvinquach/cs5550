@@ -7,13 +7,13 @@ class Physics {
 public:
 	
 	/// <summary>The target physics update rate in updates per second.</summary>
-	static const int UpdateRate = 60;
+	static const int UpdateRate;
 
 	/// <summary>
 	/// The target physics update rate in seconds.
 	/// This is calculated from UpdateRate.
 	/// </summary>
-	static double DeltaTime;
+	static const double DeltaTime;
 
 	static void UpdateBall(Ball& ball);
 
