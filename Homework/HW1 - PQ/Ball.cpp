@@ -8,7 +8,7 @@ const float Ball::Density = 1.0;
 Ball::Ball() {
 	position = Vector2f::Zero();
 	position = Vector2f::Zero();
-	radius = 10;
+	radius = 1;
 }
 
 Ball::~Ball() {

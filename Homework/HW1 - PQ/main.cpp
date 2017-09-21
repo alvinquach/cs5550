@@ -2,8 +2,6 @@
 
 using namespace std;
 
-Ball ball;
-
 void test() {
 	Vector2f a = Vector2f(3, 4);
 	Vector2f b = 6.9 * a;
@@ -43,9 +41,8 @@ void init(int argc, char** argv) {
 	glClearColor(1, 1, 1, 0);
 	Draw::SetWindow(-worldWidth / 2, worldWidth / 2, -worldHeight / 2, worldHeight / 2);
 
-	ball = Ball();
-	ball.setColor(ColorRGB(0, 64, 255));
-	ball.setVelocity(Vector2f(6, 9));
+	scene = Scene();
+	cout << scene.balls.size() << endl;
 
 	glutMainLoop();
 }
@@ -55,17 +52,16 @@ void display() {
 	Sleep(1000 / Physics::UpdateRate);
 	glClear(GL_COLOR_BUFFER_BIT);
 	
-	Draw::DrawBall(ball);
+	for (int i = 0; i < scene.balls.size(); i++) {
+		Draw::DrawBall(scene.balls[i]);
+	}
 
 	glutSwapBuffers();	// send all output to display
 }
 
 void idle() {
-	Physics::UpdateBall(ball);
-	//Vector2f deltaPosition = Vector2f(
-	//	ball.getVelocity().getX() * Physics::DeltaTime,
-	//	ball.getVelocity().getY() * Physics::DeltaTime
-	//);
-	//ball.setPosition(ball.getPosition() + deltaPosition);
+	for (int i = 0; i < scene.balls.size(); i++) {
+		Physics::UpdateBall(scene.balls[i]);
+	}
 	glutPostRedisplay();
 }

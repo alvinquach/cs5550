@@ -120,6 +120,7 @@
     <ClCompile Include="Draw.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Vector2f.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +129,7 @@
     <ClInclude Include="Draw.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vector2f.h" />

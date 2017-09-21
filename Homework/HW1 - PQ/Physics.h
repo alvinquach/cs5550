@@ -7,7 +7,7 @@ class Physics {
 public:
 	
 	/// <summary>The target physics update rate in updates per second.</summary>
-	static const int UpdateRate = 100;
+	static const int UpdateRate = 60;
 
 	/// <summary>
 	/// The target physics update rate in seconds.
