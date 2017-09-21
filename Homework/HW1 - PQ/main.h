@@ -2,8 +2,9 @@
 #include "Draw.h"
 #include "Physics.h"
 #include "Scene.h"
+#include "Input.h"
 
-Scene scene;
+//Scene scene;
 
 void init(int argc, char** argv);
 void display();

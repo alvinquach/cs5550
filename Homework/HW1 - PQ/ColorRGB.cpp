@@ -1,5 +1,19 @@
 #include "ColorRGB.h"
 
+vector<ColorRGB> ColorRGB::colors = {
+	ColorRGB(255, 0, 0),
+	ColorRGB(0, 255, 0),
+	ColorRGB(0, 0, 255),
+	ColorRGB(0, 255, 255),
+	ColorRGB(255, 0, 255),
+	ColorRGB(255, 255, 0)
+};
+
+ColorRGB ColorRGB::Random() {
+	ColorRGB color = colors[rand() * colors.size() / RAND_MAX];
+	return color;
+}
+
 ColorRGB::ColorRGB(): ColorRGB(0, 0, 0) {}
 
 ColorRGB::ColorRGB(int r, int g, int b) {

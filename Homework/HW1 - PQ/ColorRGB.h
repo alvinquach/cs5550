@@ -1,6 +1,11 @@
 #pragma once
+#include <vector>
+
+using namespace std;
+
 class ColorRGB {
 public:
+	static ColorRGB Random();
 	ColorRGB();
 	ColorRGB(int r, int g, int b);
 	~ColorRGB();
@@ -14,6 +19,7 @@ public:
 	float getFloatG();
 	float getFloatB();
 private:
+	static vector<ColorRGB> colors;
 	int r;
 	int g;
 	int b;

@@ -1,21 +1,42 @@
 #include "Scene.h"
+#include <iostream>
+
+Scene Scene::Instance = Scene();
+
+Scene& Scene::GetInstance() {
+	return Instance;
+}
+
+void Scene::Reset() {
+	Instance = Scene();
+}
 
 Scene::Scene()
 {
-	Ball ball = Ball();
-	ball.setColor(ColorRGB(0, 64, 255));
+	std::cout << "RESET!" << std::endl;
+	Ball& ball = addBall(6.9);
 	ball.setVelocity(Vector2f(13, 37));
-	ball.setRadius(6.9);
-	balls.push_back(ball);
+	addBall(6.9).setVelocity(Vector2f(-4, -20));
+}
 
-	ball = Ball();
-	ball.setColor(ColorRGB(255, 0, 0));
-	ball.setVelocity(Vector2f(-4, -20));
-	ball.setRadius(6.9);
+vector<Ball>& Scene::GetBalls() {
+	return GetInstance().balls;
+}
+
+Ball& Scene::AddBall() {
+	return AddBall(6.9);
+}
+
+Ball& Scene::AddBall(float radius) {
+	return Instance.addBall(radius);
+}
+
+Ball& Scene::addBall(float radius) {
+	Ball ball = Ball();
+	ball.setColor(ColorRGB::Random());
+	ball.setRadius(radius);
 	balls.push_back(ball);
+	return balls.back();
 }
 
 
-Scene::~Scene()
-{
-}

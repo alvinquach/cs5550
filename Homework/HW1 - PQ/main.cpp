@@ -29,11 +29,17 @@ void main(int argc, char** argv) {
 
 void init(int argc, char** argv) {
 
+
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(screenWidth, screenHeight);
 	glutInitWindowPosition(screenPositionX, screenPositionY);
 	glutCreateWindow("C5550 - Homework 1 Programming Question");
+
+	// Set up inputs
+	glutKeyboardFunc(Input::keyboard);
+	glutSpecialFunc(Input::specialKeyboard);
 
 	glutDisplayFunc(display);
 	glutIdleFunc(idle);
@@ -41,8 +47,11 @@ void init(int argc, char** argv) {
 	glClearColor(1, 1, 1, 0);
 	Draw::SetWindow(-worldWidth / 2, worldWidth / 2, -worldHeight / 2, worldHeight / 2);
 
-	scene = Scene();
-	cout << scene.balls.size() << endl;
+	cout << Scene::GetInstance().GetBalls().size() << endl;
+
+	for (int i = 0; i < 100; i++) {
+		cout << (rand() * 10 / RAND_MAX) << endl;
+	}
 
 	glutMainLoop();
 }
@@ -52,16 +61,16 @@ void display() {
 	Sleep(1000 / Physics::UpdateRate);
 	glClear(GL_COLOR_BUFFER_BIT);
 	
-	for (int i = 0; i < scene.balls.size(); i++) {
-		Draw::DrawBall(scene.balls[i]);
+	for (int i = 0; i < Scene::GetInstance().GetBalls().size(); i++) {
+		Draw::DrawBall(Scene::GetInstance().GetBalls()[i]);
 	}
 
 	glutSwapBuffers();	// send all output to display
 }
 
 void idle() {
-	for (int i = 0; i < scene.balls.size(); i++) {
-		Physics::UpdateBall(scene.balls[i]);
+	for (int i = 0; i < Scene::GetInstance().GetBalls().size(); i++) {
+		Physics::UpdateBall(Scene::GetInstance().GetBalls()[i]);
 	}
 	glutPostRedisplay();
 }

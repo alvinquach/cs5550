@@ -118,6 +118,7 @@
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="ColorRGB.cpp" />
     <ClCompile Include="Draw.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="Ball.h" />
     <ClInclude Include="ColorRGB.h" />
     <ClInclude Include="Draw.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Scene.h" />

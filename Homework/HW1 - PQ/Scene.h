@@ -6,8 +6,16 @@ using namespace std;
 
 class Scene {
 public:
-	vector<Ball> balls;
+	static Scene& GetInstance();
+	static void Reset();
+	static vector<Ball>& GetBalls();
+	static Ball& AddBall();
+	static Ball& AddBall(float radius);
+
+private:
+	static Scene Instance;
 	Scene();
-	~Scene();
+	vector<Ball> balls;
+	Ball& addBall(float radius);
 };
 
