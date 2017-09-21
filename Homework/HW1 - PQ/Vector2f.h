@@ -1,31 +1,41 @@
 #pragma once
-#include "Point2f.h"
+#include "Vector.h"
 
-class Vector2f : public Point2f {
+/// <summary>Represents a two dimensional vector with values stored in float.</summary>
+class Vector2f : public Vector<float, 2> {
 public:
 
 	Vector2f();
 
 	Vector2f(float x, float y);
 
-	float getMagnitude();
+	/// <summary>Shorthand for writing Vector2f(0, 1).</summary>
+	static Vector2f up();
 
-	///	<summary>
-	///		Make the vector have the specified magnitude.
-	///		The vector's direction will remain unchanged.
-	///	</summary>
-	///	<param name='magnitude'>The vector's new magnitude.</param>
-	void setMagnitude(float magnitude);
+	///	<summary>Shorthand for writing Vector2f(1, 0).</summary>
+	static Vector2f right();
 
-	///	<summary>Make the vector have a magnitude of 1.</summary>
-	void normalize();
+	///	<summary>Shorthand for writing Vector2f(0, -1).</summary>
+	static Vector2f down();
 
-	Vector2f operator +(Vector2f anotherVector);
-	Vector2f operator -(Vector2f anotherVector);
-	float dot(Vector2f anotherVector);
-	Vector2f cross(Vector2f anotherVector);
-	
+	///	<summary>Shorthand for writing Vector2f(-1, 0).</summary>
+	static Vector2f left();
+
+	///	<summary>Shorthand for writing Vector2f(0, 0).</summary>
+	static Vector2f zero();
+
+	float getX();
+	void setX(float x);
+	float getY();
+	void setY(float y);
+
+
+
+	/// <summary>Scale the vector's magnitude by the specified amount.</summary>
+	///	<param name='scale'>The scaling factor.</param>
+	void scale();
+
 };
 
+// Free function operator overloads.
 Vector2f operator *(float scalar, Vector2f vector);
-Vector2f operator /(Vector2f vector, float scalar);
