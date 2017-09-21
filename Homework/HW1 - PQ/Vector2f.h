@@ -10,30 +10,32 @@ public:
 	Vector2f(float x, float y);
 
 	/// <summary>Shorthand for writing Vector2f(0, 1).</summary>
-	static Vector2f up();
+	static Vector2f Up();
 
 	/// <summary>Shorthand for writing Vector2f(1, 0).</summary>
-	static Vector2f right();
+	static Vector2f Right();
 
 	/// <summary>Shorthand for writing Vector2f(0, -1).</summary>
-	static Vector2f down();
+	static Vector2f Down();
 
 	/// <summary>Shorthand for writing Vector2f(-1, 0).</summary>
-	static Vector2f left();
+	static Vector2f Left();
 
 	/// <summary>Shorthand for writing Vector2f(0, 0).</summary>
-	static Vector2f zero();
+	static Vector2f Zero();
 
 	float getX();
 	void setX(float x);
 	float getY();
 	void setY(float y);
 
+	/// <summary>Returns a unit vector with the same direction as this vector.</summary>
+	Vector2f unitVector();
 
-
-	/// <summary>Scale the vector's magnitude by the specified amount.</summary>
-	/// <param name='scale'>The scaling factor.</param>
-	void scale();
+	// Operator overloads.
+	Vector2f operator +(Vector2f anotherVector);
+	Vector2f operator -(Vector2f anotherVector);
+	Vector2f operator /(float scalar);
 
 };
 

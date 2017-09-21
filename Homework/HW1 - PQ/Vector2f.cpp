@@ -11,23 +11,23 @@ Vector2f::Vector2f(float x, float y) : Vector<float, 2>() {
 	components[1] = y;
 }
 
-Vector2f Vector2f::up() {
+Vector2f Vector2f::Up() {
 	return Vector2f(0, 1);
 }
 
-Vector2f Vector2f::right() {
+Vector2f Vector2f::Right() {
 	return Vector2f(1, 0);
 }
 
-Vector2f Vector2f::down() {
+Vector2f Vector2f::Down() {
 	return Vector2f(0, -1);
 }
 
-Vector2f Vector2f::left() {
+Vector2f Vector2f::Left() {
 	return Vector2f(-1, 0);
 }
 
-Vector2f Vector2f::zero() {
+Vector2f Vector2f::Zero() {
 	return Vector2f();
 }
 
@@ -45,6 +45,26 @@ float Vector2f::getY() {
 
 void Vector2f::setY(float y) {
 	components[1] = y;
+}
+
+Vector2f Vector2f::unitVector() {
+	float magnitude = getMagnitude();
+	return Vector2f(components[0] / magnitude, components[1] / magnitude);
+}
+
+// Vector addition operator overload
+Vector2f Vector2f::operator +(Vector2f anotherVector) {
+	return Vector2f(components[0] + anotherVector[0], components[1] + anotherVector[1]);
+}
+
+// Vector subtraction operator overload
+Vector2f Vector2f::operator -(Vector2f anotherVector) {
+	return Vector2f(components[0] - anotherVector[0], components[1] - anotherVector[1]);
+}
+
+// Scalar division operator overload
+Vector2f Vector2f::operator /(float scalar) {
+	return Vector2f(components[0] / scalar, components[1] / scalar);
 }
 
 // Scalar multiplication operator overload
