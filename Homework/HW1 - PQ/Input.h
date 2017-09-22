@@ -7,5 +7,6 @@ public:
 	static void specialKeyboard(int key, int mouseX, int mouseY);
 private:
 	static float BallRadiusDeltaAmount;
+	static float BallSpeedDeltaAmount;
 };
 

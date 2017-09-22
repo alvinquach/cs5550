@@ -4,6 +4,8 @@
 
 float Input::BallRadiusDeltaAmount = 0.2;
 
+float Input::BallSpeedDeltaAmount = 1.337;
+
 void Input::keyboard(unsigned char key, int mouseX, int mouseY) {
 
 	Ball *selectedBall = Scene::GetSelectedBall();
@@ -56,15 +58,30 @@ void Input::specialKeyboard(int key, int mouseX, int mouseY) {
 
 	switch (key) {
 
+	// Increase radius. Velocity will be decreased to preserve momentum.
 	case GLUT_KEY_PAGE_UP:
 		if (selectedBall) {
 			selectedBall->setRadius(selectedBall->getRadius() + BallRadiusDeltaAmount, true);
 		}
 		break;
 
+	// Decrease radius. Velocity will be increased to preserve momentum.
 	case GLUT_KEY_PAGE_DOWN:
 		if (selectedBall) {
 			selectedBall->setRadius(selectedBall->getRadius() - BallRadiusDeltaAmount, true);
+		}
+		break;
+
+	// Increase radius. Velocity will be decreased to preserve momentum.
+	case GLUT_KEY_UP:
+		if (selectedBall) {
+			selectedBall->setSpeed(selectedBall->getSpeed() + BallSpeedDeltaAmount);
+		}
+		break;
+
+	case GLUT_KEY_DOWN:
+		if (selectedBall) {
+			selectedBall->setSpeed(selectedBall->getSpeed() - BallSpeedDeltaAmount);
 		}
 		break;
 

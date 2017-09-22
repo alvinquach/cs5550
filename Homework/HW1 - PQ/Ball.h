@@ -20,6 +20,8 @@ public:
 
 	static const float MaxRadius;
 
+	static const float MaxMomentum;
+
 	static const float MinInitialRadius;
 
 	static const float MaxInitialRadius;
@@ -58,7 +60,7 @@ public:
 	/// </summary>
 	/// <param name='preserveMomentum'>
 	/// Whether to preserve the ball's momentum.
-	///</param>
+	/// </param>
 	void setRadius(float radius, bool preserveMomentum);
 
 	ColorRGB& getColor();
@@ -67,6 +69,18 @@ public:
 	void toggleFilled();
 	bool isLocked();
 	void setLocked(bool locked);
+
+	float getSpeed();
+
+	/// <summary>
+	/// Sets the new speed of the ball.
+	/// The speed will be limited based on the ball's current mass and maximum allowed momentum.
+	/// </summary>
+	/// <param name='speed'>
+	/// The ball's new speed.
+	/// </param>
+	void setSpeed(float speed);
+
 	float getMass();
 private:
 	static int RandomBallCounter;

@@ -8,12 +8,13 @@
 const int Ball::VertexCount = 32;
 const float Ball::Density = 1.0;
 const float Ball::DefaultRadius = 5.0;
-const float Ball::MinRadius = 1.0;
-const float Ball::MaxRadius = 10.0;
+const float Ball::MinRadius = 2.5;
+const float Ball::MaxRadius = 7.5;
+const float Ball::MaxMomentum = 10000.0;
 const float Ball::MinInitialRadius = 3.7;
 const float Ball::MaxInitialRadius = 6.9;
-const float Ball::MinInitialMomentum = 2500;
-const float Ball::MaxInitialMomentum = 5000;
+const float Ball::MinInitialMomentum = 2500.0;
+const float Ball::MaxInitialMomentum = 5000.0;
 
 int Ball::RandomBallCounter = 0;
 
@@ -128,6 +129,15 @@ bool Ball::isLocked() {
 
 void Ball::setLocked(bool locked) {
 	Ball::locked = locked;
+}
+
+float Ball::getSpeed() {
+	return velocity.getMagnitude();
+}
+
+void Ball::setSpeed(float speed) {
+	float maxSpeed = MaxMomentum / getMass();
+	velocity.setMagnitude(speed > maxSpeed ? maxSpeed : speed);
 }
 
 float Ball::getMass() {
