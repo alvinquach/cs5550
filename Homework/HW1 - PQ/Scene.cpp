@@ -36,7 +36,7 @@ Ball *Scene::GetSelectedBall() {
 }
 
 void Scene::SelectBall(int index) {
-	if (index < Instance.balls.size()) {
+	if (index < (int)Instance.balls.size()) {
 		Instance.selectedBallIndex = index;
 	}
 }

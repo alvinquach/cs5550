@@ -3,6 +3,8 @@
 
 void Input::keyboard(unsigned char key, int mouseX, int mouseY) {
 
+	Ball *selectedBall = Scene::GetSelectedBall();
+
 	switch (key) {
 
 	// Add ball. There is a limit of how many balls can be added.
@@ -15,6 +17,13 @@ void Input::keyboard(unsigned char key, int mouseX, int mouseY) {
 	// Reset the scene.
 	case 'n':
 		Scene::Reset();
+		break;
+
+	// Toggles between a filled ball and a non-filled ball.
+	case 'p':
+		if (selectedBall) {
+			selectedBall->toggleFilled();
+		}
 		break;
 
 	// Remove the most recently added ball of the scene. This will not remove the last ball.

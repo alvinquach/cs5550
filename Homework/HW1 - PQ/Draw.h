@@ -20,6 +20,10 @@ public:
 
 private:
 
+	static float BallOutlineThickness;
+
+	static float BallSelectedOutlineThickness;
+
 	static ColorRGB CalculateHightlightColor(ColorRGB& color);
 
 	static void SetGlColor3f(ColorRGB& color);
