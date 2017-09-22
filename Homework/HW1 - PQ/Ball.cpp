@@ -18,12 +18,22 @@ const float Ball::MaxInitialMomentum = 5000;
 int Ball::RandomBallCounter = 0;
 
 vector<AvailableColor> Ball::AvailableColors = {
-	{ ColorRGB(255, 0, 0), 0 },
-	{ ColorRGB(0, 255, 0), 0 },
-	{ ColorRGB(0, 0, 255), 0 },
-	{ ColorRGB(0, 255, 255), 0 },
-	{ ColorRGB(255, 0, 255), 0 },
-	{ ColorRGB(255, 255, 0), 0 }
+	{ ColorRGB(213, 0, 0), 0 },
+	{ ColorRGB(197, 17, 98), 0 },
+	{ ColorRGB(170, 0, 255), 0 },
+	{ ColorRGB(98, 0, 234), 0 },
+	{ ColorRGB(48, 79, 254), 0 },
+	{ ColorRGB(41, 98, 255), 0 },
+	{ ColorRGB(0, 145, 234), 0 },
+	{ ColorRGB(0, 184, 212), 0 },
+	{ ColorRGB(0, 191, 165), 0 },
+	{ ColorRGB(0, 200, 83), 0 },
+	{ ColorRGB(100, 221, 23), 0 },
+	{ ColorRGB(174, 234, 0), 0 },
+	{ ColorRGB(255, 214, 0), 0 },
+	{ ColorRGB(255, 171, 0), 0 },
+	{ ColorRGB(255, 109, 0), 0 },
+	{ ColorRGB(221, 44, 0), 0 }
 };
 
 Ball Ball::Random() {
