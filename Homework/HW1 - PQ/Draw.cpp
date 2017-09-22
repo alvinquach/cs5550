@@ -21,7 +21,7 @@ void Draw::DrawBall(Ball& ball) {
 
 		// Draw rest of ball with ball's actual color.
 		SetGlColor3f(ball.getColor());
-		for (float t = 0; t < 1; t += 1.0 / Ball::VertexCount) {
+		for (float t = 0.0; t < 1.0 + 1.0 / Ball::VertexCount; t += 1.0 / Ball::VertexCount) {
 			glVertex2f(
 				ball.getRadius() * cos(2 * M_PI * t) + ball.getPosition().getX(),
 				ball.getRadius() * sin(2 * M_PI * t) + ball.getPosition().getY()
@@ -34,7 +34,7 @@ void Draw::DrawBall(Ball& ball) {
 		glLineWidth(BallOutlineThickness);
 		glBegin(GL_LINE_LOOP);
 		SetGlColor3f(ball.getColor());
-		for (float t = 0; t < 1; t += 1.0 / Ball::VertexCount) {
+		for (float t = 0.0; t < 1.0; t += 1.0 / Ball::VertexCount) {
 			glVertex2f(
 				ball.getRadius() * cos(2 * M_PI * t) + ball.getPosition().getX(),
 				ball.getRadius() * sin(2 * M_PI * t) + ball.getPosition().getY()
@@ -49,7 +49,7 @@ void Draw::DrawSelectedBall(Ball& ball) {
 	glLineWidth(BallSelectedOutlineThickness);
 	glBegin(GL_LINE_LOOP);
 	glColor3f(0.0, 0.0, 0.0);
-	for (float t = 0; t < 1; t += 1.0 / Ball::VertexCount) {
+	for (float t = 0.0; t < 1.0; t += 1.0 / Ball::VertexCount) {
 		glVertex2f(
 			ball.getRadius() * cos(2 * M_PI * t) + ball.getPosition().getX(),
 			ball.getRadius() * sin(2 * M_PI * t) + ball.getPosition().getY()

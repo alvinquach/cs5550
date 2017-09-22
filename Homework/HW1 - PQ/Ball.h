@@ -9,25 +9,58 @@ struct AvailableColor {
 
 class Ball {
 public:
+
 	static const int VertexCount;
+
 	static const float Density;
+
 	static const float DefaultRadius;
+
 	static const float MinRadius;
+
 	static const float MaxRadius;
+
 	static const float MinInitialRadius;
+
 	static const float MaxInitialRadius;
+
 	static const float MinInitialMomentum;
+
 	static const float MaxInitialMomentum;
+
 	static Ball Random();
+
 	Ball();
+
 	Ball(float radius);
+
 	~Ball();
+
 	Vector2f& getPosition();
+
 	void setPosition(Vector2f& position);
+
 	Vector2f& getVelocity();
+
 	void setVelocity(Vector2f& velocity);
+
 	float getRadius();
+
+	/// <summary>
+	/// Sets a new radius for the ball.
+	/// Momentum of the ball will not be preserved.
+	/// </summary>
 	void setRadius(float radius);
+
+	/// <summary>
+	/// Sets a new radius for the ball.
+	/// This function can optionally preserve the ball's momentum by adjusting the ball's speed.
+	/// </summary>
+	/// <param name='preserveMomentum'>
+	/// Whether to preserve the ball's momentum.
+	///</param>
+	void setRadius(float radius, bool preserveMomentum);
+
 	ColorRGB& getColor();
 	void setColor(ColorRGB& color);
 	bool isFilled();

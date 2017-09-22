@@ -1,5 +1,8 @@
 #include "Input.h"
 #include "Scene.h"
+#include "glut.h"
+
+float Input::BallRadiusDeltaAmount = 0.2;
 
 void Input::keyboard(unsigned char key, int mouseX, int mouseY) {
 
@@ -49,4 +52,21 @@ void Input::keyboard(unsigned char key, int mouseX, int mouseY) {
 
 void Input::specialKeyboard(int key, int mouseX, int mouseY) {
 
+	Ball *selectedBall = Scene::GetSelectedBall();
+
+	switch (key) {
+
+	case GLUT_KEY_PAGE_UP:
+		if (selectedBall) {
+			selectedBall->setRadius(selectedBall->getRadius() + BallRadiusDeltaAmount, true);
+		}
+		break;
+
+	case GLUT_KEY_PAGE_DOWN:
+		if (selectedBall) {
+			selectedBall->setRadius(selectedBall->getRadius() - BallRadiusDeltaAmount, true);
+		}
+		break;
+
+	}
 }

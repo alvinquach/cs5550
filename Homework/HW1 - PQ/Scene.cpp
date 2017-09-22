@@ -23,7 +23,7 @@ Ball& Scene::AddBall() {
 
 void Scene::RemoveLastBall() {
 	Instance.balls.pop_back();
-	if (Instance.selectedBallIndex < Instance.balls.size() - 1) {
+	if (Instance.selectedBallIndex >= Instance.balls.size()) {
 		Instance.selectedBallIndex = -1;
 	}
 }

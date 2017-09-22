@@ -5,7 +5,7 @@
 #include "Ball.h"
 #include "Random.h"
 
-const int Ball::VertexCount = 48;
+const int Ball::VertexCount = 32;
 const float Ball::Density = 1.0;
 const float Ball::DefaultRadius = 5.0;
 const float Ball::MinRadius = 1.0;
@@ -93,7 +93,17 @@ float Ball::getRadius() {
 }
 
 void Ball::setRadius(float radius) {
-	Ball::radius = radius;
+	Ball::radius = radius < MinRadius ? MinRadius : radius > MaxRadius ? MaxRadius : radius;
+}
+
+void Ball::setRadius(float radius, bool preserveMomentum) {
+	if (!preserveMomentum) {
+		setRadius(radius);
+		return;
+	}
+	float momentum = getMass() * velocity.getMagnitude();
+	setRadius(radius);
+	velocity.setMagnitude(momentum / getMass());
 }
 
 ColorRGB& Ball::getColor() {
