@@ -17,11 +17,13 @@ public:
 	static vector<Ball>& GetBalls();
 	static Ball& AddBall();
 	static void RemoveLastBall();
-
+	static Ball *GetSelectedBall();
+	static void SelectBall(int index);
 private:
 	static Scene Instance;
 	Scene();
 	vector<Ball> balls;
+	int selectedBallIndex;
 	Ball& addBall();
 };
 

@@ -30,7 +30,10 @@ public:
 	void setRadius(float radius);
 	ColorRGB& getColor();
 	void setColor(ColorRGB& color);
-	bool getLocked();
+	bool isFilled();
+	void toggleFilled();
+	bool isLocked();
+	void setLocked(bool locked);
 	float getMass();
 private:
 	static int RandomBallCounter;
@@ -40,5 +43,6 @@ private:
 	Vector2f velocity;
 	float radius;
 	ColorRGB color;
+	bool filled;
 	bool locked;
 };

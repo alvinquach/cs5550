@@ -16,6 +16,8 @@ public:
 
 	static void DrawBall(Ball& ball);
 
+	static void DrawSelectedBall(Ball& ball);
+
 private:
 
 	static ColorRGB CalculateHightlightColor(ColorRGB& color);

@@ -65,6 +65,11 @@ void display() {
 		Draw::DrawBall(Scene::GetInstance().GetBalls()[i]);
 	}
 
+	Ball *selectedBall = Scene::GetSelectedBall();
+	if (selectedBall) {
+		Draw::DrawSelectedBall(*selectedBall);
+	}
+
 	glutSwapBuffers();	// send all output to display
 }
 

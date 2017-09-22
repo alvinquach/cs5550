@@ -24,6 +24,16 @@ void Input::keyboard(unsigned char key, int mouseX, int mouseY) {
 		}
 		break;
 
+	// Select a ball. '0' deselects the ball.
+	case '0':
+	case '1':
+	case '2':
+	case '3':
+	case '4':
+	case '5':
+		Scene::SelectBall(key - '0' - 1);
+		break;
+
 	}
 
 }

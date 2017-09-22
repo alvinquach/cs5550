@@ -23,11 +23,28 @@ Ball& Scene::AddBall() {
 
 void Scene::RemoveLastBall() {
 	Instance.balls.pop_back();
+	if (Instance.selectedBallIndex < Instance.balls.size() - 1) {
+		Instance.selectedBallIndex = -1;
+	}
+}
+
+Ball *Scene::GetSelectedBall() {
+	if (Instance.selectedBallIndex < 0) {
+		return nullptr;
+	}
+	return &Instance.balls[Instance.selectedBallIndex];
+}
+
+void Scene::SelectBall(int index) {
+	if (index < Instance.balls.size()) {
+		Instance.selectedBallIndex = index;
+	}
 }
 
 Scene::Scene() {
 	addBall();
 	addBall();
+	selectedBallIndex = -1;
 }
 
 Ball& Scene::addBall() {

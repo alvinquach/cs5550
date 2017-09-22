@@ -25,6 +25,18 @@ void Draw::DrawBall(Ball& ball) {
 	glEnd();
 }
 
+void Draw::DrawSelectedBall(Ball& ball) {
+	glBegin(GL_LINE_LOOP);
+	glColor3f(0.0, 0.0, 0.0);
+	for (float t = 0; t < 1; t += 1.0 / Ball::VertexCount) {
+		glVertex2f(
+			(ball.getRadius() + 1) * cos(2 * M_PI * t) + ball.getPosition().getX(),
+			(ball.getRadius() + 1) * sin(2 * M_PI * t) + ball.getPosition().getY()
+		);
+	}
+	glEnd();
+}
+
 
 ColorRGB Draw::CalculateHightlightColor(ColorRGB& color) {
 	return ColorRGB(

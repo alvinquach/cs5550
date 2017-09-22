@@ -104,8 +104,20 @@ void Ball::setColor(ColorRGB& color) {
 	Ball::color = color;
 }
 
-bool Ball::getLocked() {
+bool Ball::isFilled() {
+	return filled;
+}
+
+void Ball::toggleFilled() {
+	filled = !filled;
+}
+
+bool Ball::isLocked() {
 	return locked;
+}
+
+void Ball::setLocked(bool locked) {
+	Ball::locked = locked;
 }
 
 float Ball::getMass() {
