@@ -4,6 +4,11 @@
 
 using namespace std;
 
+struct Color {
+	ColorRGB color;
+	int count;
+};
+
 class Scene {
 public:
 	static const int MaxBallCount;
@@ -19,4 +24,6 @@ private:
 	vector<Ball> balls;
 	Ball& addBall();
 };
+
+
 

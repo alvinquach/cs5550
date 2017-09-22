@@ -2,6 +2,11 @@
 #include "Vector2f.h"
 #include "ColorRGB.h"
 
+struct AvailableColor {
+	ColorRGB color;
+	int counter;
+};
+
 class Ball {
 public:
 	static const int VertexCount;
@@ -28,6 +33,9 @@ public:
 	bool getLocked();
 	float getMass();
 private:
+	static int RandomBallCounter;
+	static vector<AvailableColor> AvailableColors;
+	static ColorRGB GetRandomColor();
 	Vector2f position;
 	Vector2f velocity;
 	float radius;

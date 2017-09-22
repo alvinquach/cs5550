@@ -1,7 +1,9 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include <algorithm>
 #include "Random.h"
 #include "Ball.h"
+#include "Random.h"
 
 const int Ball::VertexCount = 48;
 const float Ball::Density = 1.0;
@@ -10,8 +12,19 @@ const float Ball::MinRadius = 1.0;
 const float Ball::MaxRadius = 10.0;
 const float Ball::MinInitialRadius = 3.7;
 const float Ball::MaxInitialRadius = 6.9;
-const float Ball::MinInitialMomentum = 2000;
-const float Ball::MaxInitialMomentum = 4000;
+const float Ball::MinInitialMomentum = 2500;
+const float Ball::MaxInitialMomentum = 5000;
+
+int Ball::RandomBallCounter = 0;
+
+vector<AvailableColor> Ball::AvailableColors = {
+	{ ColorRGB(255, 0, 0), 0 },
+	{ ColorRGB(0, 255, 0), 0 },
+	{ ColorRGB(0, 0, 255), 0 },
+	{ ColorRGB(0, 255, 255), 0 },
+	{ ColorRGB(255, 0, 255), 0 },
+	{ ColorRGB(255, 255, 0), 0 }
+};
 
 Ball Ball::Random() {
 	Ball ball = Ball(Random::RandomFloat(MinInitialRadius, MaxInitialRadius));
@@ -19,8 +32,22 @@ Ball Ball::Random() {
 	float speed = Random::RandomFloat(MinInitialMomentum / mass, MaxInitialMomentum / mass);
 	float direction = Random::RandomFloat(2 * M_PI);
 	ball.setVelocity(Vector2f(speed * cos(direction), speed * sin(direction)));
-	ball.setColor(ColorRGB::Random());
+	ball.setColor(GetRandomColor());
 	return ball;
+}
+
+ColorRGB Ball::GetRandomColor() {
+	int counter = RandomBallCounter / AvailableColors.size();
+	vector<int> availableColorIndices;
+	for (int i = 0; i < AvailableColors.size(); i++) {
+		if (AvailableColors[i].counter == counter) {
+			availableColorIndices.push_back(i);
+		}
+	}
+	AvailableColor& color = AvailableColors[availableColorIndices[Random::RandomInt(availableColorIndices.size())]];
+	color.counter++;
+	RandomBallCounter++;
+	return color.color;
 }
 
 Ball::Ball(): Ball(DefaultRadius) {}

@@ -1,19 +1,4 @@
 #include "ColorRGB.h"
-#include "Random.h"
-
-vector<ColorRGB> ColorRGB::colors = {
-	ColorRGB(255, 0, 0),
-	ColorRGB(0, 255, 0),
-	ColorRGB(0, 0, 255),
-	ColorRGB(0, 255, 255),
-	ColorRGB(255, 0, 255),
-	ColorRGB(255, 255, 0)
-};
-
-ColorRGB ColorRGB::Random() {
-	ColorRGB color = colors[Random::RandomInt(0, colors.size())];
-	return color;
-}
 
 ColorRGB::ColorRGB(): ColorRGB(0, 0, 0) {}
 
