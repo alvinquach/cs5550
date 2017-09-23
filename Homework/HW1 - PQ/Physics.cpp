@@ -2,10 +2,10 @@
 #include <windows.h>
 #include <iostream>
 
-const int Physics::UpdateRate = 60;
+const int Physics::UpdatesPerFrame = 10;
 
 // This is calculated from UpdateRate.
-const double Physics::DeltaTime = 1.0 / Physics::UpdateRate;
+const double Physics::DeltaTime = 1.0 / (UpdatesPerFrame * frameRate);
 
 void Physics::UpdateBall(Ball& ball) {
 

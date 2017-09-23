@@ -17,3 +17,5 @@ const float worldWidth = 100.0;
 /// <summary>The height of the world.</summary>
 const float worldHeight = worldWidth * screenHeight / screenWidth;
 
+/// <summary>How many frames are drawn per second.</summary>
+const float frameRate = 60.0;

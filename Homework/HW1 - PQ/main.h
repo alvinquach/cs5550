@@ -5,8 +5,7 @@
 #include "Input.h"
 #include "Random.h"
 
-//Scene scene;
-
 void init(int argc, char** argv);
 void display();
-void idle();
+void timer(int value);
+void callTimerFunc();

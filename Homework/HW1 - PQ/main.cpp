@@ -43,7 +43,7 @@ void init(int argc, char** argv) {
 	glutSpecialFunc(Input::specialKeyboard);
 
 	glutDisplayFunc(display);
-	glutIdleFunc(idle);
+	callTimerFunc();
 
 	glClearColor(1, 1, 1, 0);
 	Draw::SetWindow(-worldWidth / 2, worldWidth / 2, -worldHeight / 2, worldHeight / 2);
@@ -58,7 +58,7 @@ void init(int argc, char** argv) {
 
 void display() {
 
-	Sleep(1000 / Physics::UpdateRate);
+	//Sleep(1000 / Physics::UpdateRate);
 	glClear(GL_COLOR_BUFFER_BIT);
 	
 	for (int i = 0; i < Scene::GetInstance().GetBalls().size(); i++) {
@@ -73,9 +73,27 @@ void display() {
 	glutSwapBuffers();	// send all output to display
 }
 
-void idle() {
+
+
+void timer(int value) {
+
+	// Keeps track of how many physics frames have been calcuated.
+	static long physicsFrames;
+
+	// Update position for each ball.
 	for (int i = 0; i < Scene::GetInstance().GetBalls().size(); i++) {
 		Physics::UpdateBall(Scene::GetInstance().GetBalls()[i]);
 	}
-	glutPostRedisplay();
+
+	// Call the display function only when enough physics recalculations have been performed.
+	if (physicsFrames++ % Physics::UpdatesPerFrame == 0) {
+		glutPostRedisplay();
+	}
+
+	callTimerFunc();
+}
+
+void callTimerFunc() {
+	// Using timer instead of idle to be able to control frame rate.
+	glutTimerFunc(1000 * Physics::DeltaTime, timer, 0);
 }
