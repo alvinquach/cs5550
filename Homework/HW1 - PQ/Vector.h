@@ -70,6 +70,15 @@ public:
 		return result;
 	}
 
+	// Vector subtraction operator overload 
+	Vector<T, SIZE> operator -(Vector<T, SIZE>& anotherVector) {
+		Vector<T, SIZE> result = Vector<T, SIZE>();
+		for (int i = 0; i < SIZE; i++) {
+			result[i] = components[i] - anotherVector[i];
+		}
+		return result;
+	}
+
 protected:
 
 	T components[SIZE];

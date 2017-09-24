@@ -61,7 +61,7 @@ void display() {
 	//Sleep(1000 / Physics::UpdateRate);
 	glClear(GL_COLOR_BUFFER_BIT);
 	
-	for (int i = 0; i < Scene::GetInstance().GetBalls().size(); i++) {
+	for (int i = 0; i < (int)Scene::GetInstance().GetBalls().size(); i++) {
 		Draw::DrawBall(Scene::GetInstance().GetBalls()[i]);
 	}
 
@@ -80,7 +80,7 @@ void timer(int value) {
 
 	// Update position for each ball.
 	for (int i = 0; i < Scene::GetInstance().GetBalls().size(); i++) {
-		Physics::UpdateBall(Scene::GetInstance().GetBalls()[i]);
+		Physics::UpdateBalls(Scene::GetInstance().GetBalls());
 	}
 
 	// Call the display function only when enough physics recalculations have been performed.

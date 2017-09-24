@@ -15,7 +15,24 @@ public:
 	/// </summary>
 	static const double DeltaTime;
 	
-	static void UpdateBall(Ball& ball);
+	static void UpdateBalls(vector<Ball>& balls);
+
+private:
+
+	/// <summary>Updates the ball's position based on velocity.</summary>
+	static void UpdateBallPosition(Ball& ball);
+
+	/// <summary>Check if the ball has collided with the world, and update its velocity accordingly.</summary>
+	static void CheckBallWorldCollision(Ball& ball);
+
+	/// <summary>Check if balls a and b have collided with each other.</summary>
+	static bool BallsCollided(Ball& a, Ball& b);
+
+	/// <summary>
+	/// Handles the collision between two balls.
+	/// This function assumes that both balls have indeed collided with each other.
+	/// </summary>
+	static void HandleBallCollision(Ball& a, Ball& b);
 
 };
 
