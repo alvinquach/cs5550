@@ -6,6 +6,8 @@
 
 using namespace std;
 
+string windowName = "C5550 - Homework 1 Programming - by Alvin Quach";
+
 void main(int argc, char** argv) {
 	init(argc, argv);
 }
@@ -18,7 +20,7 @@ void init(int argc, char** argv) {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(screenWidth, screenHeight);
 	glutInitWindowPosition(screenPositionX, screenPositionY);
-	glutCreateWindow("C5550 - Homework 1 Programming Question");
+	glutCreateWindow(windowName.c_str());
 
 	// Set up inputs
 	glutMouseFunc(Input::Mouse);
