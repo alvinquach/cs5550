@@ -84,7 +84,7 @@ void Physics::CheckBallSolidity(vector<Ball>& balls) {
 	for (int i = 0; i < balls.size(); i++) {
 		Ball& a = balls[i];
 		if (!a.isSolid()) {
-			bool hasCollision = false;
+			bool isColliding = false;
 			for (int j = 0; j < balls.size(); j++) {
 
 				// Don't check against itself.
@@ -94,15 +94,12 @@ void Physics::CheckBallSolidity(vector<Ball>& balls) {
 
 				Ball& b = balls[j];
 				if (BallsCollided(a, b)) {
-					hasCollision = true;
+					isColliding = true;
 					break;
 				}
 			}
-			if (!hasCollision) {
+			if (!isColliding) {
 				a.setSolid(true);
-			}
-			else {
-				continue;
 			}
 		}
 	}
