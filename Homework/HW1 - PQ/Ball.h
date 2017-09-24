@@ -14,24 +14,38 @@ struct AvailableColor {
 class Ball {
 public:
 
+	/// <summary>The number of verticies to use when drawing a ball.</summary>
 	static const int VertexCount;
 
+	/// <summary>The density of all balls. Used for calculating mass.</summary>
 	static const float Density;
 
+	/// <summary>The default radius of a constructed ball.</summary>
 	static const float DefaultRadius;
 
+	/// <summary>The smallest amount that a ball's radius can be decreased to.</summary>
 	static const float MinRadius;
 
+	/// <summary>The largest amount that a ball's radius can be increased to.</summary>
 	static const float MaxRadius;
 
+	/// <summary>
+	/// The maximum momentum allowed when increaseing the ball's speed using the up arrow.
+	/// This will limit how much a ball's speed can be increased to based on its mass.
+	/// This does not limit the max speed/momentum of a ball due to collision or mouse movement.
+	/// </summary>
 	static const float MaxMomentum;
 
+	/// <summary>Minimum initial radius of a randomly generated ball.</summary>
 	static const float MinInitialRadius;
 
+	/// <summary>Maximum initial radius of a randomly generated ball.</summary>
 	static const float MaxInitialRadius;
 
+	/// <summary>Minimum initial momentum of a randomly generated ball.</summary>
 	static const float MinInitialMomentum;
 
+	/// <summary>Maximum initial momentum of a randomly generated ball.</summary>
 	static const float MaxInitialMomentum;
 
 	static Ball Random();
