@@ -9,8 +9,8 @@
 
 using namespace std;
 
-const float Input::BallRadiusDeltaAmount = 0.2;
-const float Input::BallSpeedDeltaAmount = 1.337;
+const float Input::BallRadiusDeltaAmount = 0.25;
+const float Input::BallMomentumDeltaAmount = 1337;
 
 // Initialize variables
 Vector2f Input::InitialBallCoordinates = Vector2f::Zero();
@@ -96,11 +96,11 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 		}
 		break;
 
-	// Resets the speed of every ball to 6.9, except for balls that are not moving. 
+	// Resets the speed of every ball to 5, except for balls that are not moving. 
 	// Useful for when things get out of hand.
 	case 's':
 		for (vector<Ball>::iterator ball = balls.begin(); ball != balls.end(); ++ball) {
-			ball->getVelocity().setMagnitude(6.9);
+			ball->getVelocity().setMagnitude(5.0);
 		}
 		break;
 
@@ -143,13 +143,13 @@ void Input::SpecialKeyboard(int key, int mouseX, int mouseY) {
 	// Increase radius. Velocity will be decreased to preserve momentum.
 	case GLUT_KEY_UP:
 		if (selectedBall) {
-			selectedBall->setSpeed(selectedBall->getSpeed() + BallSpeedDeltaAmount);
+			selectedBall->setSpeed(selectedBall->getSpeed() + BallMomentumDeltaAmount / selectedBall->getMass());
 		}
 		break;
 
 	case GLUT_KEY_DOWN:
 		if (selectedBall) {
-			selectedBall->setSpeed(abs(selectedBall->getSpeed() - BallSpeedDeltaAmount));
+			selectedBall->setSpeed(abs(selectedBall->getSpeed() - BallMomentumDeltaAmount / selectedBall->getMass()));
 		}
 		break;
 

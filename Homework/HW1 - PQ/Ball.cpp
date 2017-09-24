@@ -11,13 +11,13 @@
 const int Ball::VertexCount = 32;
 const float Ball::Density = 1.0;
 const float Ball::DefaultRadius = 5.0;
-const float Ball::MinRadius = 2.5;
-const float Ball::MaxRadius = 7.5;
-const float Ball::MaxMomentum = 10000.0;
-const float Ball::MinInitialRadius = 3.7;
+const float Ball::MinRadius = 3.1;
+const float Ball::MaxRadius = 8.6;
+const float Ball::MaxMomentum = 40000.0;
+const float Ball::MinInitialRadius = 4.20;
 const float Ball::MaxInitialRadius = 6.9;
-const float Ball::MinInitialMomentum = 2500.0;
-const float Ball::MaxInitialMomentum = 5000.0;
+const float Ball::MinInitialMomentum = 2000.0;
+const float Ball::MaxInitialMomentum = 20000.0;
 
 int Ball::RandomBallCounter = 0;
 

@@ -15,7 +15,7 @@ public:
 	static void SpecialKeyboard(int key, int mouseX, int mouseY);
 private:
 	static const float BallRadiusDeltaAmount;
-	static const float BallSpeedDeltaAmount;
+	static const float BallMomentumDeltaAmount;
 	static Vector2f InitialBallCoordinates;
 	static Vector2f InitialMouseCoordinates;
 	static Vector2f LastMouseCoordinates;
