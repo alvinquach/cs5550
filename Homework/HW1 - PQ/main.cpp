@@ -73,8 +73,6 @@ void display() {
 	glutSwapBuffers();	// send all output to display
 }
 
-
-
 void timer(int value) {
 
 	// Keeps track of how many physics frames have been calcuated.

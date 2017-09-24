@@ -16,7 +16,7 @@ void Draw::DrawBall(Ball& ball) {
 		glBegin(GL_TRIANGLE_FAN);
 
 		// Draw center vertex with highlight color.
-		SetGlColor3f(CalculateHightlightColor(ball.getColor()));
+		SetGlColor3f(ball.getHighlight());
 		glVertex2f(ball.getPosition().getX(), ball.getPosition().getY());
 
 		// Draw rest of ball with ball's actual color.
@@ -56,15 +56,6 @@ void Draw::DrawSelectedBall(Ball& ball) {
 		);
 	}
 	glEnd();
-}
-
-
-ColorRGB Draw::CalculateHightlightColor(ColorRGB& color) {
-	return ColorRGB(
-		(color.getR() + 511) / 3,
-		(color.getG() + 511) / 3,
-		(color.getB() + 511) / 3
-	);
 }
 
 void Draw::SetGlColor3f(ColorRGB& color) {

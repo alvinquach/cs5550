@@ -24,8 +24,6 @@ private:
 
 	static float BallSelectedOutlineThickness;
 
-	static ColorRGB CalculateHightlightColor(ColorRGB& color);
-
 	static void SetGlColor3f(ColorRGB& color);
 
 };

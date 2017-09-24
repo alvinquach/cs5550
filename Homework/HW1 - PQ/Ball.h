@@ -4,6 +4,7 @@
 
 struct AvailableColor {
 	ColorRGB color;
+	ColorRGB highlight;
 	int counter;
 };
 
@@ -65,6 +66,8 @@ public:
 
 	ColorRGB& getColor();
 	void setColor(ColorRGB& color);
+	ColorRGB& getHighlight();
+	void setHighlight(ColorRGB& highlight);
 	bool isFilled();
 	void toggleFilled();
 	bool isLocked();
@@ -85,11 +88,12 @@ public:
 private:
 	static int RandomBallCounter;
 	static vector<AvailableColor> AvailableColors;
-	static ColorRGB GetRandomColor();
+	static AvailableColor& GetRandomColor();
 	Vector2f position;
 	Vector2f velocity;
 	float radius;
 	ColorRGB color;
+	ColorRGB highlight;
 	bool filled;
 	bool locked;
 };

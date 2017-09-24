@@ -19,22 +19,22 @@ const float Ball::MaxInitialMomentum = 5000.0;
 int Ball::RandomBallCounter = 0;
 
 vector<AvailableColor> Ball::AvailableColors = {
-	{ ColorRGB(213, 0, 0), 0 },
-	{ ColorRGB(197, 17, 98), 0 },
-	{ ColorRGB(170, 0, 255), 0 },
-	{ ColorRGB(98, 0, 234), 0 },
-	{ ColorRGB(48, 79, 254), 0 },
-	{ ColorRGB(41, 98, 255), 0 },
-	{ ColorRGB(0, 145, 234), 0 },
-	{ ColorRGB(0, 184, 212), 0 },
-	{ ColorRGB(0, 191, 165), 0 },
-	{ ColorRGB(0, 200, 83), 0 },
-	{ ColorRGB(100, 221, 23), 0 },
-	{ ColorRGB(174, 234, 0), 0 },
-	{ ColorRGB(255, 214, 0), 0 },
-	{ ColorRGB(255, 171, 0), 0 },
-	{ ColorRGB(255, 109, 0), 0 },
-	{ ColorRGB(221, 44, 0), 0 }
+	{ ColorRGB(213, 0, 0), ColorRGB(255, 138, 128), 0 }, 
+	{ ColorRGB(197, 17, 98), ColorRGB(255, 128, 171), 0 }, 
+	{ ColorRGB(170, 0, 255), ColorRGB(234, 128, 252), 0 }, 
+	{ ColorRGB(98, 0, 234), ColorRGB(179, 136, 255), 0 }, 
+	{ ColorRGB(48, 79, 254), ColorRGB(140, 158, 255), 0 }, 
+	{ ColorRGB(41, 98, 255), ColorRGB(130, 177, 255), 0 }, 
+	{ ColorRGB(0, 145, 234), ColorRGB(128, 216, 255), 0 }, 
+	{ ColorRGB(0, 184, 212), ColorRGB(132, 255, 255), 0 }, 
+	{ ColorRGB(0, 191, 165), ColorRGB(167, 255, 235), 0 }, 
+	{ ColorRGB(0, 200, 83), ColorRGB(185, 246, 202), 0 }, 
+	{ ColorRGB(100, 221, 23), ColorRGB(204, 255, 144), 0 }, 
+	{ ColorRGB(174, 234, 0), ColorRGB(244, 255, 129), 0 }, 
+	{ ColorRGB(255, 214, 0), ColorRGB(255, 255, 141), 0 }, 
+	{ ColorRGB(255, 171, 0), ColorRGB(255, 229, 127), 0 }, 
+	{ ColorRGB(255, 109, 0), ColorRGB(255, 209, 128), 0 }, 
+	{ ColorRGB(221, 44, 0), ColorRGB(255, 158, 128), 0 }
 };
 
 Ball Ball::Random() {
@@ -43,11 +43,13 @@ Ball Ball::Random() {
 	float speed = Random::RandomFloat(MinInitialMomentum / mass, MaxInitialMomentum / mass);
 	float direction = Random::RandomFloat(2 * M_PI);
 	ball.setVelocity(Vector2f(speed * cos(direction), speed * sin(direction)));
-	ball.setColor(GetRandomColor());
+	AvailableColor& randomColor = GetRandomColor();
+	ball.setColor(randomColor.color);
+	ball.setHighlight(randomColor.highlight);
 	return ball;
 }
 
-ColorRGB Ball::GetRandomColor() {
+AvailableColor& Ball::GetRandomColor() {
 	int counter = RandomBallCounter / AvailableColors.size();
 	vector<int> availableColorIndices;
 	for (int i = 0; i < AvailableColors.size(); i++) {
@@ -55,10 +57,10 @@ ColorRGB Ball::GetRandomColor() {
 			availableColorIndices.push_back(i);
 		}
 	}
-	AvailableColor& color = AvailableColors[availableColorIndices[Random::RandomInt(availableColorIndices.size())]];
-	color.counter++;
+	AvailableColor& result = AvailableColors[availableColorIndices[Random::RandomInt(availableColorIndices.size())]];
+	result.counter++;
 	RandomBallCounter++;
-	return color.color;
+	return result;
 }
 
 Ball::Ball(): Ball(DefaultRadius) {}
@@ -113,6 +115,14 @@ ColorRGB& Ball::getColor() {
 
 void Ball::setColor(ColorRGB& color) {
 	Ball::color = color;
+}
+
+ColorRGB& Ball::getHighlight() {
+	return highlight;
+}
+
+void Ball::setHighlight(ColorRGB& highlight) {
+	Ball::highlight = highlight;
 }
 
 bool Ball::isFilled() {
