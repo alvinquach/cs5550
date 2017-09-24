@@ -33,11 +33,6 @@ void init(int argc, char** argv) {
 
 	glClearColor(1, 1, 1, 0);
 	Draw::SetWindow(-worldWidth / 2, worldWidth / 2, -worldHeight / 2, worldHeight / 2);
-	cout << Scene::GetInstance().GetBalls().size() << endl;
-
-	for (int i = 0; i < 100; i++) {
-		cout << Random::RandomFloat(-5.0, 5.0) << endl;
-	}
 
 	glutMainLoop();
 }

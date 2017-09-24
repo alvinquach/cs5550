@@ -4,7 +4,6 @@
 #include "Physics.h"
 #include "Scene.h"
 #include <windows.h>
-#include <iostream>
 
 const int Physics::UpdatesPerFrame = 10;
 

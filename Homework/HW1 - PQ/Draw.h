@@ -4,7 +4,6 @@
 #pragma once
 #define _USE_MATH_DEFINES
 #include <windows.h>
-#include <iostream>
 #include <cmath>
 #include <gl/Gl.h>
 #include "Ball.h"
