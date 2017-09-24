@@ -25,6 +25,14 @@ private:
 	/// <summary>Check if the ball has collided with the world, and update its velocity accordingly.</summary>
 	static void CheckBallWorldCollision(Ball& ball);
 
+	/// <summary>
+	/// If the ball is currently not solid, then check if its currenlty colliding (overlapping) with any other balls.
+	/// If the ball is no longer overlapping with any other balls, then it it set to solid.
+	/// Balls start out as non-solid to avoid issues when spawning inside of an existing ball, 
+	/// and become solid once they are no longer touching any other balls.
+	/// </summary>
+	static void CheckBallSolidity(vector<Ball>& balls);
+
 	/// <summary>Check if balls a and b have collided with each other.</summary>
 	static bool BallsCollided(Ball& a, Ball& b);
 

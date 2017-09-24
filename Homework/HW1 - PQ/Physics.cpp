@@ -13,13 +13,23 @@ void Physics::UpdateBalls(vector<Ball>& balls) {
 	for (vector<Ball>::iterator ball = balls.begin(); ball != balls.end(); ++ball) {
 		UpdateBallPosition(*ball);
 		CheckBallWorldCollision(*ball);
+		
 	}
+
+	// Check and update solidity status of balls.
+	CheckBallSolidity(balls);
 
 	// Check for collision against other balls.
 	for (int i = 0; i < balls.size() - 1; i++) {
 		Ball& a = balls[i];
 		for (int j = i + 1; j < balls.size(); j++) {
 			Ball& b = balls[j];
+
+			// Skip the ball if it's not solid.
+			if (!b.isSolid()) {
+				continue;
+			}
+
 			if (BallsCollided(a, b)) {
 				HandleBallCollision(a, b);
 			}
@@ -56,6 +66,34 @@ void Physics::CheckBallWorldCollision(Ball& ball) {
 	// Left edge
 	if (ball.getPosition().getX() < -(worldWidth / 2 - ball.getRadius())) {
 		ball.getVelocity().reflect(Vector2f::Right());
+	}
+}
+
+void Physics::CheckBallSolidity(vector<Ball>& balls) {
+	for (int i = 0; i < balls.size(); i++) {
+		Ball& a = balls[i];
+		if (!a.isSolid()) {
+			bool hasCollision = false;
+			for (int j = 0; j < balls.size(); j++) {
+
+				// Don't check against itself.
+				if (i == j) {
+					continue;
+				}
+
+				Ball& b = balls[j];
+				if (BallsCollided(a, b)) {
+					hasCollision = true;
+					break;
+				}
+			}
+			if (!hasCollision) {
+				a.setSolid(true);
+			}
+			else {
+				continue;
+			}
+		}
 	}
 }
 
