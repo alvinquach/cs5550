@@ -39,8 +39,10 @@ void init(int argc, char** argv) {
 	glutCreateWindow("C5550 - Homework 1 Programming Question");
 
 	// Set up inputs
-	glutKeyboardFunc(Input::keyboard);
-	glutSpecialFunc(Input::specialKeyboard);
+	glutMouseFunc(Input::Mouse);
+	glutMotionFunc(Input::Motion);
+	glutKeyboardFunc(Input::Keyboard);
+	glutSpecialFunc(Input::SpecialKeyboard);
 
 	glutDisplayFunc(display);
 	callTimerFunc();
@@ -79,7 +81,7 @@ void timer(int value) {
 	static long physicsFrames;
 
 	// Update position for each ball.
-	Physics::UpdateBalls(Scene::GetInstance().GetBalls());
+	Physics::UpdateBalls();
 
 	// Call the display function only when enough physics recalculations have been performed.
 	if (physicsFrames++ % Physics::UpdatesPerFrame == 0) {

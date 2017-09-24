@@ -1,12 +1,47 @@
 #include "Input.h"
 #include "Scene.h"
+#include "Window.h"
 #include "glut.h"
 
-float Input::BallRadiusDeltaAmount = 0.2;
+const float Input::BallRadiusDeltaAmount = 0.2;
+const float Input::BallSpeedDeltaAmount = 1.337;
 
-float Input::BallSpeedDeltaAmount = 1.337;
+void Input::Mouse(int button, int state, int x, int y) {
 
-void Input::keyboard(unsigned char key, int mouseX, int mouseY) {
+	vector<Ball>& balls = Scene::GetBalls();
+	Vector2f worldCoordinates = ConvertScreenToWorld(Vector2f(x, y));
+
+	if (state == GLUT_DOWN && (button == GLUT_LEFT_BUTTON || button == GLUT_RIGHT_BUTTON)) {
+
+		// If the mouse click was on a ball, then select the ball.
+		for (int i = 0; i < balls.size(); i++) {
+			Ball& ball = balls[i];
+			if (Vector2f::Distance(ball.getPosition(), worldCoordinates) <= ball.getRadius()) {
+				Scene::SelectBall(i);
+					
+				// Also 'lock' the ball if it was a left click
+				if (button == GLUT_LEFT_BUTTON) {
+					Scene::LockBall(i);
+				}
+
+				break;
+			}
+		}
+
+	}
+
+	// Unlock the 'locked' ball if left button was released.
+	else if (button = GLUT_LEFT_BUTTON) {
+		Scene::LockBall(-1);
+	}
+
+}
+
+void Input::Motion(int x, int y) {
+
+}
+
+void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 
 	Ball *selectedBall = Scene::GetSelectedBall();
 
@@ -48,11 +83,13 @@ void Input::keyboard(unsigned char key, int mouseX, int mouseY) {
 		Scene::SelectBall(key - '0' - 1);
 		break;
 
+	default:
+		break;
 	}
 
 }
 
-void Input::specialKeyboard(int key, int mouseX, int mouseY) {
+void Input::SpecialKeyboard(int key, int mouseX, int mouseY) {
 
 	Ball *selectedBall = Scene::GetSelectedBall();
 
@@ -85,5 +122,14 @@ void Input::specialKeyboard(int key, int mouseX, int mouseY) {
 		}
 		break;
 
+	default:
+		break;
 	}
+}
+
+Vector2f& Input::ConvertScreenToWorld(Vector2f& screenCoordinates) {
+	return Vector2f(
+		worldWidth / screenWidth * screenCoordinates.getX() - worldWidth / 2,
+		-worldHeight / screenHeight * screenCoordinates.getY() + worldHeight / 2
+	);
 }

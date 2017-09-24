@@ -15,7 +15,7 @@ public:
 	/// </summary>
 	static const double DeltaTime;
 	
-	static void UpdateBalls(vector<Ball>& balls);
+	static void UpdateBalls();
 
 private:
 
@@ -37,7 +37,13 @@ private:
 	static bool BallsCollided(Ball& a, Ball& b);
 
 	/// <summary>
-	/// Handles the collision between two balls.
+	/// Handles the special collision between a locked ball and a non-locked ball.
+	/// This function assumes that both balls have indeed collided with each other.
+	/// </summary>
+	static void HandleLockedBallCollision(Ball& lockedBall, Ball& anotherBall);
+
+	/// <summary>
+	/// Handles the normal collision between two balls.
 	/// This function assumes that both balls have indeed collided with each other.
 	/// </summary>
 	static void HandleBallCollision(Ball& a, Ball& b);

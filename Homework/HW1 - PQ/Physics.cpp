@@ -1,4 +1,5 @@
 #include "Physics.h"
+#include "Scene.h"
 #include <windows.h>
 #include <iostream>
 
@@ -7,13 +8,15 @@ const int Physics::UpdatesPerFrame = 10;
 // This is calculated from UpdateRate.
 const double Physics::DeltaTime = 1.0 / (UpdatesPerFrame * frameRate);
 
-void Physics::UpdateBalls(vector<Ball>& balls) {
+void Physics::UpdateBalls() {
+
+	// Get balls from scene.
+	vector<Ball>& balls = Scene::GetInstance().GetBalls();
 
 	// Update position based on velocity, and then check for collision with world.
 	for (vector<Ball>::iterator ball = balls.begin(); ball != balls.end(); ++ball) {
 		UpdateBallPosition(*ball);
 		CheckBallWorldCollision(*ball);
-		
 	}
 
 	// Check and update solidity status of balls.
@@ -31,7 +34,15 @@ void Physics::UpdateBalls(vector<Ball>& balls) {
 			}
 
 			if (BallsCollided(a, b)) {
-				HandleBallCollision(a, b);
+				if (i == Scene::GetLockedBallIndex()) {
+					HandleLockedBallCollision(a, b);
+				}
+				else if (j == Scene::GetLockedBallIndex()) {
+					HandleLockedBallCollision(b, a);
+				}
+				else {
+					HandleBallCollision(a, b);
+				}
 			}
 		}
 	}
@@ -101,9 +112,25 @@ bool Physics::BallsCollided(Ball& a, Ball& b) {
 	return Vector2f::Distance(a.getPosition(), b.getPosition()) <= a.getRadius() + b.getRadius();
 }
 
+void Physics::HandleLockedBallCollision(Ball & lockedBall, Ball & anotherBall) {
+
+	// Modified version of the algorithm from https://csns.calstatela.edu/download?fileId=6114722
+
+	// Find unit vecotr n from the point of collision for the first ball and the point of collision of the second ball.
+	Vector2f n = (anotherBall.getPosition() - lockedBall.getPosition()).unitVector();
+
+	// Calculate the K-value that takes into account the velocities of both balls.
+	float K = 2 * (Vector2f::Dot(lockedBall.getVelocity(), n) - Vector2f::Dot(anotherBall.getVelocity(), n)) / (9999999 + anotherBall.getMass());
+
+	// Calculate the new velocity of each ball using K-value.
+	//a.setVelocity(lockedBall.getVelocity() - K * anotherBall.getMass() * n);
+	anotherBall.setVelocity(anotherBall.getVelocity() + K * 9999999 * n);
+
+}
+
 void Physics::HandleBallCollision(Ball& a, Ball& b) {
 
-	// Using the algorithm from https://csns.calstatela.edu/download?fileId=6114722
+	// Algorithm from https://csns.calstatela.edu/download?fileId=6114722
 	// a = ball 1, b = ball 2
 
 	// Find unit vecotr n from the point of collision for the first ball and the point of collision of the second ball.

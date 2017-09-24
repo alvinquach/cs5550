@@ -1,12 +1,16 @@
 #pragma once
+#include "Vector2f.h"
 
-class Input
-{
+class Input {
+
 public:
-	static void keyboard(unsigned char key, int mouseX, int mouseY);
-	static void specialKeyboard(int key, int mouseX, int mouseY);
+	static void Mouse(int button, int state, int x, int y);
+	static void Motion(int x, int y);
+	static void Keyboard(unsigned char key, int mouseX, int mouseY);
+	static void SpecialKeyboard(int key, int mouseX, int mouseY);
 private:
-	static float BallRadiusDeltaAmount;
-	static float BallSpeedDeltaAmount;
+	static const float BallRadiusDeltaAmount;
+	static const float BallSpeedDeltaAmount;
+	static Vector2f& ConvertScreenToWorld(Vector2f& screenCoordinates);
 };
 

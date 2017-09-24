@@ -73,7 +73,6 @@ Ball::Ball(float radius) {
 	highlight = ColorRGB();
 	filled = true;
 	solid = false;
-	locked = false;
 }
 
 Ball::~Ball() {
@@ -144,14 +143,6 @@ bool Ball::isSolid() {
 
 void Ball::setSolid(bool solid) {
 	Ball::solid = solid;
-}
-
-bool Ball::isLocked() {
-	return locked;
-}
-
-void Ball::setLocked(bool locked) {
-	Ball::locked = locked;
 }
 
 float Ball::getSpeed() {

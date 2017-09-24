@@ -41,10 +41,21 @@ void Scene::SelectBall(int index) {
 	}
 }
 
+int Scene::GetLockedBallIndex() {
+	return Instance.lockedBallIndex;
+}
+
+void Scene::LockBall(int index) {
+	if (index < (int)Instance.balls.size()) {
+		Instance.lockedBallIndex = index;
+	}
+}
+
 Scene::Scene() {
 	addBall();
 	addBall();
 	selectedBallIndex = -1;
+	lockedBallIndex = -1;
 }
 
 Ball& Scene::addBall() {

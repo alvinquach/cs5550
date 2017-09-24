@@ -19,11 +19,14 @@ public:
 	static void RemoveLastBall();
 	static Ball *GetSelectedBall();
 	static void SelectBall(int index);
+	static int GetLockedBallIndex();
+	static void LockBall(int index);
 private:
 	static Scene Instance;
 	Scene();
 	vector<Ball> balls;
 	int selectedBallIndex;
+	int lockedBallIndex;
 	Ball& addBall();
 };
 

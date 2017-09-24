@@ -72,8 +72,6 @@ public:
 	void toggleFilled();
 	bool isSolid();
 	void setSolid(bool solid);
-	bool isLocked();
-	void setLocked(bool locked);
 
 	float getSpeed();
 
@@ -98,5 +96,4 @@ private:
 	ColorRGB highlight;
 	bool filled;
 	bool solid;
-	bool locked;
 };
