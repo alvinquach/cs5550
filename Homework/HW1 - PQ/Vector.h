@@ -46,7 +46,10 @@ public:
 	/// <summary>Make the vector have the specified magnitude.</summary>
 	/// <param name='magnitude'>The vector's new magnitude.</param>
 	void setMagnitude(T magnitude) {
-		scale(magnitude / getMagnitude());
+		float prevMagnitude = getMagnitude();
+		if (prevMagnitude > 0) {
+			scale(magnitude / prevMagnitude);
+		}
 	}
 
 	/// <summary>Reflects this vector accross a normal vector.</summary>

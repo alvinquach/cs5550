@@ -151,7 +151,7 @@ void Input::SpecialKeyboard(int key, int mouseX, int mouseY) {
 
 	case GLUT_KEY_DOWN:
 		if (selectedBall) {
-			selectedBall->setSpeed(selectedBall->getSpeed() - BallSpeedDeltaAmount);
+			selectedBall->setSpeed(abs(selectedBall->getSpeed() - BallSpeedDeltaAmount));
 		}
 		break;
 
