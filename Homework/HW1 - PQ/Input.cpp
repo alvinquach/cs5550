@@ -84,6 +84,10 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 		}
 		break;
 
+	// Exits the program.
+	case 'q':
+		exit(0);
+
 	// Remove the most recently added ball of the scene. This will not remove the last ball.
 	case 'r':
 		if (Scene::GetInstance().GetBalls().size() > 1) {
