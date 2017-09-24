@@ -7,6 +7,7 @@
 template<typename T, int SIZE>
 class Vector {
 
+	// Make sure the type of T is numeric.
 	static_assert(std::is_arithmetic<T>::value, "Template type T in Vector must be numeric.");
 
 public:
@@ -43,7 +44,10 @@ public:
 		return sqrt(magnitudeSquared);
 	}
 
-	/// <summary>Make the vector have the specified magnitude.</summary>
+	/// <summary>
+	/// Make the vector have the specified magnitude.
+	/// Has no effect on zero vectors.
+	/// </summary>
 	/// <param name='magnitude'>The vector's new magnitude.</param>
 	void setMagnitude(T magnitude) {
 		float prevMagnitude = getMagnitude();
@@ -62,7 +66,10 @@ public:
 		}
 	}
 
-	/// <summary>Make the vector have a magnitude of 1.</summary>
+	/// <summary>
+	/// Make the vector have a magnitude of 1.
+	/// Has no effect on zero vectors.
+	///</summary>
 	void normalize() {
 		setMagnitude(1);
 	}
