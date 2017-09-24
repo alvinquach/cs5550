@@ -75,6 +75,8 @@ void display() {
 		Draw::DrawSelectedBall(*selectedBall);
 	}
 
+	Physics::SampleLockedBallPosition();
+
 	glutSwapBuffers();	// send all output to display
 }
 

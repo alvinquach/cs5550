@@ -2,12 +2,16 @@
 // CS5550 F17 - HW1 PQ
 
 #include "Input.h"
+#include "Physics.h"
 #include "Scene.h"
 #include "Window.h"
 #include "glut.h"
 
+using namespace std;
+
 const float Input::BallRadiusDeltaAmount = 0.2;
 const float Input::BallSpeedDeltaAmount = 1.337;
+Vector2f Input::LastMouseCoordinates = Vector2f::Zero();
 
 void Input::Mouse(int button, int state, int x, int y) {
 
@@ -22,9 +26,11 @@ void Input::Mouse(int button, int state, int x, int y) {
 			if (Vector2f::Distance(ball.getPosition(), worldCoordinates) <= ball.getRadius()) {
 				Scene::SelectBall(i);
 					
-				// Also 'lock' the ball if it was a left click
+				// Also 'lock' the ball to the mouse movement if it was a left click.
 				if (button == GLUT_LEFT_BUTTON) {
 					Scene::LockBall(i);
+					Physics::SampleLockedBallPosition();
+					LastMouseCoordinates = worldCoordinates;
 				}
 
 				break;
@@ -33,15 +39,20 @@ void Input::Mouse(int button, int state, int x, int y) {
 
 	}
 
-	// Unlock the 'locked' ball if left button was released.
-	else if (button = GLUT_LEFT_BUTTON) {
+	// Unlock the ball from mouse movement if left button was released.
+	else if (button == GLUT_LEFT_BUTTON) {
 		Scene::LockBall(-1);
 	}
 
 }
 
 void Input::Motion(int x, int y) {
-
+	Ball *lockedBall = Scene::GetLockedBall();
+	if (lockedBall) {
+		Vector2f newCoordinates = ConvertScreenToWorld(Vector2f(x, y));
+		lockedBall->setPosition(lockedBall->getPosition() + newCoordinates - LastMouseCoordinates);
+		LastMouseCoordinates = newCoordinates;
+	}
 }
 
 void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
@@ -130,7 +141,7 @@ void Input::SpecialKeyboard(int key, int mouseX, int mouseY) {
 	}
 }
 
-Vector2f& Input::ConvertScreenToWorld(Vector2f& screenCoordinates) {
+Vector2f Input::ConvertScreenToWorld(Vector2f& screenCoordinates) {
 	return Vector2f(
 		worldWidth / screenWidth * screenCoordinates.getX() - worldWidth / 2,
 		-worldHeight / screenHeight * screenCoordinates.getY() + worldHeight / 2

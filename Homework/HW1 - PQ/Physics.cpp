@@ -11,15 +11,23 @@ const int Physics::UpdatesPerFrame = 10;
 // This is calculated from UpdateRate.
 const double Physics::DeltaTime = 1.0 / (UpdatesPerFrame * frameRate);
 
+Vector2f& Physics::LockedBallLastPosition = Vector2f::Zero();
+
 void Physics::UpdateBalls() {
 
 	// Get balls from scene.
 	vector<Ball>& balls = Scene::GetInstance().GetBalls();
 
 	// Update position based on velocity, and then check for collision with world.
-	for (vector<Ball>::iterator ball = balls.begin(); ball != balls.end(); ++ball) {
-		UpdateBallPosition(*ball);
-		CheckBallWorldCollision(*ball);
+	for (int i = 0; i < balls.size(); i++) {
+		Ball& ball = balls[i];
+		if (i == Scene::GetLockedBallIndex()) {
+			UpdateLockedBallVelocity(ball);
+		}
+		else {
+			UpdateBallPosition(ball);
+			CheckBallWorldCollision(ball);
+		}
 	}
 
 	// Check and update solidity status of balls.
@@ -52,12 +60,19 @@ void Physics::UpdateBalls() {
 
 }
 
+void Physics::SampleLockedBallPosition() {
+	Ball *lockedBall = Scene::GetLockedBall();
+	if (lockedBall) {
+		LockedBallLastPosition = lockedBall->getPosition();
+	}
+}
+
 void Physics::UpdateBallPosition(Ball& ball) {
-	Vector2f deltaPosition = Vector2f(
-		ball.getVelocity().getX() * DeltaTime,
-		ball.getVelocity().getY() * DeltaTime
-	);
-	ball.setPosition(ball.getPosition() + deltaPosition);
+	ball.setPosition(ball.getPosition() + DeltaTime * ball.getVelocity());
+}
+
+void Physics::UpdateLockedBallVelocity(Ball & ball) {
+	ball.setVelocity(frameRate * (ball.getPosition() - LockedBallLastPosition));
 }
 
 void Physics::CheckBallWorldCollision(Ball& ball) {

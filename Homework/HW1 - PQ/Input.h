@@ -4,6 +4,8 @@
 #pragma once
 #include "Vector2f.h"
 
+using namespace std;
+
 class Input {
 
 public:
@@ -14,6 +16,7 @@ public:
 private:
 	static const float BallRadiusDeltaAmount;
 	static const float BallSpeedDeltaAmount;
-	static Vector2f& ConvertScreenToWorld(Vector2f& screenCoordinates);
+	static Vector2f LastMouseCoordinates;
+	static Vector2f ConvertScreenToWorld(Vector2f& screenCoordinates);
 };
 

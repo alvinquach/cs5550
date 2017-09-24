@@ -20,10 +20,21 @@ public:
 	
 	static void UpdateBalls();
 
+	/// <summary>
+	/// Samples the locked ball's current position (if there is one) so that it
+	/// can be used to calculate the velocity of the ball after it is unlocked.
+	/// </summary>
+	static void SampleLockedBallPosition();
+
 private:
+
+	static Vector2f& LockedBallLastPosition;
 
 	/// <summary>Updates the ball's position based on velocity.</summary>
 	static void UpdateBallPosition(Ball& ball);
+
+	/// <summary>Updates the locked ball's velocity based on prevous mouse movements.</summary>
+	static void UpdateLockedBallVelocity(Ball& ball);
 
 	/// <summary>Check if the ball has collided with the world, and update its velocity accordingly.</summary>
 	static void CheckBallWorldCollision(Ball& ball);

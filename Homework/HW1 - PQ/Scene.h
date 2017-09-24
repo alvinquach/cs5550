@@ -23,6 +23,7 @@ public:
 	static Ball *GetSelectedBall();
 	static void SelectBall(int index);
 	static int GetLockedBallIndex();
+	static Ball *GetLockedBall();
 	static void LockBall(int index);
 private:
 	static Scene Instance;

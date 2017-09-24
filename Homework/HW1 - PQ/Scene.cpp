@@ -48,6 +48,13 @@ int Scene::GetLockedBallIndex() {
 	return Instance.lockedBallIndex;
 }
 
+Ball *Scene::GetLockedBall() {
+	if (Instance.lockedBallIndex < 0) {
+		return nullptr;
+	}
+	return &Instance.balls[Instance.lockedBallIndex];
+}
+
 void Scene::LockBall(int index) {
 	if (index < (int)Instance.balls.size()) {
 		Instance.lockedBallIndex = index;
