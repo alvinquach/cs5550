@@ -69,6 +69,11 @@ Ball::Ball(float radius) {
 	position = Vector2f::Zero();
 	position = Vector2f::Zero();
 	Ball::radius = radius;
+	color = ColorRGB();
+	highlight = ColorRGB();
+	filled = true;
+	solid = false;
+	locked = false;
 }
 
 Ball::~Ball() {
@@ -131,6 +136,14 @@ bool Ball::isFilled() {
 
 void Ball::toggleFilled() {
 	filled = !filled;
+}
+
+bool Ball::isSolid() {
+	return solid;
+}
+
+void Ball::setSolid(bool solid) {
+	Ball::solid = solid;
 }
 
 bool Ball::isLocked() {

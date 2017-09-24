@@ -70,6 +70,8 @@ public:
 	void setHighlight(ColorRGB& highlight);
 	bool isFilled();
 	void toggleFilled();
+	bool isSolid();
+	void setSolid(bool solid);
 	bool isLocked();
 	void setLocked(bool locked);
 
@@ -95,5 +97,6 @@ private:
 	ColorRGB color;
 	ColorRGB highlight;
 	bool filled;
+	bool solid;
 	bool locked;
 };
