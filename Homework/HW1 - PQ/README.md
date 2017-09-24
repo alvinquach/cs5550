@@ -15,7 +15,6 @@ The following files should be added under the Header Files in VC++:
 * Vector2f.h
 * Window.h
 
-
 The following files should be added under the Source Files in VC++:
 * Ball.cpp
 * ColorRGB.cpp
@@ -26,7 +25,6 @@ The following files should be added under the Source Files in VC++:
 * Random.cpp
 * Scene.cpp
 * Vector2f.cpp
-
 
 Also, make sure that glut.h, glut32.lib, and glut32.dll are inside the project directory (or modifiy the #include headers accordingly).
 
