@@ -62,6 +62,7 @@ void Input::Motion(int x, int y) {
 void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 
 	Ball *selectedBall = Scene::GetSelectedBall();
+	vector<Ball>& balls = Scene::GetBalls();
 
 	switch (key) {
 
@@ -92,6 +93,16 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 	case 'r':
 		if (Scene::GetInstance().GetBalls().size() > 1) {
 			Scene::RemoveLastBall();
+		}
+		break;
+
+	// Resets the speed of every ball to 6.9, except for balls that are not moving. 
+	// Just in case things get out of hand.
+	case 's':
+		for (vector<Ball>::iterator ball = balls.begin(); ball != balls.end(); ++ball) {
+			if (ball->getVelocity().getMagnitude() > 0) {
+				ball->getVelocity().setMagnitude(6.9);
+			}
 		}
 		break;
 
