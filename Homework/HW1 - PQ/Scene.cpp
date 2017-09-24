@@ -1,3 +1,6 @@
+// Alvin Quach, 300793745
+// CS5550 F17 - HW1 PQ
+
 #include "Scene.h"
 #include <iostream>
 

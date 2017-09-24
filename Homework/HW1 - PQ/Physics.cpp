@@ -1,3 +1,6 @@
+// Alvin Quach, 300793745
+// CS5550 F17 - HW1 PQ
+
 #include "Physics.h"
 #include "Scene.h"
 #include <windows.h>
