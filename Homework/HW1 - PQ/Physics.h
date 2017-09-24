@@ -26,9 +26,16 @@ public:
 	/// </summary>
 	static void SampleLockedBallPosition();
 
+	/// <summary>
+	/// Move the ball using mouse movement.
+	/// This function will check for collision with world boundaries to
+	/// prevent the user from dragging the ball outisde of the window.
+	/// </summary>
+	static void MoveLockedBall(Vector2f& newPosition);
+
 private:
 
-	static Vector2f& LockedBallLastPosition;
+	static Vector2f LockedBallLastPosition;
 
 	/// <summary>Updates the ball's position based on velocity.</summary>
 	static void UpdateBallPosition(Ball& ball);
@@ -51,10 +58,10 @@ private:
 	static bool BallsCollided(Ball& a, Ball& b);
 
 	/// <summary>
-	/// Handles the special collision between a locked ball and a non-locked ball.
+	/// Handles the special collision between a ball that is locked to mouse movement and a ball that is not locked.
 	/// This function assumes that both balls have indeed collided with each other.
 	/// </summary>
-	static void HandleLockedBallCollision(Ball& lockedBall, Ball& anotherBall);
+	static void HandleLockedBallCollision(Ball& lockedBall, Ball& unlockedBall);
 
 	/// <summary>
 	/// Handles the normal collision between two balls.

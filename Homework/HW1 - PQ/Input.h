@@ -16,6 +16,8 @@ public:
 private:
 	static const float BallRadiusDeltaAmount;
 	static const float BallSpeedDeltaAmount;
+	static Vector2f InitialBallCoordinates;
+	static Vector2f InitialMouseCoordinates;
 	static Vector2f LastMouseCoordinates;
 	static Vector2f ConvertScreenToWorld(Vector2f& screenCoordinates);
 };

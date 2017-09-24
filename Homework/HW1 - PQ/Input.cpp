@@ -11,6 +11,10 @@ using namespace std;
 
 const float Input::BallRadiusDeltaAmount = 0.2;
 const float Input::BallSpeedDeltaAmount = 1.337;
+
+// Initialize variables
+Vector2f Input::InitialBallCoordinates = Vector2f::Zero();
+Vector2f Input::InitialMouseCoordinates = Vector2f::Zero();
 Vector2f Input::LastMouseCoordinates = Vector2f::Zero();
 
 void Input::Mouse(int button, int state, int x, int y) {
@@ -30,7 +34,8 @@ void Input::Mouse(int button, int state, int x, int y) {
 				if (button == GLUT_LEFT_BUTTON) {
 					Scene::LockBall(i);
 					Physics::SampleLockedBallPosition();
-					LastMouseCoordinates = worldCoordinates;
+					InitialMouseCoordinates = LastMouseCoordinates = worldCoordinates;
+					InitialBallCoordinates = Scene::GetLockedBall()->getPosition();
 				}
 
 				break;
@@ -49,9 +54,8 @@ void Input::Mouse(int button, int state, int x, int y) {
 void Input::Motion(int x, int y) {
 	Ball *lockedBall = Scene::GetLockedBall();
 	if (lockedBall) {
-		Vector2f newCoordinates = ConvertScreenToWorld(Vector2f(x, y));
-		lockedBall->setPosition(lockedBall->getPosition() + newCoordinates - LastMouseCoordinates);
-		LastMouseCoordinates = newCoordinates;
+		LastMouseCoordinates = ConvertScreenToWorld(Vector2f(x, y));
+		Physics::MoveLockedBall(InitialBallCoordinates + LastMouseCoordinates - InitialMouseCoordinates);
 	}
 }
 
