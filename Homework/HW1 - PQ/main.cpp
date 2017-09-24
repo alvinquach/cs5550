@@ -79,9 +79,7 @@ void timer(int value) {
 	static long physicsFrames;
 
 	// Update position for each ball.
-	for (int i = 0; i < Scene::GetInstance().GetBalls().size(); i++) {
-		Physics::UpdateBalls(Scene::GetInstance().GetBalls());
-	}
+	Physics::UpdateBalls(Scene::GetInstance().GetBalls());
 
 	// Call the display function only when enough physics recalculations have been performed.
 	if (physicsFrames++ % Physics::UpdatesPerFrame == 0) {
