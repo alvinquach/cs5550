@@ -97,12 +97,10 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 		break;
 
 	// Resets the speed of every ball to 6.9, except for balls that are not moving. 
-	// Just in case things get out of hand.
+	// Useful for when things get out of hand.
 	case 's':
 		for (vector<Ball>::iterator ball = balls.begin(); ball != balls.end(); ++ball) {
-			if (ball->getVelocity().getMagnitude() > 0) {
-				ball->getVelocity().setMagnitude(6.9);
-			}
+			ball->getVelocity().setMagnitude(6.9);
 		}
 		break;
 
