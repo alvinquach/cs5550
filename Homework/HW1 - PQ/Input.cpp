@@ -24,6 +24,9 @@ void Input::Mouse(int button, int state, int x, int y) {
 
 	if (state == GLUT_DOWN && (button == GLUT_LEFT_BUTTON || button == GLUT_RIGHT_BUTTON)) {
 
+		// Deselect
+		Scene::SelectBall(-1);
+
 		// If the mouse click was on a ball, then select the ball.
 		for (int i = 0; i < balls.size(); i++) {
 			Ball& ball = balls[i];

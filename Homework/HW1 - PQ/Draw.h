@@ -24,9 +24,15 @@ private:
 
 	static float BallOutlineThickness;
 
-	static float BallSelectedOutlineThickness;
+	static float BallSelectedPulsePeriod;
+
+	static float BallSelectedMaxOpacity;
+
+	static float BallGhostOpacity;
 
 	static void SetGlColor3f(ColorRGB& color);
+
+	static void SetGlColor4f(ColorRGB& color, float alpha);
 
 };
 

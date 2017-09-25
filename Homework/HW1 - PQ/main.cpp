@@ -22,6 +22,10 @@ void init(int argc, char** argv) {
 	glutInitWindowPosition(screenPositionX, screenPositionY);
 	glutCreateWindow(windowName.c_str());
 
+	// Enable alpha blending.
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	// Set up inputs
 	glutMouseFunc(Input::Mouse);
 	glutMotionFunc(Input::Motion);
@@ -39,7 +43,6 @@ void init(int argc, char** argv) {
 
 void display() {
 
-	//Sleep(1000 / Physics::UpdateRate);
 	glClear(GL_COLOR_BUFFER_BIT);
 	
 	for (int i = 0; i < (int)Scene::GetInstance().GetBalls().size(); i++) {
