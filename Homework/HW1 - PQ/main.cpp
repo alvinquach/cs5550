@@ -5,7 +5,7 @@
 
 using namespace std;
 
-string windowName = "C5550 - Homework 1 Programming - by Alvin Quach";
+string windowName = "CS5550 - Homework 1 Programming - by Alvin Quach";
 
 void main(int argc, char** argv) {
 	init(argc, argv);
