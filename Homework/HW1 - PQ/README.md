@@ -36,13 +36,13 @@ There are multiple ways to select a ball. In addition to using the number keys a
 
 When left-clicking on the ball, the ball will be locked to the mouse movement until the left-click is released (more on this later). That means the velocity of the ball will most likely change just by left clicking on it. To select a ball using the mouse without changing its position/velocity, use right-click instead.
 
-The currently selected ball will be indicated by a black outline around the ball. To deselect a ball, press '0' on the keyboard.
+The currently selected ball can be identified by its strobing effect. To deselect a ball, press '0' on the keyboard or click on an empty area of the background.
 
 
 
 ## Adding New Balls
 
-As per the assignment instructions, ressing 'n' will add a new ball to the screen as long as the limit has not been reached. The ball will be added in the center of the world/screen, and can potentially overlap with existing balls. In the case that the newly added ball does overlap with any existing ball, it will be non-solid and will not be able to physically affect any other balls. This condition is lifted as soon as the new ball has cleared the other balls and is no longer overlapping with any of them.
+As per the assignment instructions, ressing 'n' will add a new ball to the screen as long as the limit has not been reached. The ball will be added in the center of the world/screen, and can potentially overlap with existing balls. In the case that the newly added ball does overlap with any existing ball, it will be non-solid and will not be able to physically affect any other balls. This condition is lifted as soon as the new ball has cleared the other balls and is no longer overlapping with any of them. Non-soild balls are rendered with a semi-transparent color. 
 
 
 
