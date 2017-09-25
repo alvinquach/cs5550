@@ -2,6 +2,7 @@
 // CS5550 F17 - HW1 PQ
 
 #include "Scene.h"
+#include <ctime>
 
 const int Scene::MaxBallCount = 5;
 
@@ -61,6 +62,7 @@ void Scene::LockBall(int index) {
 }
 
 Scene::Scene() {
+	srand((unsigned)time(0));
 	addBall();
 	addBall();
 	selectedBallIndex = -1;

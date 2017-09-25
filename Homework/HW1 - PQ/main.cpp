@@ -1,7 +1,6 @@
 // Alvin Quach, 300793745
 // CS5550 F17 - HW1 PQ
 
-#include <ctime>
 #include "main.h"
 
 using namespace std;
@@ -13,8 +12,6 @@ void main(int argc, char** argv) {
 }
 
 void init(int argc, char** argv) {
-
-	srand((unsigned)time(0));
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);

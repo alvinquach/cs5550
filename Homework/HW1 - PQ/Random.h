@@ -2,6 +2,7 @@
 // CS5550 F17 - HW1 PQ
 
 #pragma once
+
 class Random {
 public:
 	static int RandomInt(int max);
