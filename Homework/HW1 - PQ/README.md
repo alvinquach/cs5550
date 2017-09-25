@@ -28,6 +28,8 @@ The following files should be added under the Source Files in VC++:
 
 Also, make sure that glut.h, glut32.lib, and glut32.dll are inside the project directory (or modifiy the #include headers accordingly).
 
+The window size is set to 960*540. This can be adjusted as necessary inside Window.h.
+
 
 
 ## Ball Selection
