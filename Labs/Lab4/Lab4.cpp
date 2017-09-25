@@ -65,16 +65,13 @@ void myKeyboard(unsigned char key, int x, int y)
 
 	switch (key) {
 	case '+':
-		// do what you need to do for up-scale here
-
+		scale *= 1.05;
 		break;
 	case '-':
-		// do what you need to do for down-scale  here
-
+		scale /= 1.05;
 		break;
 	case 'r':
-		// do what you need to do for rotation here
-
+		rotation_angle += 10;
 		break;
 	default:
 		break;
@@ -86,24 +83,21 @@ void mySpecialKeyboard(int key, int x, int y)
 {
 	switch (key) {
 	case GLUT_KEY_UP:
-		// do what you need to do for translation in one direction here
-
+		tz -= 0.1;
 		break;
 	case GLUT_KEY_DOWN:
-		// do what you need to do for translation in the opposite direction of UP KEY here
-
+		tz += 0.1;
 		break;
 	case GLUT_KEY_LEFT:
-		// do what you need to do for translation in one direction here
-
+		tx -= 0.1;
 		break;
 	case GLUT_KEY_RIGHT:
-		// do what you need to do for translation in the opposite direction of LEFT KEY here
-
+		tx += 0.1;
 		break;
 	case GLUT_KEY_HOME:
-		// do what you need to do for initialization here
-
+		scale = 1.0;
+		tx = ty = tz = 0.0;
+		rotation_angle = 0.0;
 		break;
 	default:
 		break;
@@ -125,8 +119,9 @@ void myDisplay(void)
 	gluLookAt(10.0, 10.0, 15.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
 	// apply your own transformations accordingly here
-
-
+	glTranslated(tx, ty, tz);
+	glRotated(rotation_angle, 0, 1, 0);
+	glScaled(scale, scale, scale);
 
 	// draw octahedron
 	drawOctahedron();
