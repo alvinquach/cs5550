@@ -83,10 +83,10 @@ void mySpecialKeyboard(int key, int x, int y)
 {
 	switch (key) {
 	case GLUT_KEY_UP:
-		tz -= 0.1;
+		ty += 0.1;
 		break;
 	case GLUT_KEY_DOWN:
-		tz += 0.1;
+		ty -= 0.1;
 		break;
 	case GLUT_KEY_LEFT:
 		tx -= 0.1;
