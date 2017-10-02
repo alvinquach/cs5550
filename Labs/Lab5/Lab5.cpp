@@ -54,7 +54,6 @@ void myIdle() {
 		eyex = cameraRadius1 * cos(tCamera / periodCameraOrbital * M_PI / 180 + cameraInitialAngle);
 		eyey = 25;
 		eyez = cameraRadius2 * sin(tCamera / periodCameraOrbital * M_PI / 180 + cameraInitialAngle);
-		std::cout << eyex << ", " << eyey << std::endl;
 	}
 	else if (view == 1) {
 		eyex = 25;
