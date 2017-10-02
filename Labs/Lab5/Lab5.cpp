@@ -1,11 +1,14 @@
+#define _USE_MATH_DEFINES
+
 #include <windows.h>  //suitable when using Windows 95/98/NT
 #include <gl/Gl.h>
 #include <gl/Glu.h>
 #include "glut.h"
 #include <iostream>
-
+#include <math.h>
 
 #include "Lab5.h"
+
 
 void myInit(int shadingChoice, int colorChoice)
 {
@@ -41,6 +44,33 @@ void myInit(int shadingChoice, int colorChoice)
 	glOrtho(-3.5*worldWidth / worldHeight, 3.5*worldWidth / worldHeight, -3.5, 3.5, 0.1, 100);
 }
 
+void myIdle() {
+
+	t += speedMultiplier * 60.0 / 1000;
+
+	// UpdateCamera
+	if (view == 0) {
+		tCamera += rotateCamera ? 60.0 / 1000 : 0.0;
+		eyex = cameraRadius1 * cos(tCamera / periodCameraOrbital * M_PI / 180 + cameraInitialAngle);
+		eyey = 25;
+		eyez = cameraRadius2 * sin(tCamera / periodCameraOrbital * M_PI / 180 + cameraInitialAngle);
+		std::cout << eyex << ", " << eyey << std::endl;
+	}
+	else if (view == 1) {
+		eyex = 25;
+		eyey = 0;
+		eyez = 0;
+	}
+	else if (view == 2) {
+		eyex = 0;
+		eyey = 25;
+		eyez = 25;
+	}
+
+	glutPostRedisplay();
+
+}
+
 
 void drawAxes()
 {
@@ -60,27 +90,50 @@ void drawAxes()
 	glEnd();
 }
 
+void drawEarthOrbit()
+{
+	glBegin(GL_LINE_LOOP);
+	glColor3f(0.0f, 0.0f, 0.0f);
+	for (int i = 0; i < 64; i++) {
+		glVertex3f(2 * cos(2 * M_PI * i / 64), 0, 2 * sin(2 * M_PI * i / 64));
+	}
+	glEnd();
+}
+
 void drawSun()
 {	// Sun
 	glColor3f(1.0f, 0.5f, 0.0f);    // sun is orange
+	glPushMatrix();
+	glRotated(t / periodSunDay, 0.0, 1.0, 0.0);
 	glutSolidSphere(0.5, 20, 16);	// locate the sun at the origin
+	glPopMatrix();
 }
+
 
 void drawEarthAndMoon()
 {
 	// Earth
 	glColor3f(0.0f, 1.0f, 0.0f); // earth is green
 	glPushMatrix();
+	glRotated(t / periodEarthOrbital, 0.0, 1.0, 0.0);
 	glTranslated(0, 0, 2);
+
+	// We can reuse the above transformations for the moon,
+	// so push another matrix here.
+	glPushMatrix();
+	
+	glRotated(t / periodEarthDay, 0.0, 1.0, 0.0);
 	glutSolidSphere(0.2, 20, 8);
 	glPopMatrix();
 
-	// Moon
+	// Moon. Two transformations were carried over from the earth.
 	glColor3f(0.5f, 0.5f, 0.5f);
 	glPushMatrix();
-	glTranslated(0, 0, 2);
+	glRotated(t / periodMoonOrbital, 0.0, 1.0, 0.0);
 	glTranslated(0, 0, 0.3);
+	glRotated(t / periodMoonDay, 0.0, 1.0, 0.0);
 	glutSolidSphere(0.05, 10, 4);
+	glPopMatrix();
 	glPopMatrix();
 }
 
@@ -89,7 +142,9 @@ void drawMars()
 	// Mars
 	glColor3f(1.0f, 0.0f, 0.0f);
 	glPushMatrix();
+	glRotated(t / periodMarsOrbital, 0.0, 1.0, 0.0);
 	glTranslated(0, 0, 3);
+	glRotated(t / periodMarsDay, 0.0, 1.0, 0.0);
 	glutSolidSphere(0.15, 20, 8);
 	glPopMatrix();
 }
@@ -104,6 +159,7 @@ void displaySolarSystem()
 	gluLookAt(eyex, eyey, eyez, lookx, looky, lookz, 0.0, 1.0, 0.0);
 
 	drawAxes();
+	drawEarthOrbit();
 	drawSun();
 	drawEarthAndMoon();
 	drawMars();
@@ -114,24 +170,12 @@ void displaySolarSystem()
 void myKeyboard(unsigned char key, int x, int y)
 {
 	switch (key) {
+	case 'r':
+		rotateCamera = !rotateCamera;
+		break;
 	case 'v':
 		view++;
 		view %= 3;
-		if (view == 0) {
-			eyex = 25;
-			eyey = 25;
-			eyez = 25;
-		}
-		else if (view == 1) {
-			eyex = 25;
-			eyey = 0;
-			eyez = 0;
-		}
-		else if (view == 2) {
-			eyex = 0;
-			eyey = 25;
-			eyez = 25;
-		}
 		break;
 	default:
 		break;
@@ -163,6 +207,8 @@ int main(int argc, char **argv)
 
 	glutDisplayFunc(displaySolarSystem);
 	glutKeyboardFunc(myKeyboard);
+
+	glutIdleFunc(myIdle);
 
 	glutMainLoop();
 

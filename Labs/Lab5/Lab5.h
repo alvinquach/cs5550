@@ -32,6 +32,22 @@ GLfloat shininess[] = { 50.0f };
 GLfloat position[] = { 2.0f, 6.0f, 3.0f, 0.0f };
 GLfloat lightIntensity[] = { 0.7f, 0.7f, 0.7f, 1.0f };
 
+// added variables
+GLdouble t = 0.0;
+GLdouble speedMultiplier = 420.0;
+GLdouble periodSunDay = 24.0; // At equator
+GLdouble periodEarthDay = 1.00;
+GLdouble periodEarthOrbital = 365.25;
+GLdouble periodMoonDay = 27.3;
+GLdouble periodMoonOrbital = 27.3;
+GLdouble periodMarsDay = 1.03;
+GLdouble periodMarsOrbital = 687.0;
 
+bool rotateCamera = false;
+GLdouble tCamera = 0.0;
+GLdouble cameraRadius1 = 55.90;
+GLdouble cameraRadius2 = 27.95;
+GLdouble cameraInitialAngle = 1.107;
+GLdouble periodCameraOrbital = 0.69;
 
 #endif
