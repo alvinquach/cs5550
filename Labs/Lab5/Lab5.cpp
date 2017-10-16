@@ -127,12 +127,10 @@ void drawEarthAndMoon()
 
 	// Moon. Two transformations were carried over from the earth.
 	glColor3f(0.5f, 0.5f, 0.5f);
-	glPushMatrix();
 	glRotated(t / periodMoonOrbital, 0.0, 1.0, 0.0);
 	glTranslated(0, 0, 0.3);
 	glRotated(t / periodMoonDay, 0.0, 1.0, 0.0);
 	glutSolidSphere(0.05, 10, 4);
-	glPopMatrix();
 	glPopMatrix();
 }
 
