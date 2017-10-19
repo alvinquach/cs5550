@@ -10,27 +10,38 @@ public:
 
 	Vector3f();
 
-	Vector3f(float x, float y);
+	Vector3f(float x, float y, float z);
 
-	/// <summary>Shorthand for writing Vector3f(0, 1).</summary>
+	/// <summary>Shorthand for writing Vector3f(0, 1, 0).</summary>
 	static Vector3f Up();
 
-	/// <summary>Shorthand for writing Vector3f(1, 0).</summary>
+	/// <summary>Shorthand for writing Vector3f(1, 0, 0).</summary>
 	static Vector3f Right();
 
-	/// <summary>Shorthand for writing Vector3f(0, -1).</summary>
+	/// <summary>Shorthand for writing Vector3f(0, -1, 0).</summary>
 	static Vector3f Down();
 
-	/// <summary>Shorthand for writing Vector3f(-1, 0).</summary>
+	/// <summary>Shorthand for writing Vector3f(-1, 0, 0).</summary>
 	static Vector3f Left();
 
-	/// <summary>Shorthand for writing Vector3f(0, 0).</summary>
+	/// <summary>Shorthand for writing Vector3f(0, 0, 1).</summary>
+	static Vector3f Forward();
+
+	/// <summary>Shorthand for writing Vector3f(0, 0, -1).</summary>
+	static Vector3f Back();
+
+	/// <summary>Shorthand for writing Vector3f(0, 0, 0).</summary>
 	static Vector3f Zero();
+
+	/// <summary>Returns the cross product of two vectors.</summary>
+	static Vector3f Cross(Vector3f a, Vector3f b);
 
 	float getX();
 	void setX(float x);
 	float getY();
 	void setY(float y);
+	float getZ();
+	void setZ(float z);
 
 	/// <summary>Returns a unit vector with the same direction as this vector.</summary>
 	Vector3f unitVector();
