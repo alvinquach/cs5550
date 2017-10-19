@@ -13,8 +13,10 @@ class Draw {
 
 public:
 
-	/// <summary>Dimensions of the room.</summary>
-	static Vector3f& RoomDimensions;
+	/// <summary>Thickness of the floor.</summary>
+	static const float RoomFloorThickness;
+
+	// TODO Add wall thickness if time permits.
 
 	static void DrawAxes();
 
