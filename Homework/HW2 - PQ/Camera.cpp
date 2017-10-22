@@ -4,6 +4,9 @@
 #include <Windows.h>
 #include "glut.h"
 
+/// <summary>Height of the camera.</summary>
+const float Camera::Height = 0.69;
+
 /// <summary>Maximum distance the camera can be away from the target.</summary>
 const float Camera::MaxDistance = 13.37;
 
@@ -11,7 +14,7 @@ const float Camera::MaxDistance = 13.37;
 const float Camera::DefaultDistance = 6.9;
 
 /// <summary>Minimum distance that camera can be from the target.</summary>
-const float Camera::MinDistance = 1.0;
+const float Camera::MinDistance = 3.1;
 
 /// <summary>How fast the camera moves when in anaimation mode in rads/update.</summary>
 const float Camera::AngularVelocity = M_PI / 360;
@@ -43,10 +46,10 @@ Camera::Camera() {
 void Camera::lookAt() {
 	gluLookAt(
 		current.distance * cos(current.angle) + current.target.getX(),
-		current.distance * sin(current.verticalAngle) + current.target.getY(),
+		current.distance * sin(current.verticalAngle) + current.target.getY() + Height,
 		current.distance * sin(current.angle) + current.target.getZ(),
 		current.target.getX(),
-		current.target.getY(),
+		current.target.getY() + Height,
 		current.target.getZ(),
 		0, 1, 0
 	);
@@ -64,7 +67,7 @@ void Camera::toggleAnimation() {
 		saveState(current);
 		applyState(CameraState {
 			current.angle,
-			2.0f,
+			5.0f,
 			(float) M_PI / 12,
 			Vector3f::Zero()
 		});
@@ -100,7 +103,7 @@ void Camera::updateAnimation(float t, Vector3f target) {
 	}
 	else {
 		animationCooldown = max(animationCooldown - 0.05, 0.0f);
-		goToTarget(target / 2.0);
+		goToTarget(0.69 * target);
 	}
 	updateVerticalAngle();
 	updateDistance();

@@ -31,6 +31,7 @@ public:
 
 private:
 
+	static const float Height;
 	static const float MaxDistance;
 	static const float DefaultDistance;
 	static const float MinDistance;

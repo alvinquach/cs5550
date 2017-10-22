@@ -15,11 +15,7 @@ float Draw::RoomFloorThickness = 0.1;
 /// <summary>Color of the floor.</summary>
 ColorRGB Draw::RoomFloorColor = ColorRGB(127, 127, 127);
 
-/// <summary>Radius of the robot's base.</summary>
-float Draw::RobotBaseRadius = 0.5;
 
-/// <summary>Color of the robot's base.</summary>
-ColorRGB Draw::RobotBaseColor = ColorRGB(197, 17, 98);
 
 void Draw::DrawAxes() {
 
@@ -63,36 +59,73 @@ void Draw::DrawRobot(GLenum renderMode) {
 	Translate3f(robot.getCurrentState().position);
 	glRotatef(robot.getCurrentState().baseAngle * 180 / M_PI, 0, -1, 0);
 
-	// Draw the arm components
+	// Draw the base.
 	DrawRobotBase(robot, renderMode);
-	//DrawRobotUpperArm(renderMode);
 
+	// Angle the upper arm assembly.
+	glPushMatrix();
+	glRotatef(robot.getCurrentState().upperArmAngle * 180 / M_PI, 0, 0, 1);
+
+	// Draw the upper arm.
+	DrawRobotUpperArm(robot, renderMode);
+
+	// Position the elbow.
+	glPushMatrix();
+	glTranslatef(0, Robot::RobotUpperArmLength, 0);
+	
+	// Draw the elbow.
+	DrawRobotElbow(robot, renderMode);
+
+	// Angle the lower arm assembly.
+	glPushMatrix();
+	glRotatef(robot.getCurrentState().lowerArmAngle * 180 / M_PI, 0, 0, 1);
+
+	// Draw the lower arm.
+	DrawRobotLowerArm(robot, renderMode);
+
+	glPopMatrix();
+	glPopMatrix();
 	glPopMatrix();
 }
 
 void Draw::DrawRobotBase(Robot& robot, GLenum renderMode) {
-	SetGlColor3f(RobotBaseColor);
+	SetGlColor3f(Robot::RobotBaseColor);
 	glPushMatrix();
 	glTranslatef(0, 0.02, 0);
 	glRotatef(90, 1, 0, 0);
-	GLUquadricObj * qobj = gluNewQuadric();
-	gluQuadricDrawStyle(qobj, renderMode);
-	gluCylinder(qobj, RobotBaseRadius, RobotBaseRadius, 0.02, CircleVertexCount, 1);
-	gluDisk(qobj, 0, RobotBaseRadius, CircleVertexCount, 1);
-	gluSphere(qobj, RobotBaseRadius / 2.5, CircleVertexCount, 24);
+	GLUquadricObj * baseAssm = gluNewQuadric();
+	gluQuadricDrawStyle(baseAssm, renderMode);
+	gluCylinder(baseAssm, Robot::RobotBaseRadius, Robot::RobotBaseRadius, 0.02, CircleVertexCount, 1);
+	gluDisk(baseAssm, 0, Robot::RobotBaseRadius, CircleVertexCount, 1);
+	SetGlColor3f(Robot::RobotJointColor);
+	gluSphere(baseAssm, Robot::RobotLargeJointRadius, CircleVertexCount, 24);
 	glPopMatrix();
 }
 
 void Draw::DrawRobotUpperArm(Robot& robot, GLenum renderMode) {
-	SetGlColor3f(RobotBaseColor);
+	SetGlColor3f(Robot::RobotUpperArmColor);
 	glPushMatrix();
-	glTranslatef(0, 0.02, 0);
-	glRotatef(90, 1, 0, 0);
-	GLUquadricObj * qobj = gluNewQuadric();
-	gluQuadricDrawStyle(qobj, renderMode);
-	gluCylinder(qobj, RobotBaseRadius, RobotBaseRadius, 0.02, CircleVertexCount, 1);
-	gluDisk(qobj, 0, RobotBaseRadius, CircleVertexCount, 1);
-	gluSphere(qobj, RobotBaseRadius / 2.5, CircleVertexCount, 24);
+	glRotatef(90, -1, 0, 0);
+	GLUquadricObj * upperArm = gluNewQuadric();
+	gluQuadricDrawStyle(upperArm, renderMode);
+	gluCylinder(upperArm, Robot::RobotUpperArmRadius, Robot::RobotUpperArmRadius, Robot::RobotUpperArmLength, CircleVertexCount, 1);
+	glPopMatrix();
+}
+
+void Draw::DrawRobotElbow(Robot& robot, GLenum renderMode) {
+	SetGlColor3f(Robot::RobotJointColor);
+	GLUquadricObj * elbow = gluNewQuadric();
+	gluQuadricDrawStyle(elbow, renderMode);
+	gluSphere(elbow, Robot::RobotLargeJointRadius, CircleVertexCount, 24);
+}
+
+void Draw::DrawRobotLowerArm(Robot& robot, GLenum renderMode) {
+	SetGlColor3f(Robot::RobotLowerArmColor);
+	glPushMatrix();
+	glRotatef(90, -1, 0, 0);
+	GLUquadricObj * lowerArm = gluNewQuadric();
+	gluQuadricDrawStyle(lowerArm, renderMode);
+	gluCylinder(lowerArm, Robot::RobotLowerArmRadius, Robot::RobotLowerArmRadius, Robot::RobotLowerArmLength, CircleVertexCount, 1);
 	glPopMatrix();
 }
 

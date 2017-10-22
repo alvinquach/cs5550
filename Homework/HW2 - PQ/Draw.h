@@ -32,12 +32,14 @@ private:
 	// TODO Add wall thickness if time permits.
 
 	static ColorRGB RoomFloorColor;
-	static float RobotBaseRadius;
-	static ColorRGB RobotBaseColor;
 
 	static void DrawRobotBase(Robot& robot, GLenum renderMode);
 
 	static void DrawRobotUpperArm(Robot& robot, GLenum renderMode);
+
+	static void DrawRobotElbow(Robot& robot, GLenum renderMode);
+
+	static void DrawRobotLowerArm(Robot& robot, GLenum renderMode);
 
 	static void SetGlColor3f(ColorRGB& color);
 

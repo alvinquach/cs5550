@@ -10,6 +10,26 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 
 	switch (key) {
 
+		// Rotate the entire arm clockwise.
+	case 'i':
+		Scene::GetRobot().moveUpperArm(1);
+		break;
+
+		// Rotate the entire arm counterclockwise.
+	case 'I':
+		Scene::GetRobot().moveUpperArm(-1);
+		break;
+
+		// Rotate the entire arm clockwise.
+	case 'j':
+		Scene::GetRobot().moveLowerArm(1);
+		break;
+
+		// Rotate the entire arm counterclockwise.
+	case 'J':
+		Scene::GetRobot().moveLowerArm(-1);
+		break;
+
 	// Rotate the entire arm clockwise.
 	case 'r':
 		Scene::GetRobot().rotateBase(1);
@@ -55,11 +75,11 @@ void Input::SpecialKeyboard(int key, int mouseX, int mouseY) {
 	switch(key) {
 
 	case GLUT_KEY_UP:
-		Scene::GetRobot().move(1);
+		Scene::GetRobot().moveBase(1);
 		break;
 
 	case GLUT_KEY_DOWN:
-		Scene::GetRobot().move(-1);
+		Scene::GetRobot().moveBase(-1);
 		break;
 
 	case GLUT_KEY_LEFT:
