@@ -23,6 +23,10 @@ public:
 
 	static Robot& GetRobot();
 
+	static bool GetShowAxes();
+
+	static void ToggleShowAxes();
+
 private:
 
 	Scene();
@@ -38,5 +42,7 @@ private:
 	Camera camera;
 
 	Robot robot;
+
+	bool showAxes;
 	
 };

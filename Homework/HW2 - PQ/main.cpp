@@ -72,15 +72,12 @@ void display() {
 	glLoadIdentity();
 	camera.lookAt();
 
-	// Need to disable lighting to draw axes with color.
-	glDisable(GL_LIGHTING);
-
-	// Draw Axes
-	// TODO Add a variable and if-statement to toggle this.
-	Draw::DrawAxes();
-
-	// Reenable lighting after drawing axes.
-	glEnable(GL_LIGHTING);
+	// Draw Axes, if enabled.
+	if (Scene::GetShowAxes()) {
+		glDisable(GL_LIGHTING); // Need to disable lighting to draw axes with color.
+		Draw::DrawAxes();
+		glEnable(GL_LIGHTING); // Reenable lighting after drawing axes.
+	}
 
 	GLenum renderMode = Scene::GetRenderMode();
 	Draw::DrawFloor(renderMode);

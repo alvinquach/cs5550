@@ -10,25 +10,33 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 
 	switch (key) {
 
-		// Rotate the entire arm clockwise.
+	// Toggle between turning on and off displaying coordinate system.
+	case 'c':		Scene::ToggleShowAxes();		break;
+
+	// Lift up the upper arm.
 	case 'i':
 		Scene::GetRobot().moveUpperArm(1);
 		break;
 
-		// Rotate the entire arm counterclockwise.
+	// Lift down the upper arm.
 	case 'I':
 		Scene::GetRobot().moveUpperArm(-1);
 		break;
 
-		// Rotate the entire arm clockwise.
+	// Lift up the lower arm.
 	case 'j':
 		Scene::GetRobot().moveLowerArm(1);
 		break;
 
-		// Rotate the entire arm counterclockwise.
+	// Lift down the lower arm.
 	case 'J':
 		Scene::GetRobot().moveLowerArm(-1);
 		break;
+
+	// Exit the program.
+	case 'q':
+	case 'Q':
+		exit(0);
 
 	// Rotate the entire arm clockwise.
 	case 'r':

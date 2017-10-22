@@ -12,6 +12,7 @@ Scene::Scene() {
 	camera = Camera();
 	roomDimensions = Vector3f(10, 10, 10);
 	renderMode = GLU_FILL;
+	showAxes = true;
 }
 
 GLenum Scene::ToggleRenderMode() {
@@ -33,6 +34,14 @@ Camera& Scene::GetCamera() {
 
 Robot& Scene::GetRobot() {
 	return GetInstance().robot;
+}
+
+bool Scene::GetShowAxes() {
+	return GetInstance().showAxes;
+}
+
+void Scene::ToggleShowAxes() {
+	GetInstance().showAxes = !GetInstance().showAxes;
 }
 
 Scene& Scene::GetInstance() {
