@@ -4,9 +4,9 @@
 #include <math.h>
 #include <Windows.h>
 
-const float Robot::AccelRate = 13.37;
+const float Robot::AccelRate = 9.1;
 const float Robot::DecelRate = 6.9;
-const float Robot::MaxSpeed = 4.20;
+const float Robot::MaxSpeed = 8.6;
 
 const float Robot::BaseMaxAngularVelocity = M_PI / 2;
 const float Robot::UpperArmMaxAngularVelocity = M_PI / 4;
