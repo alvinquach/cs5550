@@ -31,8 +31,16 @@ Camera& Scene::GetCamera() {
 	return GetInstance().camera;
 }
 
+Robot& Scene::GetRobot() {
+	return GetInstance().robot;
+}
+
 Scene& Scene::GetInstance() {
 	return Instance;
+}
+
+void Scene::Reset() {
+	Instance = Scene();
 }
 
 Vector3f& Scene::GetRoomDimensions() {

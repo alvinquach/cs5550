@@ -4,15 +4,7 @@
 #include "Input.h"
 #include "Scene.h"
 
-/*
-void Input::Mouse(int button, int state, int x, int y) {
-
-}
-
-void Input::Motion(int x, int y) {
-
-}
-*/
+const float Input::InputDelay = 100.0;
 
 void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 
@@ -38,9 +30,28 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 		Scene::GetCamera().zoomIn();
 		break;
 
+	// Reset the scene.
+	case 27:
+		Scene::Reset();
+		break;
+
+	default:
+		break;
 	}
 }
 
 void Input::SpecialKeyboard(int key, int mouseX, int mouseY) {
+
+	switch(key) {
+
+	case GLUT_KEY_UP:
+		Scene::GetRobot().moveForward();
+
+	case GLUT_KEY_DOWN:
+		Scene::GetRobot().moveBackward();
+
+	default:
+		break;
+	}
 
 }

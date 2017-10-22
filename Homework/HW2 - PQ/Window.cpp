@@ -1,5 +1,7 @@
 #include <windows.h>
 #include <cmath>
+#include <gl/Gl.h>
+#include "glut.h"
 #include "Window.h"
 
 const float Window::ScreenWidth = 960.0;

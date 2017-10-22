@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Input.h"
 #include "Scene.h"
+#include "Physics.h"
 #include <vector>
 
 void init(int argc, char** argv);

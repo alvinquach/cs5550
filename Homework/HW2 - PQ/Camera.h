@@ -50,11 +50,12 @@ private:
 	float angleSpeed;
 	float distanceSpeed;
 	float verticalAngleSpeed;
-	float targetSpeed;
+	//Vector3f targetSpeed;
 
 	CameraState current;
 	CameraState savedState;
 	bool animationActive;
+	float animationCooldown;
 
 	void updateAngle();
 	void updateVerticalAngle();

@@ -2,12 +2,11 @@
 // CS5550 F17 - HW2 PQ
 
 #pragma once
-#define _USE_MATH_DEFINES
 #include <windows.h>
-#include <cmath>
-#include "Window.h"
 #include "Vector3f.h"
 #include "ColorRGB.h"
+#include "glut.h"
+#include "Robot.h"
 //#include "Ball.h"
 
 class Draw {
@@ -36,11 +35,15 @@ private:
 	static float RobotBaseRadius;
 	static ColorRGB RobotBaseColor;
 
-	static void DrawRobotBase(GLenum renderMode);
+	static void DrawRobotBase(Robot& robot, GLenum renderMode);
 
-	static void DrawRobotUpperArm(GLenum renderMode);
+	static void DrawRobotUpperArm(Robot& robot, GLenum renderMode);
 
 	static void SetGlColor3f(ColorRGB& color);
+
+	static void Translate3f(Vector3f& position);
+
+	static void Scale3f(Vector3f& scale);
 
 	//static void SetGlColor4f(ColorRGB& color, float alpha);
 

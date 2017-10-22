@@ -8,9 +8,9 @@ using namespace std;
 class Input {
 
 public:
-	/*static void Mouse(int button, int state, int x, int y);
-	static void Motion(int x, int y);*/
+	static const float InputDelay;
 	static void Keyboard(unsigned char key, int mouseX, int mouseY);
 	static void SpecialKeyboard(int key, int mouseX, int mouseY);
+
 };
 

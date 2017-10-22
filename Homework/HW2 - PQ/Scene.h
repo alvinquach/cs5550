@@ -3,12 +3,14 @@
 #include "glut.h"
 #include "Vector3f.h"
 #include "Camera.h"
+#include "Robot.h"
 
 class Scene {
 
 public:
 
 	static Scene& GetInstance();
+	static void Reset();
 	static Vector3f& GetRoomDimensions();
 
 	/// <summary>Toggles the rendering mode and returns the new rendering mode.</summary>
@@ -18,6 +20,8 @@ public:
 	static GLenum GetRenderMode();
 
 	static Camera& GetCamera();
+
+	static Robot& GetRobot();
 
 private:
 
@@ -32,5 +36,7 @@ private:
 	GLenum renderMode;
 
 	Camera camera;
+
+	Robot robot;
 	
 };

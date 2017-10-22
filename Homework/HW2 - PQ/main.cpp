@@ -95,12 +95,17 @@ void timer(int value) {
 	// Keeps track of how many physics frames have been calcuated.
 	static long physicsFrames;
 
-	glutPostRedisplay();
+	Physics::Update();
+
+	// Call the display function only when enough physics recalculations have been performed.
+	if (physicsFrames++ % Physics::UpdatesPerFrame == 0) {
+		glutPostRedisplay();
+	}
 
 	callTimerFunc();
 }
 
 void callTimerFunc() {
 	// Using timer instead of idle to be able to control frame rate.
-	glutTimerFunc(1000 / 600.0, timer, 0);
+	glutTimerFunc(1000 * Physics::DeltaTime, timer, 0);
 }

@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "Draw.h"
 #include "Scene.h"
 
@@ -54,11 +56,34 @@ void Draw::DrawFloor(GLenum renderMode) {
 
 void Draw::DrawRobot(GLenum renderMode) {
 
-	DrawRobotBase(renderMode);
+	Robot& robot = Scene::GetRobot();
 
+	// Position the robot.
+	glPushMatrix();
+	Translate3f(robot.getCurrentState().position);
+	glRotatef(robot.getCurrentState().baseAngle, 0, 1, 0);
+
+	// Draw the arm components
+	DrawRobotBase(robot, renderMode);
+	//DrawRobotUpperArm(renderMode);
+
+	glPopMatrix();
 }
 
-void Draw::DrawRobotBase(GLenum renderMode) {
+void Draw::DrawRobotBase(Robot& robot, GLenum renderMode) {
+	SetGlColor3f(RobotBaseColor);
+	glPushMatrix();
+	glTranslatef(0, 0.02, 0);
+	glRotatef(90, 1, 0, 0);
+	GLUquadricObj * qobj = gluNewQuadric();
+	gluQuadricDrawStyle(qobj, renderMode);
+	gluCylinder(qobj, RobotBaseRadius, RobotBaseRadius, 0.02, CircleVertexCount, 1);
+	gluDisk(qobj, 0, RobotBaseRadius, CircleVertexCount, 1);
+	gluSphere(qobj, RobotBaseRadius / 2.5, CircleVertexCount, 24);
+	glPopMatrix();
+}
+
+void Draw::DrawRobotUpperArm(Robot& robot, GLenum renderMode) {
 	SetGlColor3f(RobotBaseColor);
 	glPushMatrix();
 	glTranslatef(0, 0.02, 0);
@@ -73,6 +98,22 @@ void Draw::DrawRobotBase(GLenum renderMode) {
 
 void Draw::SetGlColor3f(ColorRGB& color) {
 	glColor3f(color.getFloatR(), color.getFloatG(), color.getFloatB());
+}
+
+void Draw::Translate3f(Vector3f& position) {
+	glTranslatef(
+		position.getX(),
+		position.getY(),
+		position.getZ()
+	);
+}
+
+void Draw::Scale3f(Vector3f& scale) {
+	glScalef(
+		scale.getX(),
+		scale.getY(),
+		scale.getZ()
+	);
 }
 
 

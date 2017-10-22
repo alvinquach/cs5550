@@ -31,7 +31,8 @@ Camera::Camera() {
 		Vector3f::Zero()
 	};
 	saveState(current);
-	angleSpeed = distanceSpeed = verticalAngleSpeed = targetSpeed = 0;
+	angleSpeed = distanceSpeed = verticalAngleSpeed = 0;
+	//targetSpeed = Vector3f::Zero();
 	angleLerp = 0.05;
 	verticalAngleLerp = 0.05;
 	distanceLerp = 0.05;
@@ -44,6 +45,9 @@ void Camera::lookAt() {
 }
 
 void Camera::toggleAnimation() {
+	if (animationCooldown > 0) {
+		return;
+	}
 	animationActive = !animationActive;
 	if (animationActive) {
 		distanceLerp = 0.02;
@@ -63,6 +67,7 @@ void Camera::toggleAnimation() {
 		verticalAngleLerp = 0.05;
 		applyState(savedState);
 	}
+	animationCooldown = 1.0;
 }
 
 void Camera::zoomIn() {
@@ -81,10 +86,12 @@ void Camera::zoomOut() {
 
 void Camera::updateAnimation(float t, Vector3f target) {
 	if (animationActive) {
+		animationCooldown = max(animationCooldown - 0.02, 0.0f);
 		objectiveTarget = current.target = target;
 		goToAngle(current.angle + AngularVelocity);
 	}
 	else {
+		animationCooldown = max(animationCooldown - 0.05, 0.0f);
 		// Do something.
 	}
 	updateVerticalAngle();
@@ -182,7 +189,7 @@ void Camera::goToAngle(float angle) {
 
 void Camera::goToVerticalAngle(float verticalAngle) {
 	float newSpeed = abs(verticalAngle - current.verticalAngle) * verticalAngleLerp;
-	if (newSpeed > angleSpeed) {
+	if (newSpeed > verticalAngleSpeed) {
 		verticalAngleSpeed = newSpeed;
 	}
 	objectiveVerticalAngle = verticalAngle;
