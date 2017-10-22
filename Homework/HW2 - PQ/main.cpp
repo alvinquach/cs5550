@@ -66,7 +66,7 @@ void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	Camera& camera = Scene::GetCamera();
-	camera.updateAnimation(1000 / 60, Vector3f::Zero());
+	camera.updateAnimation(1000 / 60, Scene::GetRobot().getCurrentState().position);
 
 	glMatrixMode(GL_MODELVIEW); // position and aim the camera
 	glLoadIdentity();

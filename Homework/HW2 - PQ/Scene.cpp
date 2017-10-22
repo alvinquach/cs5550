@@ -10,7 +10,7 @@ Scene::Scene() {
 
 	// TODO Initialize scene here.
 	camera = Camera();
-	roomDimensions = Vector3f(4, 4, 4);
+	roomDimensions = Vector3f(10, 10, 10);
 	renderMode = GLU_FILL;
 }
 

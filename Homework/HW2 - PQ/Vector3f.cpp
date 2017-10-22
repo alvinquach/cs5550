@@ -78,6 +78,9 @@ void Vector3f::setZ(float z) {
 
 Vector3f Vector3f::unitVector() {
 	float magnitude = getMagnitude();
+	if (magnitude == 0) {
+		return Vector3f::Zero();
+	}
 	return Vector3f(components[0] / magnitude, components[1] / magnitude, components[2] / magnitude);
 }
 

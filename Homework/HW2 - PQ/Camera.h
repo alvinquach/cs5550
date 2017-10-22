@@ -50,7 +50,7 @@ private:
 	float angleSpeed;
 	float distanceSpeed;
 	float verticalAngleSpeed;
-	//Vector3f targetSpeed;
+	Vector3f targetSpeed;
 
 	CameraState current;
 	CameraState savedState;
@@ -60,7 +60,7 @@ private:
 	void updateAngle();
 	void updateVerticalAngle();
 	void updateDistance();
-	void updateTarget(Vector3f target);
+	void updateTarget();
 
 	void goToDistance(float distance);
 	void goToAngle(float angle);

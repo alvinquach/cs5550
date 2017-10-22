@@ -61,7 +61,7 @@ void Draw::DrawRobot(GLenum renderMode) {
 	// Position the robot.
 	glPushMatrix();
 	Translate3f(robot.getCurrentState().position);
-	glRotatef(robot.getCurrentState().baseAngle, 0, 1, 0);
+	glRotatef(robot.getCurrentState().baseAngle * 180 / M_PI, 0, -1, 0);
 
 	// Draw the arm components
 	DrawRobotBase(robot, renderMode);

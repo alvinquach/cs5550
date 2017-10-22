@@ -5,7 +5,7 @@
 #include "glut.h"
 
 /// <summary>Maximum distance the camera can be away from the target.</summary>
-const float Camera::MaxDistance = 10.0;
+const float Camera::MaxDistance = 13.37;
 
 /// <summary>The default distance that the camera is away from the target.</summary>
 const float Camera::DefaultDistance = 6.9;
@@ -41,7 +41,15 @@ Camera::Camera() {
 }
 
 void Camera::lookAt() {
-	gluLookAt(current.distance * cos(current.angle), current.distance * sin(current.verticalAngle), current.distance * sin(current.angle), 0, 0, 0, 0, 1, 0);
+	gluLookAt(
+		current.distance * cos(current.angle) + current.target.getX(),
+		current.distance * sin(current.verticalAngle) + current.target.getY(),
+		current.distance * sin(current.angle) + current.target.getZ(),
+		current.target.getX(),
+		current.target.getY(),
+		current.target.getZ(),
+		0, 1, 0
+	);
 }
 
 void Camera::toggleAnimation() {
@@ -87,17 +95,17 @@ void Camera::zoomOut() {
 void Camera::updateAnimation(float t, Vector3f target) {
 	if (animationActive) {
 		animationCooldown = max(animationCooldown - 0.02, 0.0f);
-		objectiveTarget = current.target = target;
 		goToAngle(current.angle + AngularVelocity);
+		goToTarget(target);
 	}
 	else {
 		animationCooldown = max(animationCooldown - 0.05, 0.0f);
-		// Do something.
+		goToTarget(target / 2.0);
 	}
 	updateVerticalAngle();
 	updateDistance();
 	updateAngle();
-	updateTarget(target);
+	updateTarget();
 }
 
 void Camera::updateAngle() {
@@ -161,8 +169,12 @@ void Camera::updateDistance() {
 	}
 }
 
-void Camera::updateTarget(Vector3f target) {
-
+void Camera::updateTarget() {
+	current.target = current.target + targetSpeed;
+	if (Vector3f::Distance(current.target, objectiveTarget) < targetSpeed.getMagnitude()) {
+		targetSpeed = Vector3f::Zero();
+		current.target = objectiveTarget;
+	}
 }
 
 void Camera::goToDistance(float distance) {
@@ -193,6 +205,11 @@ void Camera::goToVerticalAngle(float verticalAngle) {
 		verticalAngleSpeed = newSpeed;
 	}
 	objectiveVerticalAngle = verticalAngle;
+}
+
+void Camera::goToTarget(Vector3f target) {
+	targetSpeed = targetLerp * (target - current.target);
+	objectiveTarget = target;
 }
 
 void Camera::saveState(CameraState& state) {

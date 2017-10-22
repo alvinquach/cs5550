@@ -4,11 +4,21 @@
 #include "Input.h"
 #include "Scene.h"
 
-const float Input::InputDelay = 100.0;
+const float Input::InputDelay = 500.0;
 
 void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 
 	switch (key) {
+
+	// Rotate the entire arm clockwise.
+	case 'r':
+		Scene::GetRobot().rotateBase(1);
+		break;
+
+	// Rotate the entire arm counterclockwise.
+	case 'R':
+		Scene::GetRobot().rotateBase(-1);
+		break;
 
 	// Animate the camera
 	case 's':
@@ -45,10 +55,20 @@ void Input::SpecialKeyboard(int key, int mouseX, int mouseY) {
 	switch(key) {
 
 	case GLUT_KEY_UP:
-		Scene::GetRobot().moveForward();
+		Scene::GetRobot().move(1);
+		break;
 
 	case GLUT_KEY_DOWN:
-		Scene::GetRobot().moveBackward();
+		Scene::GetRobot().move(-1);
+		break;
+
+	case GLUT_KEY_LEFT:
+		Scene::GetRobot().rotateBase(-1);
+		break;
+
+	case GLUT_KEY_RIGHT:
+		Scene::GetRobot().rotateBase(1);
+		break;
 
 	default:
 		break;

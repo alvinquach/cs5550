@@ -17,21 +17,25 @@ class Robot {
 public:
 	Robot();
 	~Robot();
-	void moveForward();
-	void moveBackward();
-	void updatePosition(Vector3f& position, float angle, Vector3f, Vector3f velocity);
+	void move(int direction);
+	void rotateBase(int direction);
+	void updatePosition(Vector3f& position, Vector3f& velocity);
 	void updateTimer(float delta);
+	void updateState();
 	RobotState& getCurrentState();
 
 private:
+
 	static const float AccelRate;
 	static const float DecelRate;
+	static const float MaxSpeed;
 
-	float positionLerp;
-	float rotationLerp;
+	static const float BaseMaxAngularVelocity;
 
 	float positionInputTimer;
 	float baseAngleInputTimer;
+
+	float baseAngularVelocity;
 
 	Vector3f positionSpeed;
 	float rotationSpeed;
