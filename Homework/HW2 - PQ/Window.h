@@ -10,10 +10,10 @@ class Window {
 public:
 
 	/// <summary>Width of screen window in pixels.</summary>
-	static const int ScreenWidth;
+	static const float ScreenWidth;
 
 	/// <summary>Height of screen window in pixels.</summary>
-	static const int ScreenHeight;
+	static const float ScreenHeight;
 
 	/// <summary>Initial screen position x.</summary>
 	static const int ScreenPositionX;
@@ -21,11 +21,8 @@ public:
 	/// <summary>Initial screen position y.</summary>
 	static const int ScreenPositionY;
 
-	/// <summary>The width of the world.</summary>
-	static const float WorldWidth;
-
-	/// <summary>The height of the world.</summary>
-	static const float WorldHeight;
+	/// <summary>Field of view of the camera.</summary>
+	static const float FieldOfView;
 
 	/// <summary>Distance of the near-Z clipping plane from the camera.</summary>
 	static const float NearZClipPlane;

@@ -7,20 +7,18 @@
 #include <cmath>
 #include "Window.h"
 #include "Vector3f.h"
+#include "ColorRGB.h"
 //#include "Ball.h"
 
 class Draw {
 
 public:
 
-	/// <summary>Thickness of the floor.</summary>
-	static const float RoomFloorThickness;
-
-	// TODO Add wall thickness if time permits.
-
 	static void DrawAxes();
 
-	static void DrawFloor();
+	static void DrawFloor(GLenum renderMode);
+
+	static void DrawRobot(GLenum renderMode);
 
 	//static void DrawBall(Ball& ball);
 
@@ -28,18 +26,21 @@ public:
 
 private:
 
-	/// <summary>Length of the rendered world axes.</summary>
-	static const float AxesLength;
+	static float CircleVertexCount;
+	static float AxesLength;
+	static float RoomFloorThickness;
 
-	//static float BallOutlineThickness;
+	// TODO Add wall thickness if time permits.
 
-	//static float BallSelectedPulsePeriod;
+	static ColorRGB RoomFloorColor;
+	static float RobotBaseRadius;
+	static ColorRGB RobotBaseColor;
 
-	//static float BallSelectedMaxOpacity;
+	static void DrawRobotBase(GLenum renderMode);
 
-	//static float BallGhostOpacity;
+	static void DrawRobotUpperArm(GLenum renderMode);
 
-	//static void SetGlColor3f(ColorRGB& color);
+	static void SetGlColor3f(ColorRGB& color);
 
 	//static void SetGlColor4f(ColorRGB& color, float alpha);
 

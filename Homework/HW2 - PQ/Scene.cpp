@@ -2,13 +2,33 @@
 #include <ctime>
 #include <cmath>
 
+/// <summary>Singleton instance of the scene.</summary>
 Scene Scene::Instance = Scene();
 
 Scene::Scene() {
 	srand((unsigned)time(0));
 
 	// TODO Initialize scene here.
-	roomDimensions = Vector3f(2, 2, 2);
+	camera = Camera();
+	roomDimensions = Vector3f(4, 4, 4);
+	renderMode = GLU_FILL;
+}
+
+GLenum Scene::ToggleRenderMode() {
+	if (Instance.renderMode == GLU_FILL) {
+		return Instance.renderMode = GLU_LINE;
+	}
+	else {
+		return Instance.renderMode = GLU_FILL;
+	}
+}
+
+GLenum Scene::GetRenderMode() {
+	return GetInstance().renderMode;
+}
+
+Camera& Scene::GetCamera() {
+	return GetInstance().camera;
 }
 
 Scene& Scene::GetInstance() {
@@ -18,3 +38,4 @@ Scene& Scene::GetInstance() {
 Vector3f& Scene::GetRoomDimensions() {
 	return GetInstance().roomDimensions;
 }
+

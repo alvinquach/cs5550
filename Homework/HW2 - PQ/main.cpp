@@ -51,7 +51,11 @@ void init(int argc, char** argv) {
 
 	Window::SetWindow();
 
+	glutKeyboardFunc(Input::Keyboard);
+	glutSpecialFunc(Input::SpecialKeyboard);
+
 	glutDisplayFunc(display);
+	callTimerFunc();
 
 	glutMainLoop();
 
@@ -61,11 +65,12 @@ void display() {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// TODO Create a class for the camera.
+	Camera& camera = Scene::GetCamera();
+	camera.updateAnimation(1000 / 60, Vector3f::Zero());
 
 	glMatrixMode(GL_MODELVIEW); // position and aim the camera
 	glLoadIdentity();
-	gluLookAt(eyex, eyey, eyez, lookx, looky, lookz, 0.0, 1.0, 0.0);
+	camera.lookAt();
 
 	// Need to disable lighting to draw axes with color.
 	glDisable(GL_LIGHTING);
@@ -77,7 +82,25 @@ void display() {
 	// Reenable lighting after drawing axes.
 	glEnable(GL_LIGHTING);
 
-	Draw::DrawFloor();
+	GLenum renderMode = Scene::GetRenderMode();
+	Draw::DrawFloor(renderMode);
+	Draw::DrawRobot(renderMode);
+
 
 	glutSwapBuffers();
+}
+
+void timer(int value) {
+
+	// Keeps track of how many physics frames have been calcuated.
+	static long physicsFrames;
+
+	glutPostRedisplay();
+
+	callTimerFunc();
+}
+
+void callTimerFunc() {
+	// Using timer instead of idle to be able to control frame rate.
+	glutTimerFunc(1000 / 600.0, timer, 0);
 }
