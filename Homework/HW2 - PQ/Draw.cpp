@@ -98,7 +98,7 @@ void Draw::DrawRobotBase(Robot& robot, GLenum renderMode) {
 	gluCylinder(baseAssm, Robot::RobotBaseRadius, Robot::RobotBaseRadius, 0.02, CircleVertexCount, 1);
 	gluDisk(baseAssm, 0, Robot::RobotBaseRadius, CircleVertexCount, 1);
 	SetGlColor3f(Robot::RobotJointColor);
-	gluSphere(baseAssm, Robot::RobotLargeJointRadius, CircleVertexCount, 24);
+	gluSphere(baseAssm, Robot::RobotShoulderJointRadius, CircleVertexCount, 24);
 	glPopMatrix();
 }
 
@@ -116,7 +116,7 @@ void Draw::DrawRobotElbow(Robot& robot, GLenum renderMode) {
 	SetGlColor3f(Robot::RobotJointColor);
 	GLUquadricObj * elbow = gluNewQuadric();
 	gluQuadricDrawStyle(elbow, renderMode);
-	gluSphere(elbow, Robot::RobotLargeJointRadius, CircleVertexCount, 24);
+	gluSphere(elbow, Robot::RobotElbowJointRadius, CircleVertexCount, 24);
 }
 
 void Draw::DrawRobotLowerArm(Robot& robot, GLenum renderMode) {

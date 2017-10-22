@@ -17,4 +17,10 @@ public:
 
 	static void Update();
 
+private:
+
+	static const float RobotWorldCollisionSlowDownFactor;
+
+	static void CheckRobotBaseWorldCollision(Vector3f& position, Vector3f& velocity);
+
 };

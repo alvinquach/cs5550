@@ -16,8 +16,9 @@ struct RobotState {
 
 class Robot {
 public:
-	static float RobotSmallJointRadius;
-	static float RobotLargeJointRadius;
+	static float RobotShoulderJointRadius;
+	static float RobotElbowJointRadius;
+	static float RobotWristJointRadius;
 	static ColorRGB RobotJointColor;
 	static float RobotBaseRadius;
 	static ColorRGB RobotBaseColor;

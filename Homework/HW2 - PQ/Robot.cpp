@@ -12,8 +12,9 @@ const float Robot::BaseMaxAngularVelocity = M_PI / 2;
 const float Robot::UpperArmMaxAngularVelocity = M_PI / 4;
 const float Robot::LowerArmMaxAngularVelocity = M_PI / 4;
 
-float Robot::RobotSmallJointRadius;
-float Robot::RobotLargeJointRadius = 0.125;
+float Robot::RobotShoulderJointRadius = 0.125;
+float Robot::RobotElbowJointRadius = 0.1;
+float Robot::RobotWristJointRadius = 0.069;
 ColorRGB Robot::RobotJointColor = ColorRGB(0, 184, 212);
 float Robot::RobotBaseRadius = 0.5;
 ColorRGB Robot::RobotBaseColor = ColorRGB(48, 79, 254);
