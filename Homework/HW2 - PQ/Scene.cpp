@@ -13,7 +13,6 @@ Scene::Scene() {
 	roomDimensions = Vector3f(10, 10, 10);
 	renderMode = GLU_FILL;
 	showAxes = true;
-	robotDisabled = false;
 }
 
 GLenum Scene::ToggleRenderMode() {
@@ -43,18 +42,6 @@ bool Scene::GetShowAxes() {
 
 void Scene::ToggleShowAxes() {
 	GetInstance().showAxes = !GetInstance().showAxes;
-}
-
-void Scene::DisableRobot() {
-	GetInstance().robotDisabled = true;
-}
-
-void Scene::EnableRobot() {
-	GetInstance().robotDisabled = false;
-}
-
-bool Scene::IsRobotDisabled() {
-	return GetInstance().robotDisabled;
 }
 
 Scene& Scene::GetInstance() {

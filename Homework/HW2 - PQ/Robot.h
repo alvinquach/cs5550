@@ -79,8 +79,18 @@ public:
 	void updateTimer(float delta);
 	void updateState();
 	RobotState& getCurrentState();
+	
+	bool isDisabled();
+	void disable();
+	void enable();
+
+	bool isThrowing();
+	void iThrowPower();
 
 private:
+
+	static const RobotState ThrowPrepState;
+	static const RobotState ThrowingState;
 
 	static const float AccelRate;
 	static const float DecelRate;
@@ -134,5 +144,15 @@ private:
 
 	RobotState current;
 	RobotState saved;
+
+	bool disabled;
+
+	bool throwing;
+	bool readyToThrow;
+	bool throwComplete;
+	int throwCountdown;
+
+	void saveState(RobotState state);
+	void applyState(RobotState& state);
 };
 

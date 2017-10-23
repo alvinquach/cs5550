@@ -15,11 +15,11 @@ const float Robot::HandMaxAngularVelocity = M_PI / 4;
 const float Robot::FingerMaxAngularVelocity = M_PI / 4;
 const float Robot::ThumbMaxAngularVelocity = M_PI / 24;
 
-const float Robot::UpperArmMinAngle = - M_PI * 3 / 8;
+const float Robot::UpperArmMinAngle = -M_PI * 3 / 8;
 const float Robot::UpperArmMaxAngle = M_PI * 3 / 8;
 const float Robot::LowerArmMinAngle = 0.0;
 const float Robot::LowerArmMaxAngle = M_PI / 2;
-const float Robot::HandMinAngle = - M_PI / 8;
+const float Robot::HandMinAngle = -M_PI / 8;
 const float Robot::HandMaxAngle = M_PI / 2;
 const float Robot::FingerMinAngle = M_PI / 16;
 const float Robot::FingerMaxAngle = M_PI * 9 / 16;
@@ -68,6 +68,30 @@ float Robot::ThumbDistalDigitLength = 0.06;
 float Robot::ThumbDistalDigitThickness = 0.02;
 ColorRGB Robot::ThumbDistalDigitColor = ColorRGB(0, 200, 83);
 
+const RobotState Robot::ThrowPrepState = {
+	Vector3f::Zero(),
+	0.0,
+	Vector3f::Zero(),
+	Vector3f::Zero(),
+	-M_PI / 4,
+	LowerArmMinAngle,
+	HandMinAngle,
+	FingerMinAngle,
+	ThumbMinAngle
+};
+
+const RobotState Robot::ThrowingState = {
+	Vector3f::Zero(),
+	0.0,
+	Vector3f::Zero(),
+	Vector3f::Zero(),
+	-M_PI / 6,
+	M_PI / 6,
+	0.0,
+	FingerMinAngle,
+	ThumbMinAngle
+};
+
 Robot::Robot() {
 	saved = { Vector3f::Zero(), 0, Vector3f::Zero(), Vector3f::Zero(), 0, 0, 0, Robot::FingerMinAngle, Robot::ThumbMinAngle };
 	current = { Vector3f::Zero(), 0, Vector3f::Zero(), Vector3f::Zero(), 0, 0, 0, Robot::FingerMinAngle, Robot::ThumbMinAngle };
@@ -78,35 +102,53 @@ Robot::~Robot()
 }
 
 void Robot::moveBase(int direction) {
+	if (disabled) {
+		return;
+	}
 	positionInputTimer = Input::InputDelay / 1000;
 	current.acceleration = AccelRate * Vector3f(direction * cos(current.baseAngle), 0, direction * sin(current.baseAngle)).unitVector();
 }
 
 void Robot::rotateBase(int direction) {
+	if (disabled) {
+		return;
+	}
 	baseAngleInputTimer = Input::InputDelay / 1000;
 	if (direction)
 		baseAngularVelocity = direction / abs(direction) * BaseMaxAngularVelocity;
 }
 
 void Robot::moveUpperArm(int direction) {
+	if (disabled || throwing) {
+		return;
+	}
 	upperArmAngleInputTimer = Input::InputDelay / 1000;
 	if (direction)
 		upperArmAngularVelocity = direction / abs(direction) * UpperArmMaxAngularVelocity;
 }
 
 void Robot::moveLowerArm(int direction) {
+	if (disabled || throwing) {
+		return;
+	}
 	lowerArmAngleInputTimer = Input::InputDelay / 1000;
 	if (direction)
 		lowerArmAngularVelocity = direction / abs(direction) * LowerArmMaxAngularVelocity;
 }
 
 void Robot::moveHand(int direction) {
+	if (disabled || throwing) {
+		return;
+	}
 	handAngleInputTimer = Input::InputDelay / 1000;
 	if (direction)
 		handAngularVelocity = direction / abs(direction) * HandMaxAngularVelocity;
 }
 
 void Robot::moveFingers(int direction) {
+	if (disabled || throwing) {
+		return;
+	}
 	fingerAngleInputTimer = Input::InputDelay / 1000;
 	if (direction) {
 		fingerAngularVelocity = direction / abs(direction) * FingerMaxAngularVelocity;
@@ -163,46 +205,186 @@ void Robot::updateState() {
 		baseAngularVelocity = 0;
 	}
 
-	// Update upper arm angle.
-	if (upperArmAngleInputTimer > 0) {
-		current.upperArmAngle = min(max(current.upperArmAngle + upperArmAngularVelocity * Physics::DeltaTime, UpperArmMinAngle), UpperArmMaxAngle);
-	}
-	else {
-		upperArmAngularVelocity = 0;
+	// Only move arm if it is not throwing.
+	if (!throwing) {
+
+		// Update upper arm angle.
+		if (upperArmAngleInputTimer > 0) {
+			current.upperArmAngle = min(max(current.upperArmAngle + upperArmAngularVelocity * Physics::DeltaTime, UpperArmMinAngle), UpperArmMaxAngle);
+		}
+		else {
+			upperArmAngularVelocity = 0;
+		}
+
+		// Update lower arm angle.
+		if (lowerArmAngleInputTimer > 0) {
+			current.lowerArmAngle = min(max(current.lowerArmAngle + lowerArmAngularVelocity * Physics::DeltaTime, LowerArmMinAngle), LowerArmMaxAngle);
+		}
+		else {
+			lowerArmAngularVelocity = 0;
+		}
+
+		// Check lower arm angle constraints relative to upper arm.
+		if (current.lowerArmAngle + current.upperArmAngle > LowerArmMaxAngle) {
+			current.lowerArmAngle = LowerArmMaxAngle - current.upperArmAngle;
+		}
+
+		// Update hand angle.
+		if (handAngleInputTimer > 0) {
+			current.handAngle = min(max(current.handAngle + handAngularVelocity * Physics::DeltaTime, HandMinAngle), HandMaxAngle);
+		}
+		else {
+			handAngularVelocity = 0;
+		}
+
+		// Update fingers angle.
+		if (fingerAngleInputTimer > 0) {
+			current.fingerAngle = min(max(current.fingerAngle + fingerAngularVelocity * Physics::DeltaTime, FingerMinAngle), FingerMaxAngle);
+			current.thumbAngle = min(max(current.thumbAngle + thumbAngularVelocity * Physics::DeltaTime, ThumbMinAngle), ThumbMaxAngle);
+		}
+		else {
+			fingerAngularVelocity = thumbAngularVelocity = 0;
+		}
 	}
 
-	// Update lower arm angle.
-	if (lowerArmAngleInputTimer > 0) {
-		current.lowerArmAngle = min(max(current.lowerArmAngle + lowerArmAngularVelocity * Physics::DeltaTime, LowerArmMinAngle), LowerArmMaxAngle);
-	}
+	// If arm is throwing, update the throwing animation instead.
 	else {
-		lowerArmAngularVelocity = 0;
-	}
 
-	// Check lower arm angle constraints relative to upper arm.
-	if (current.lowerArmAngle + current.upperArmAngle > LowerArmMaxAngle) {
-		current.lowerArmAngle = LowerArmMaxAngle - current.upperArmAngle;
-	}
+		// Prep the arm for throwing.
+		if (!readyToThrow) {
 
-	// Update hand angle.
-	if (handAngleInputTimer > 0) {
-		current.handAngle = min(max(current.handAngle + handAngularVelocity * Physics::DeltaTime, HandMinAngle), HandMaxAngle);
-	}
-	else {
-		handAngularVelocity = 0;
-	}
+			int readyCount = 0;
 
-	// Update fingers angle.
-	if (fingerAngleInputTimer > 0) {
-		current.fingerAngle = min(max(current.fingerAngle + fingerAngularVelocity * Physics::DeltaTime, FingerMinAngle), FingerMaxAngle);
-		current.thumbAngle = min(max(current.thumbAngle + thumbAngularVelocity * Physics::DeltaTime, ThumbMinAngle), ThumbMaxAngle);
-	}
-	else {
-		fingerAngularVelocity = thumbAngularVelocity = 0;
+			// Upper Arm
+			if (current.upperArmAngle < ThrowPrepState.upperArmAngle) {
+				current.upperArmAngle = min(current.upperArmAngle + UpperArmMaxAngularVelocity * Physics::DeltaTime, ThrowPrepState.upperArmAngle);
+			}
+			else if (current.upperArmAngle > ThrowPrepState.upperArmAngle) {
+				current.upperArmAngle = max(current.upperArmAngle - UpperArmMaxAngularVelocity * Physics::DeltaTime, ThrowPrepState.upperArmAngle);
+			}
+			if (current.upperArmAngle == ThrowPrepState.upperArmAngle) {
+				readyCount++;
+			}
+
+			// Lower Arm
+			if (current.lowerArmAngle < ThrowPrepState.lowerArmAngle) {
+				current.lowerArmAngle = min(current.lowerArmAngle + LowerArmMaxAngularVelocity * Physics::DeltaTime, ThrowPrepState.lowerArmAngle);
+			}
+			else if (current.lowerArmAngle > ThrowPrepState.lowerArmAngle) {
+				current.lowerArmAngle = max(current.lowerArmAngle - LowerArmMaxAngularVelocity * Physics::DeltaTime, ThrowPrepState.lowerArmAngle);
+			}
+			if (current.lowerArmAngle == ThrowPrepState.lowerArmAngle) {
+				readyCount++;
+			}
+
+			// Hand
+			if (current.handAngle < ThrowPrepState.handAngle) {
+				current.handAngle = min(current.handAngle + HandMaxAngularVelocity * Physics::DeltaTime, ThrowPrepState.handAngle);
+			}
+			else if (current.handAngle > ThrowPrepState.handAngle) {
+				current.handAngle = max(current.handAngle - HandMaxAngularVelocity * Physics::DeltaTime, ThrowPrepState.handAngle);
+			}
+			if (current.handAngle == ThrowPrepState.handAngle) {
+				readyCount++;
+			}
+
+			// Fingers
+			if (current.fingerAngle < ThrowPrepState.fingerAngle) {
+				current.fingerAngle = min(current.fingerAngle + FingerMaxAngularVelocity * Physics::DeltaTime, ThrowPrepState.fingerAngle);
+			}
+			else if (current.fingerAngle > ThrowPrepState.fingerAngle) {
+				current.fingerAngle = max(current.fingerAngle - FingerMaxAngularVelocity * Physics::DeltaTime, ThrowPrepState.fingerAngle);
+			}
+			if (current.fingerAngle == ThrowPrepState.fingerAngle) {
+				readyCount++;
+			}
+
+			// Thumb
+			if (current.thumbAngle < ThrowPrepState.thumbAngle) {
+				current.thumbAngle = min(current.thumbAngle + ThumbMaxAngularVelocity * Physics::DeltaTime, ThrowPrepState.thumbAngle);
+			}
+			else if (current.thumbAngle > ThrowPrepState.thumbAngle) {
+				current.thumbAngle = max(current.thumbAngle - ThumbMaxAngularVelocity * Physics::DeltaTime, ThrowPrepState.thumbAngle);
+			}
+			if (current.thumbAngle == ThrowPrepState.thumbAngle) {
+				readyCount++;
+			}
+
+			if (readyCount == 5) {
+				readyToThrow = true;
+				throwCountdown = 10;
+			}
+		}
+
+		// Countdown to start throwing.
+		else if (throwCountdown) {
+
+			throwCountdown--;
+
+		}
+
+
+		// ITHROWPOWER
+		else {
+
+		}
+
 	}
 
 }
 
 RobotState& Robot::getCurrentState() {
 	return current;
+}
+
+
+void Robot::disable() {
+	disabled = true;
+}
+
+void Robot::enable() {
+	disabled = false;
+}
+
+bool Robot::isDisabled() {
+	return disabled;
+}
+
+bool Robot::isThrowing() {
+	return throwing;
+}
+
+void Robot::iThrowPower() {
+	throwing = true;
+
+	// Reset arm angular velocities.
+	upperArmAngularVelocity
+		= lowerArmAngularVelocity
+		= handAngularVelocity
+		= fingerAngularVelocity
+		= thumbAngularVelocity
+		= 0;
+
+	readyToThrow = false;
+	throwComplete = false;
+}
+
+// This is currently not being used.
+void Robot::saveState(RobotState state) {
+	saved = {
+		state.position,
+		state.baseAngle,
+		state.velocity,
+		state.acceleration,
+		state.upperArmAngle,
+		state.lowerArmAngle,
+		state.handAngle,
+		state.fingerAngle,
+		state.thumbAngle,
+	};
+}
+
+// This is currently not being used.
+void Robot::applyState(RobotState& state) {
+
 }

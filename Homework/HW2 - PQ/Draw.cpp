@@ -15,8 +15,6 @@ float Draw::RoomFloorThickness = 0.1;
 /// <summary>Color of the floor.</summary>
 ColorRGB Draw::RoomFloorColor = ColorRGB(127, 127, 127);
 
-
-
 void Draw::DrawAxes() {
 
 	glBegin(GL_LINES);
