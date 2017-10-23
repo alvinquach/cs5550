@@ -29,44 +29,44 @@ const float Robot::ThumbMaxAngle = M_PI * 9 / 96;
 float Robot::RobotShoulderJointRadius = 0.125;
 float Robot::RobotElbowJointRadius = 0.1;
 float Robot::RobotWristJointRadius = 0.069;
-ColorRGB Robot::RobotJointColor = ColorRGB(0, 184, 212);
+ColorRGB Robot::RobotJointColor = ColorRGB(98, 0, 234);
 
 float Robot::RobotBaseRadius = 0.5;
-ColorRGB Robot::RobotBaseColor = ColorRGB(48, 79, 254);
+ColorRGB Robot::RobotBaseColor = ColorRGB(197, 17, 98);
 
 float Robot::RobotUpperArmRadius = 0.069;
 float Robot::RobotUpperArmLength = 0.69;
-ColorRGB Robot::RobotUpperArmColor = ColorRGB(100, 221, 23);
+ColorRGB Robot::RobotUpperArmColor = ColorRGB(255, 109, 0);
 
 float Robot::RobotLowerArmRadius = 0.05;
 float Robot::RobotLowerArmLength = 0.5;
-ColorRGB Robot::RobotLowerArmColor = ColorRGB(255, 171, 0);
+ColorRGB Robot::RobotLowerArmColor = ColorRGB(255, 214, 0);
 
 float Robot::HandLength = 0.25;
 float Robot::HandThickness = 0.025;
-ColorRGB Robot::HandColor = ColorRGB(221, 44, 0);
+ColorRGB Robot::HandColor = ColorRGB(174, 234, 0);
 
 float Robot::FingerProximalDigitLength = 0.1;
 float Robot::FingerProximalDigitThickness = 0.02;
-ColorRGB Robot::FingerProximalDigitColor = ColorRGB(197, 17, 98);
+ColorRGB Robot::FingerProximalDigitColor = ColorRGB(0, 200, 83);
 
 float Robot::FingerMiddleDigitLength = 0.08;
 float Robot::FingerMiddleDigitThickness = 0.0175;
-ColorRGB Robot::FingerMiddleDigitColor = ColorRGB(98, 0, 234);
+ColorRGB Robot::FingerMiddleDigitColor = ColorRGB(0, 184, 212);
 
 float Robot::FingerDistalDigitLength = 0.05;
 float Robot::FingerDistalDigitThickness = 0.015;
-ColorRGB Robot::FingerDistalDigitColor = ColorRGB(41, 98, 255);
+ColorRGB Robot::FingerDistalDigitColor = ColorRGB(48, 79, 254);
 
 float Robot::FingerScale[4] = { 0.91, 1.0, 0.95, 0.83 };
 
 float Robot::ThumbProximalDigitLength = 0.08;
 float Robot::ThumbProximalDigitThickness = 0.02;
-ColorRGB Robot::ThumbProximalDigitColor = ColorRGB(0, 184, 212);
+ColorRGB Robot::ThumbProximalDigitColor = ColorRGB(0, 200, 83);
 
 float Robot::ThumbDistalDigitLength = 0.06;
 float Robot::ThumbDistalDigitThickness = 0.02;
-ColorRGB Robot::ThumbDistalDigitColor = ColorRGB(0, 200, 83);
+ColorRGB Robot::ThumbDistalDigitColor = ColorRGB(48, 79, 254);
 
 const RobotState Robot::ThrowPrepState = {
 	Vector3f::Zero(),
