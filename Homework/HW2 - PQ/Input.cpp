@@ -50,28 +50,28 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 	// Open the hand.
 	case 'm':
 		if (!Scene::IsRobotDisabled()) {
-			// TODO Implement this.
+			Scene::GetRobot().moveFingers(1);
 		}
 		break;
 
 	// Close the hand.
 	case 'M':
 		if (!Scene::IsRobotDisabled()) {
-			// TODO Implement this.
+			Scene::GetRobot().moveFingers(-1);
 		}
 		break;
 
 	// Lift up the hand.
 	case 'n':
 		if (!Scene::IsRobotDisabled()) {
-			// TODO Implement this.
+			Scene::GetRobot().moveHand(1);
 		}
 		break;
 
 	// Lift down the hand.
 	case 'N':
 		if (!Scene::IsRobotDisabled()) {
-			// TODO Implement this.
+			Scene::GetRobot().moveHand(-1);
 		}
 		break;
 

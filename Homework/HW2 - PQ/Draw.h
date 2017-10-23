@@ -41,6 +41,14 @@ private:
 
 	static void DrawRobotLowerArm(Robot& robot, GLenum renderMode);
 
+	static void DrawRobotWrist(Robot& robot, GLenum renderMode);
+
+	static void DrawRobotHand(Robot& robot, GLenum renderMode);
+
+	static void DrawRobotThumb(Robot& robot, GLenum renderMode);
+
+	static void DrawRobotFinger(Robot& robot, GLenum renderMode, float scale);
+
 	static void SetGlColor3f(ColorRGB& color);
 
 	static void Translate3f(Vector3f& position);
