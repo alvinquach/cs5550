@@ -11,3 +11,10 @@ The window size is set to 960*540. This can be adjusted as necessary inside Wind
 ## Robot Control
 
 In addition to the keys specified in the assignment, the robot arm can also be rotated using the left and right arrow keys.
+
+
+## Throwing the Ball
+
+If you hold 'a', you can delay throwing the ball. The ball will be thrown once you let go of 'a'.
+
+You can also move the robot around while throwing the ball. The velocity of the thrown ball will be affected by the robot's velocity at the time the ball is released from the hand.
