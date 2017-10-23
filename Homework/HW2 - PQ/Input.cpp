@@ -10,27 +10,74 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 
 	switch (key) {
 
+	// Throw ball.
+	case 'a':
+		Scene::EnableRobot();
+		// TODO Throw ball.
+		break;
+
 	// Toggle between turning on and off displaying coordinate system.
 	case 'c':		Scene::ToggleShowAxes();		break;
 
 	// Lift up the upper arm.
 	case 'i':
-		Scene::GetRobot().moveUpperArm(1);
+		if (!Scene::IsRobotDisabled()) {
+			Scene::GetRobot().moveUpperArm(1);
+		}
 		break;
 
 	// Lift down the upper arm.
 	case 'I':
-		Scene::GetRobot().moveUpperArm(-1);
+		if (!Scene::IsRobotDisabled()) {
+			Scene::GetRobot().moveUpperArm(-1);
+		}
 		break;
 
 	// Lift up the lower arm.
 	case 'j':
-		Scene::GetRobot().moveLowerArm(1);
+		if (!Scene::IsRobotDisabled()) {
+			Scene::GetRobot().moveLowerArm(1);
+		}
 		break;
 
 	// Lift down the lower arm.
 	case 'J':
-		Scene::GetRobot().moveLowerArm(-1);
+		if (!Scene::IsRobotDisabled()) {
+			Scene::GetRobot().moveLowerArm(-1);
+		}
+		break;
+
+	// Open the hand.
+	case 'm':
+		if (!Scene::IsRobotDisabled()) {
+			// TODO Implement this.
+		}
+		break;
+
+	// Close the hand.
+	case 'M':
+		if (!Scene::IsRobotDisabled()) {
+			// TODO Implement this.
+		}
+		break;
+
+	// Lift up the hand.
+	case 'n':
+		if (!Scene::IsRobotDisabled()) {
+			// TODO Implement this.
+		}
+		break;
+
+	// Lift down the hand.
+	case 'N':
+		if (!Scene::IsRobotDisabled()) {
+			// TODO Implement this.
+		}
+		break;
+
+	// Toggle robot deactivation.
+	case 'o':
+		Scene::IsRobotDisabled() ? Scene::EnableRobot() : Scene::DisableRobot();
 		break;
 
 	// Exit the program.
@@ -40,12 +87,16 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 
 	// Rotate the entire arm clockwise.
 	case 'r':
-		Scene::GetRobot().rotateBase(1);
+		if (!Scene::IsRobotDisabled()) {
+			Scene::GetRobot().rotateBase(1);
+		}
 		break;
 
 	// Rotate the entire arm counterclockwise.
 	case 'R':
-		Scene::GetRobot().rotateBase(-1);
+		if (!Scene::IsRobotDisabled()) {
+			Scene::GetRobot().rotateBase(-1);
+		}
 		break;
 
 	// Animate the camera
@@ -83,19 +134,27 @@ void Input::SpecialKeyboard(int key, int mouseX, int mouseY) {
 	switch(key) {
 
 	case GLUT_KEY_UP:
-		Scene::GetRobot().moveBase(1);
+		if (!Scene::IsRobotDisabled()) {
+			Scene::GetRobot().moveBase(1);
+		}
 		break;
 
 	case GLUT_KEY_DOWN:
-		Scene::GetRobot().moveBase(-1);
+		if (!Scene::IsRobotDisabled()) {
+			Scene::GetRobot().moveBase(-1);
+		}
 		break;
 
 	case GLUT_KEY_LEFT:
-		Scene::GetRobot().rotateBase(-1);
+		if (!Scene::IsRobotDisabled()) {
+			Scene::GetRobot().rotateBase(-1);
+		}
 		break;
 
 	case GLUT_KEY_RIGHT:
-		Scene::GetRobot().rotateBase(1);
+		if (!Scene::IsRobotDisabled()) {
+			Scene::GetRobot().rotateBase(1);
+		}
 		break;
 
 	default:

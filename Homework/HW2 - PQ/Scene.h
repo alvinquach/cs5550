@@ -27,6 +27,12 @@ public:
 
 	static void ToggleShowAxes();
 
+	static void DisableRobot();
+
+	static void EnableRobot();
+	
+	static bool IsRobotDisabled();
+
 private:
 
 	Scene();
@@ -44,5 +50,7 @@ private:
 	Robot robot;
 
 	bool showAxes;
+
+	bool robotDisabled;
 	
 };
