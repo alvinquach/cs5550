@@ -1,9 +1,11 @@
 #pragma once
+#include <vector>
 #include <Windows.h>
 #include "glut.h"
 #include "Vector3f.h"
 #include "Camera.h"
 #include "Robot.h"
+#include "Ball.h"
 
 class Scene {
 
@@ -22,6 +24,10 @@ public:
 	static Camera& GetCamera();
 
 	static Robot& GetRobot();
+
+	static vector<Ball>& GetBalls();
+
+	static Ball& LaunchBall(Vector3f& position, Vector3f& velocity);
 
 	static bool GetShowAxes();
 
@@ -42,6 +48,8 @@ private:
 	Camera camera;
 
 	Robot robot;
+
+	vector<Ball> balls;
 
 	bool showAxes;
 

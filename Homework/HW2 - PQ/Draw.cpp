@@ -87,6 +87,9 @@ void Draw::DrawRobot(GLenum renderMode) {
 	// Draw the wrist.
 	DrawRobotWrist(robot, renderMode);
 
+	// Draw the ball in the hand.
+	DrawRobotBallInHand(robot, renderMode);
+
 	// Angle the hand assembly.
 	glPushMatrix();
 	glRotatef(robot.getCurrentState().handAngle * 180 / M_PI, 0, 0, -1);
@@ -148,6 +151,20 @@ void Draw::DrawRobotWrist(Robot& robot, GLenum renderMode) {
 	GLUquadricObj * wrist = gluNewQuadric();
 	gluQuadricDrawStyle(wrist, renderMode);
 	gluSphere(wrist, Robot::RobotWristJointRadius, CircleVertexCount, 24);
+}
+
+void Draw::DrawRobotBallInHand(Robot& robot, GLenum renderMode) {
+	if (!robot.isHoldingBall()) {
+		return;
+	}
+	glPushMatrix();
+	glTranslatef(0.069, Robot::HandLength, 0);
+	SetGlColor3f(Ball::Color);
+	if (renderMode == GLU_FILL)
+		glutSolidSphere(Ball::Radius, CircleVertexCount, 24);
+	else
+		glutWireSphere(Ball::Radius, CircleVertexCount, 24);
+	glPopMatrix();
 }
 
 void Draw::DrawRobotHand(Robot& robot, GLenum renderMode) {
@@ -328,6 +345,17 @@ void Draw::DrawRobotFinger(Robot& robot, GLenum renderMode, float scale) {
 	glPopMatrix();
 	glPopMatrix();
 	glPopMatrix();
+	glPopMatrix();
+}
+
+void Draw::DrawBall(Ball& ball, GLenum renderMode) {
+	glPushMatrix();
+	Translate3f(ball.getPosition());
+	SetGlColor3f(Ball::Color);
+	if (renderMode == GLU_FILL)
+		glutSolidSphere(Ball::Radius, CircleVertexCount, 24);
+	else
+		glutWireSphere(Ball::Radius, CircleVertexCount, 24);
 	glPopMatrix();
 }
 

@@ -36,6 +36,18 @@ Robot& Scene::GetRobot() {
 	return GetInstance().robot;
 }
 
+vector<Ball>& Scene::GetBalls() {
+	return GetInstance().balls;
+}
+
+Ball& Scene::LaunchBall(Vector3f& position, Vector3f& velocity) {
+	Ball& ball = Ball();
+	ball.setPosition(position);
+	ball.setVelocity(velocity);
+	GetInstance().balls.push_back(ball);
+	return ball;
+}
+
 bool Scene::GetShowAxes() {
 	return GetInstance().showAxes;
 }

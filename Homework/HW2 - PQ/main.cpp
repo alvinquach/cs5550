@@ -83,6 +83,9 @@ void display() {
 	Draw::DrawFloor(renderMode);
 	Draw::DrawRobot(renderMode);
 
+	for (int i = 0; i < (int)Scene::GetInstance().GetBalls().size(); i++) {
+		Draw::DrawBall(Scene::GetInstance().GetBalls()[i], renderMode);
+	}
 
 	glutSwapBuffers();
 }

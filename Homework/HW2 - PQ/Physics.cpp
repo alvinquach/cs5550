@@ -9,6 +9,7 @@ const int Physics::UpdatesPerFrame = 10;
 const double Physics::DeltaTime = 1.0 / (UpdatesPerFrame * Window::FrameRate);
 
 const float Physics::RobotWorldCollisionSlowDownFactor = 0.5;
+const float Physics::BallWorldCollisionSlowDownFactor = 0.91;
 
 void Physics::Update() {
 	Robot& robot = Scene::GetRobot();
@@ -16,15 +17,54 @@ void Physics::Update() {
 
 	RobotState& robotState = robot.getCurrentState();
 	Vector3f& newVelocity = robotState.velocity + DeltaTime * robotState.acceleration;
-	CheckRobotBaseWorldCollision(robotState.position, newVelocity);
+	CheckWorldCollision(false, Robot::RobotBaseRadius, robotState.position, newVelocity, RobotWorldCollisionSlowDownFactor);
 	Vector3f& newPosition = robotState.position + DeltaTime * newVelocity;
 	robot.updatePosition(newPosition, newVelocity);
 	robot.updateState();
+
+	UpdateBalls();
 }
 
-void Physics::CheckRobotBaseWorldCollision(Vector3f& position, Vector3f& velocity) {
+void Physics::UpdateBalls() {
 
-	float radius = Robot::RobotBaseRadius;
+	// Get balls from scene.
+	vector<Ball>& balls = Scene::GetInstance().GetBalls();
+
+	// Balls marked for deletion.
+	vector<int> markForDelete;
+
+	// Update position based on velocity, and then check for collision with world.
+	for (int i = 0; i < balls.size(); i++) {
+		Ball& ball = balls[i];
+		UpdateBallPosition(ball);
+		bool test = CheckWorldCollision(true, Ball::Radius, ball.getPosition(), ball.getVelocity(), BallWorldCollisionSlowDownFactor);
+		if (ball.getPosition().getY() < Ball::Radius + 0.001) {
+			if (abs(ball.getVelocity().getY()) < 0.5) {
+				ball.getVelocity().setY(0.0);
+				markForDelete.push_back(i);
+			}
+		}
+		else {
+			ApplyGravityToBall(ball);
+		}
+	}
+
+	for (int i = 0; i < markForDelete.size(); i++) {
+		balls.erase(balls.begin() + markForDelete[i]);
+	}
+
+}
+
+void Physics::UpdateBallPosition(Ball& ball) {
+	ball.setPosition(ball.getPosition() + DeltaTime * ball.getVelocity());
+}
+
+void Physics::ApplyGravityToBall(Ball& ball) {
+	ball.setVelocity(ball.getVelocity() + Vector3f(0, -9.8 * DeltaTime, 0));
+}
+
+bool Physics::CheckWorldCollision(bool checkVertical, float radius, Vector3f& position, Vector3f& velocity, float slowDownFactor) {
+
 	bool collided = false;
 
 	if (position.getZ() > Scene::GetRoomDimensions().getZ() / 2 - radius) {
@@ -51,9 +91,24 @@ void Physics::CheckRobotBaseWorldCollision(Vector3f& position, Vector3f& velocit
 		collided = true;
 	}
 
+	if (checkVertical) {
+		if (position.getY() > Scene::GetRoomDimensions().getY() - radius) {
+			position.setY(Scene::GetRoomDimensions().getY() - radius);
+			velocity.reflect(Vector3f::Down());
+			collided = true;
+		}
+		if (position.getY() < 0) {
+			position.setY(radius);
+			velocity.reflect(Vector3f::Up());
+			collided = true;
+		}
+	}
+
 	// Reduce the velocity after collision.
 	if (collided) {
-		velocity.scale(RobotWorldCollisionSlowDownFactor);
+		velocity.scale(slowDownFactor);
 	}
+
+	return collided;
 
 }

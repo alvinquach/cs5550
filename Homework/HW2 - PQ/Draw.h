@@ -7,7 +7,7 @@
 #include "ColorRGB.h"
 #include "glut.h"
 #include "Robot.h"
-//#include "Ball.h"
+#include "Ball.h"
 
 class Draw {
 
@@ -18,6 +18,9 @@ public:
 	static void DrawFloor(GLenum renderMode);
 
 	static void DrawRobot(GLenum renderMode);
+
+	static void DrawBall(Ball& ball, GLenum renderMode);
+
 
 	//static void DrawBall(Ball& ball);
 
@@ -42,6 +45,8 @@ private:
 	static void DrawRobotLowerArm(Robot& robot, GLenum renderMode);
 
 	static void DrawRobotWrist(Robot& robot, GLenum renderMode);
+
+	static void DrawRobotBallInHand(Robot& robot, GLenum renderMode);
 
 	static void DrawRobotHand(Robot& robot, GLenum renderMode);
 

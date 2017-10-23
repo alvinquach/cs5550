@@ -76,8 +76,8 @@ const RobotState Robot::ThrowPrepState = {
 	-M_PI / 4,
 	LowerArmMinAngle,
 	HandMinAngle,
-	FingerMinAngle,
-	ThumbMinAngle
+	M_PI / 4,
+	M_PI / 24
 };
 
 const RobotState Robot::ThrowingState = {
@@ -85,8 +85,8 @@ const RobotState Robot::ThrowingState = {
 	0.0,
 	Vector3f::Zero(),
 	Vector3f::Zero(),
-	-M_PI / 6,
-	M_PI / 6,
+	-M_PI / 8,
+	M_PI / 8,
 	0.0,
 	FingerMinAngle,
 	ThumbMinAngle
@@ -312,21 +312,33 @@ void Robot::updateState() {
 
 			if (readyCount == 5) {
 				readyToThrow = true;
-				throwCountdown = 10;
+				throwCountdown = 100;
 			}
 		}
 
 		// Countdown to start throwing.
 		else if (throwCountdown) {
-
 			throwCountdown--;
-
 		}
-
 
 		// ITHROWPOWER
 		else {
-
+			int delay = 69;
+			current.upperArmAngle += (ThrowingState.upperArmAngle - ThrowPrepState.upperArmAngle) / delay;
+			current.lowerArmAngle += (ThrowingState.lowerArmAngle - ThrowPrepState.lowerArmAngle) / delay;
+			current.handAngle += (ThrowingState.handAngle - ThrowPrepState.handAngle) / delay;
+			current.fingerAngle += (ThrowingState.fingerAngle - ThrowPrepState.fingerAngle) / delay;
+			current.thumbAngle += (ThrowingState.thumbAngle - ThrowPrepState.thumbAngle) / delay;
+			throwProgress++;
+			if (throwProgress >= delay) {
+				throwing = false;
+				readyToThrow = false;
+				throwProgress = 0;
+				Scene::LaunchBall(
+					current.position + Vector3f(-0.3, 1.4, 0),
+					7.25 * Vector3f(cos(current.baseAngle), 0, sin(current.baseAngle)) + current.velocity
+				);
+			}
 		}
 
 	}
@@ -366,7 +378,11 @@ void Robot::iThrowPower() {
 		= 0;
 
 	readyToThrow = false;
-	throwComplete = false;
+	throwProgress = 0;
+}
+
+bool Robot::isHoldingBall() {
+	return throwing && readyToThrow;
 }
 
 // This is currently not being used.

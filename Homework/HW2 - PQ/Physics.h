@@ -1,6 +1,7 @@
 #pragma once
 #include "Window.h"
 #include "Scene.h"
+#include "Ball.h"
 
 class Physics {
 
@@ -20,7 +21,12 @@ public:
 private:
 
 	static const float RobotWorldCollisionSlowDownFactor;
+	static const float BallWorldCollisionSlowDownFactor;
 
-	static void CheckRobotBaseWorldCollision(Vector3f& position, Vector3f& velocity);
+	static void UpdateBalls();
+	static void UpdateBallPosition(Ball& ball);
+	static void ApplyGravityToBall(Ball& ball);
+
+	static bool CheckWorldCollision(bool checkVertical, float radius, Vector3f& position, Vector3f& velocity, float slowDownFactor);
 
 };

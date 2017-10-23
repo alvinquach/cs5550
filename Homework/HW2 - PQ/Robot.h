@@ -86,6 +86,7 @@ public:
 
 	bool isThrowing();
 	void iThrowPower();
+	bool isHoldingBall();
 
 private:
 
@@ -149,8 +150,8 @@ private:
 
 	bool throwing;
 	bool readyToThrow;
-	bool throwComplete;
 	int throwCountdown;
+	int throwProgress;
 
 	void saveState(RobotState state);
 	void applyState(RobotState& state);

@@ -115,6 +115,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColorRGB.h" />
     <ClInclude Include="Draw.h" />
+    <ClInclude Include="Ball.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="main.h" />
@@ -126,6 +127,7 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColorRGB.cpp" />
     <ClCompile Include="Draw.cpp" />
