@@ -27,13 +27,14 @@ void myInit()
 
 void myMouse(int button, int state, int x, int y)
 {		
-	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && NoOfPts < 3)
+	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{		
 		int ry = screenHeight-y;
-		base[NoOfPts].set(x*worldWidth/(float)screenWidth-worldWidth/2, 
-			              ry*worldHeight/(float)screenHeight-worldHeight/2,
-						  0); 
-		NoOfPts++;	
+		base.push_back(Point3(
+			x*worldWidth/(float)screenWidth-worldWidth/2, 
+			ry*worldHeight/(float)screenHeight-worldHeight/2,
+			0)
+		); 
 	}	
 		 
 	glutPostRedisplay();
@@ -75,10 +76,10 @@ void myDisplay()
 		drawAxes();
 
 		// draws a triangle based on the input
-		if(NoOfPts==3) {			
+		if(base.size() > 2) {			
 			glColor3f(0.5f, 0.5f, 0.5f);
-			glBegin(GL_POLYGON);
-			for(int i=0; i<NoOfPts; i++)
+			glBegin(displayMode ? GL_LINE_LOOP : GL_POLYGON);
+			for(int i=0; i<base.size(); i++)
 				glVertex3f(base[i].x, base[i].y, base[i].z);
 			glEnd();
 		}		
@@ -122,7 +123,7 @@ void myKeyboard(unsigned char key, int x, int y)
 		case 'e':
 			if(!triPrism.ready2draw) {
 				length=10;
-				triPrism.createPrism(3, base, length);
+				triPrism.createPrism(3, &base[0], length);
 				anim=1;
 			}
 			break;

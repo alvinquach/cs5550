@@ -1,6 +1,8 @@
 #ifndef LAB_Modeling_H
 #define LAB_Modeling_H
+#include <vector>
 
+using std::vector;
 
 //Global Variables
 const int screenWidth = 500;	   // width of screen window in pixels
@@ -9,9 +11,8 @@ const int screenHeight = 500;	   // height of screen window in pixels
 const float worldWidth = 100.0;
 const float worldHeight = 100.0; 
 
-int NoOfPts=0;
 int displayMode = 0;
-Point3 base[3];
+vector<Point3> base;
 Mesh triPrism;
 
 // global values for camera
