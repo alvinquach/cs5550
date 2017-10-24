@@ -82,14 +82,33 @@ void Mesh:: createPrism(int N, Point3 *p, float length)
 	initPrism(N);
 
 	// create the vertex list
-
+	for (int i = 0; i < N; i++) {
+		pt[2 * i].set(p->x, p->y, p->z);
+		pt[2 * i + 1].set(p->x, p->y, p->z + 5.0);
+		p++;
+	}
 
 	// create side faces
-
+	for (int i = 0; i < N; i++) {
+		face[i] = Face();
+		face[i].nVerts = 4;
+		face[i].vert = new VertexID[4];
+		face[i].vert[0].vertIndex = 2 * i;
+		face[i].vert[1].vertIndex = 2 * i + 1;
+		face[i].vert[2].vertIndex = i == N - 1 ? 0 : 2 * (i + 1);
+		face[i].vert[3].vertIndex = i == N - 1 ? 1 : 2 * (i + 1) + 1;
+	}
 
 	// create the base and cap faces
-
+	for (int i = 0; i < 2; i++) {
+		face[N + i] = Face();
+		face[N + i].nVerts = N;
+		face[N + i].vert = new VertexID[N];
+		for (int j = 0; j < N; i++) {
+			face[N + i].vert[j].vertIndex = 2 * j + 1;
+		}
+	}
 
 	// when all is done, ready2draw=1;
-	
+	ready2draw = 1;
 }

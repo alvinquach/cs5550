@@ -75,13 +75,13 @@ void myDisplay()
 	    
 		drawAxes();
 
-		// draws a triangle based on the input
 		if(base.size() > 2) {			
 			glColor3f(0.5f, 0.5f, 0.5f);
 			glBegin(displayMode ? GL_LINE_LOOP : GL_POLYGON);
-			for(int i=0; i<base.size(); i++)
+			for(int i = 0; i < base.size(); i++)
 				glVertex3f(base[i].x, base[i].y, base[i].z);
 			glEnd();
+
 		}		
 	}
 	else  {
@@ -123,7 +123,7 @@ void myKeyboard(unsigned char key, int x, int y)
 		case 'e':
 			if(!triPrism.ready2draw) {
 				length=10;
-				triPrism.createPrism(3, &base[0], length);
+				triPrism.createPrism(base.size(), &base[0], length);
 				anim=1;
 			}
 			break;

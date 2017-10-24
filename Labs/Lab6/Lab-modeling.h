@@ -13,6 +13,7 @@ const float worldHeight = 100.0;
 
 int displayMode = 0;
 vector<Point3> base;
+
 Mesh triPrism;
 
 // global values for camera
