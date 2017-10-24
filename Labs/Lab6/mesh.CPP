@@ -30,7 +30,7 @@ void Mesh:: drawSolid() // use OpenGL to draw this mesh
 	if(ready2draw) {
 		for(int f = 0; f < numFaces; f++) // draw each face
 		{
-			glColor3f(f/(float)10,f/(float)10,f/(float)10);
+			glColor3f(f/(float)numFaces,f/(float)numFaces,f/(float)numFaces);
 			glBegin(GL_POLYGON);
 			  for(int v = 0; v < face[f].nVerts; v++) // for each one..
 			  {
@@ -95,8 +95,8 @@ void Mesh:: createPrism(int N, Point3 *p, float length)
 		face[i].vert = new VertexID[4];
 		face[i].vert[0].vertIndex = 2 * i;
 		face[i].vert[1].vertIndex = 2 * i + 1;
-		face[i].vert[2].vertIndex = i == N - 1 ? 0 : 2 * (i + 1);
-		face[i].vert[3].vertIndex = i == N - 1 ? 1 : 2 * (i + 1) + 1;
+		face[i].vert[2].vertIndex = i == N - 1 ? 1 : 2 * (i + 1) + 1;
+		face[i].vert[3].vertIndex = i == N - 1 ? 0 : 2 * (i + 1);
 	}
 
 	// create the base and cap faces
@@ -104,7 +104,7 @@ void Mesh:: createPrism(int N, Point3 *p, float length)
 		face[N + i] = Face();
 		face[N + i].nVerts = N;
 		face[N + i].vert = new VertexID[N];
-		for (int j = 0; j < N; i++) {
+		for (int j = 0; j < N; j++) {
 			face[N + i].vert[j].vertIndex = 2 * j + 1;
 		}
 	}
