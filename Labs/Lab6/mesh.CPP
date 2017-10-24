@@ -83,8 +83,8 @@ void Mesh:: createPrism(int N, Point3 *p, float length)
 
 	// create the vertex list
 	for (int i = 0; i < N; i++) {
-		pt[2 * i].set(p->x, p->y, p->z);
-		pt[2 * i + 1].set(p->x, p->y, p->z + 5.0);
+		pt[2 * i].set(*p);
+		pt[2 * i + 1].set(p->x, p->y, p->z + length);
 		p++;
 	}
 
