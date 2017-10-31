@@ -67,8 +67,8 @@ void Camera::yaw(float angle)
 	float cs = (float)cos(3.14159265 / 180 * angle);
 	float sn = (float)sin(3.14159265 / 180 * angle);
 	Vector3 t(u); // remember old u
-	u.set(cs*t.x + sn*v.x, cs*t.y + sn*v.y, cs*t.z + sn*v.z);
-	n.set(-sn*t.x + cs*v.x, -sn*t.y + cs*v.y, -sn*t.z + cs*v.z);
+	u.set(cs*t.x + sn*n.x, cs*t.y + sn*n.y, cs*t.z + sn*n.z);
+	n.set(-sn*t.x + cs*n.x, -sn*t.y + cs*n.y, -sn*t.z + cs*n.z);
 
 	setModelViewMatrix();
 }
@@ -77,7 +77,7 @@ void Camera::pitch(float angle)
 { // pitch the camera through angle degrees
 	float cs = (float)cos(3.14159265 / 180 * angle);
 	float sn = (float)sin(3.14159265 / 180 * angle);
-	Vector3 t(u); // remember old u
+	Vector3 t(n); // remember old u
 	n.set(cs*t.x + sn*v.x, cs*t.y + sn*v.y, cs*t.z + sn*v.z);
 	v.set(-sn*t.x + cs*v.x, -sn*t.y + cs*v.y, -sn*t.z + cs*v.z);
 

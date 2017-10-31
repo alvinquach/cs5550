@@ -49,12 +49,12 @@ void mySpecialKeyboard(int theKey, int mouseX, int mouseY)
 	case GLUT_KEY_PAGE_UP:
 		// slide camera forward
 		std::cout << "Camera zoom-in" << std::endl;
-		cam.slide(0,0,0.2);
+		cam.slide(0,0,-0.2);
 		break;
 	case GLUT_KEY_PAGE_DOWN:
 		// slide camera backward
 		std::cout << "Camera zoom-out" << std::endl;
-		cam.slide(0,0,-0.2);
+		cam.slide(0,0,0.2);
 		break;
 	default:
 		break;
@@ -76,18 +76,22 @@ void myKeyboard(unsigned char key, int x, int y)
 		break; // roll the camera back	
 	case 'p':    
 		std::cout << "Camera pitch up" << std::endl;
+		cam.pitch(1.0);
 		// complete pitch function in camera.cpp and invoke cam.pitch() function
 		break; 
 	case 'P':    
 		std::cout << "Camera pitch down" << std::endl;
+		cam.pitch(-1.0);
 		// complete pitch function in camera.cpp and invoke cam.pitch() function
 		break; 
 	case 'y':    
 		std::cout << "Camera yaw left" << std::endl;
+		cam.yaw(-1.0);
 		// complete yaw function in camera.cpp and invoke cam.yaw() function
 		break; 
 	case 'Y':    
 		std::cout << "Camera yaw right" << std::endl;
+		cam.yaw(1.0);
 		// complete yaw function in camera.cpp and invoke cam.yaw() function
 		break; 
 	default:
