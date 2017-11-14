@@ -122,8 +122,11 @@ void myDisplay(void)
 	glEnd();
 	glEnable(GL_LIGHTING);
 	
+	glEnable(GL_LIGHT0);
 	glLightfv(GL_LIGHT0, GL_POSITION, position);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, lightIntensity);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightIntensity);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, lightIntensity);
 
 	// Draw the gold teapot
 	glMaterialfv(GL_FRONT, GL_AMBIENT, goldAmbient);
@@ -134,6 +137,7 @@ void myDisplay(void)
 
 	// Draw the silver teapot
 	glMaterialfv(GL_FRONT, GL_AMBIENT, silverAmbient);
+
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, silverDiffuse);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, silverSpecular);
 	glMaterialfv(GL_FRONT, GL_SHININESS, silverShininess);
@@ -166,9 +170,6 @@ int main(int argc, char **argv)
 	glutInitWindowPosition(100, 100); // set window position on screen
 	glutCreateWindow("Lab - Manipulate a camera around a teapot"); // open the screen window
 
-	glEnable(GL_LIGHT0);
-	glShadeModel(GL_SMOOTH);
-	glEnable(GL_NORMALIZE);
 	glEnable(GL_DEPTH_TEST);
 
 	// register callback functions
