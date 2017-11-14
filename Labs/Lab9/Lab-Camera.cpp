@@ -147,8 +147,8 @@ void myDisplay(void)
 
 void myIdle(void) {
 	if (lightAnimation) {
-		position[0] = 5.0f * cos(lightAngle * M_PI / 180);
-		position[2] = 5.0f * sin(lightAngle * M_PI / 180);
+		position[0] = 1.5f * cos(lightAngle * M_PI / 180);
+		position[2] = 1.5f * sin(lightAngle * M_PI / 180);
 		lightAngle++;
 		if (lightAngle >= 360) {
 			lightAngle -= 360;

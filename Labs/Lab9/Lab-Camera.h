@@ -17,7 +17,7 @@ GLfloat silverDiffuse[] = { 0.50754f, 0.50754f, 0.50754f, 1.0f };
 GLfloat silverSpecular[] = { 0.508273f, 0.508273f, 0.508273f, 1.0f };
 GLfloat silverShininess[] = { 0.4f * 128 };
 
-GLfloat position[] = { 3.7f, 6.0f, 0.0f, 0.0f };
+GLfloat position[] = { 1.5f, 6.0f, 0.0f, 1.0f };
 GLfloat lightIntensity[] = { 0.91f, 0.91f, 0.91f, 1.0f };
 
 bool lightAnimation = false;
