@@ -15,6 +15,7 @@ public:
 	void applyTransformations();
 	void translate(Vector3f& delta);
 	void rotate(Vector3f& delta);
+	void resetTransformations();
 private:
 	float scale;
 	Vector3f translation;

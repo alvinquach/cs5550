@@ -173,6 +173,12 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 		Camera::PlayAnimation(Model::GetMesh().getTranslation());
 		break;
 
+	// Reset object transformations
+	case 'o':
+	case 'O':
+		Model::GetMesh().resetTransformations();
+		break;
+
 	// Enter rotation mode.
 	case 'r':
 	case 'R':

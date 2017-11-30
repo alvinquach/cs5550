@@ -50,3 +50,9 @@ void Mesh::translate(Vector3f& delta) {
 void Mesh::rotate(Vector3f& delta) {
 	rotation = rotation + delta;
 }
+
+void Mesh::resetTransformations() {
+	scale = 1.0f;
+	translation = Vector3f::Zero();
+	rotation = Vector3f::Zero();
+}
