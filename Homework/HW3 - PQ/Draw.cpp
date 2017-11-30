@@ -3,7 +3,11 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <windows.h>
 #include "glut.h"
+
+#include "Model.h"
+
 #include "Draw.h"
 
 /// <summary>Length of the rendered world axes.</summary>
@@ -53,7 +57,10 @@ void Draw::DrawAxes() {
 
 void Draw::DrawTestObject() {
 	SetMaterial();
+	glPushMatrix();
+	Model::GetMesh().applyTransformations();
 	glutSolidTeapot(1.0);
+	glPopMatrix();
 }
 
 void Draw::SetMaterial() {

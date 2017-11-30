@@ -117,6 +117,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Spline.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Vector2f.cpp" />
@@ -129,6 +130,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Spline.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Vector.h" />

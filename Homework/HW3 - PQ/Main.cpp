@@ -1,6 +1,6 @@
 #define _USE_MATH_DEFINES
-#include <math.h>
 #include <windows.h>  //suitable when using Windows 95/98/NT
+#include <math.h>
 #include <gl/gl.h>
 #include <gl/glu.h>
 #include "glut.h"
@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
 	// Register callback functions
 	glutMouseFunc(Input::Mouse);
 	glutMotionFunc(Input::Motion);
-	glutPassiveMotionFunc(Input::PassiveMotion);
+	glutPassiveMotionFunc(Input::Motion);
 	glutKeyboardFunc(Input::Keyboard);
 	glutSpecialFunc(Input::SpecialKeyboard);
 	glutDisplayFunc(display);

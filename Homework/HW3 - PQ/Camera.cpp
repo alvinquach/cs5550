@@ -1,14 +1,12 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include <windows.h>
-#include <gl/gl.h>
-#include <gl/glu.h>
 
 #include "Utils.h"
+#include "Window.h"
 
 #include "camera.h"
 
-const float Camera::FieldOfView = 30.0;
+const float Camera::FieldOfView = 45.0;
 const float Camera::NearZClipPlane = 0.1;
 const float Camera::FarZClipPlane = 100.0;
 
@@ -21,6 +19,7 @@ Vector3f Camera::Eye = Vector3f::Zero();
 Vector3f Camera::u = Vector3f::Zero();
 Vector3f Camera::v = Vector3f::Zero();
 Vector3f Camera::n = Vector3f::Zero();
+float* Camera::ModelViewMatrix = new float[16];
 
 int Camera::AnimationCounter = 0;
 Vector3f Camera::LookDelta = Vector3f::Zero();
@@ -169,12 +168,27 @@ void Camera::Update(float deltaTime) {
 }
 
 void Camera::SetModelViewMatrix() {
-	float m[16];
-	m[0] = u.getX();	m[4] = u.getY();	m[8] = u.getZ();	m[12] = -Vector3f::Dot(Eye, u);
-	m[1] = v.getX();	m[5] = v.getY();	m[9] = v.getZ();	m[13] = -Vector3f::Dot(Eye, v);
-	m[2] = n.getX();	m[6] = n.getY();	m[10] = n.getZ();	m[14] = -Vector3f::Dot(Eye, n);
-	m[3] = 0.0f;		m[7] = 0.0f;		m[11] = 0.0f;		m[15] = 1.0f;
-
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(m);
+	ModelViewMatrix[0] = u.getX();		ModelViewMatrix[4] = u.getY();		ModelViewMatrix[8] = u.getZ();		ModelViewMatrix[12] = -Vector3f::Dot(Eye, u);
+	ModelViewMatrix[1] = v.getX();		ModelViewMatrix[5] = v.getY();		ModelViewMatrix[9] = v.getZ();		ModelViewMatrix[13] = -Vector3f::Dot(Eye, v);
+	ModelViewMatrix[2] = n.getX();		ModelViewMatrix[6] = n.getY();		ModelViewMatrix[10] = n.getZ();		ModelViewMatrix[14] = -Vector3f::Dot(Eye, n);
+	ModelViewMatrix[3] = 0.0f;			ModelViewMatrix[7] = 0.0f;			ModelViewMatrix[11] = 0.0f;			ModelViewMatrix[15] = 1.0f;
+	glLoadMatrixf(ModelViewMatrix);
+}
+
+float* Camera::GetModelViewMatrix() {
+	return ModelViewMatrix;
+}
+
+float* Camera::GetProjectionMatrix() {
+	float N = NearZClipPlane;
+	float F = FarZClipPlane;
+	float vert = tan(M_PI / 360 * FieldOfView);
+	float horz = Window::ScreenWidth / Window::ScreenHeight * vert;
+	float* p = new float[16];
+	p[0] = 1 / horz;	p[4] = 0.0f;		p[8] = 0.0f;					p[12] = 0.0f;
+	p[1] = 0.0f;		p[5] = 1 / vert;	p[9] = 0.0f;					p[13] = 0.0f;
+	p[2] = 0.0f;		p[6] = 0.0f;		p[10] = -(F + N) / (F - N);		p[14] = -2 * F * N / (F - N);
+	p[3] = 0.0f;		p[7] = 0.0f;		p[11] = -1.0f;					p[15] = 1.0f;
+	return p;
 }
