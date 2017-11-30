@@ -10,15 +10,15 @@ public:
 	void setScale(float scale);
 	Vector3f& getTranslation();
 	void setTranslation(Vector3f& translation);
-	Vector3f& getRotation();
-	void setRotation(Vector3f& translation);
+	float* getRotation();
+	void setRotation(float* translation);
 	void applyTransformations();
 	void translate(Vector3f& delta);
-	void rotate(Vector3f& delta);
+	void rotate(float* rot);
 	void resetTransformations();
 private:
 	float scale;
 	Vector3f translation;
-	Vector3f rotation;
+	float* rotation;
 
 };

@@ -18,6 +18,36 @@ float* Utils::test() {
 	return m;
 }
 
+void Utils::CopyMatrix(float* from, float* to, int size) {
+	for (int i = 0; i < size; i++) {
+		to[i] = from[i];
+	}
+}
+
+float* Utils::Identity4x4() {
+	float* result = new float[16];
+	for (int i = 0; i < 16; i++) {
+		if (i % 5 == 0) {
+			result[i] = 1.0f;
+		}
+		else {
+			result[i] = 0.0f;
+		}
+	}
+	return result;
+}
+
+void Utils::SetIdentity4x4(float* matrix) {
+	for (int i = 0; i < 16; i++) {
+		if (i % 5 == 0) {
+			matrix[i] = 1.0f;
+		}
+		else {
+			matrix[i] = 0.0f;
+		}
+	}
+}
+
 float* Utils::Multiply4x4x4x1(float* a, float* b) {
 	float* result = new float[4];
 	for (int i = 0; i < 4; i++) {
@@ -79,6 +109,9 @@ Vector2f& Utils::GetScreenCoordnates(Vector3f& point) {
 	glGetFloatv(GL_PROJECTION_MATRIX, projection);
 
 	float* result = Multiply4x4x4x1(projection, camCoordinates);
+
+	// delete[] homo;
+	// delete[] camCoordinates;
 
 	return Vector2f(
 		(1 + result[0] / result[3]) * Window::ScreenWidth / 2,

@@ -4,6 +4,9 @@
 
 class Utils {
 public:
+	static void CopyMatrix(float* from, float* to, int size);
+	static float* Identity4x4();
+	static void SetIdentity4x4(float* matrix);
 	static float* Multiply4x4x4x1(float* a, float* b);
 	static float* Multiply4x4x4x4(float* a, float* b);
 	static void Print4x4(float* matrix);

@@ -1,12 +1,14 @@
 #include <windows.h>
 #include "glut.h"
 
+#include "Utils.h"
+
 #include "Mesh.h"
 
 Mesh::Mesh() {
 	scale = 1.0f;
 	translation = Vector3f::Zero();
-	rotation = Vector3f::Zero();
+	rotation = Utils::Identity4x4();
 }
 
 Mesh::~Mesh() {
@@ -29,32 +31,31 @@ void Mesh::setTranslation(Vector3f& translation) {
 	Mesh::translation = translation;
 }
 
-Vector3f& Mesh::getRotation() {
+float* Mesh::getRotation() {
 	return rotation;
 }
 
-void Mesh::setRotation(Vector3f& translation) {
-	Mesh::rotation = rotation;
+void Mesh::setRotation(float* rotation) {
+	Utils::CopyMatrix(rotation, Mesh::rotation, 16);
 }
 
 void Mesh::applyTransformations() {
 	glTranslatef(translation.getX(), translation.getY(), translation.getZ());
 	glScalef(scale, scale, scale);
-	glRotatef(rotation.getY(), 0, 1, 0);
-	glRotatef(rotation.getZ(), 0, 0, 1);
-	glRotatef(rotation.getX(), 1, 0, 0);
+	glMultMatrixf(rotation);
 }
 
 void Mesh::translate(Vector3f& delta) {
 	translation = translation + delta;
 }
 
-void Mesh::rotate(Vector3f& delta) {
-	rotation = rotation + delta;
+void Mesh::rotate(float* rot) {
+	float* newRotation = Utils::Multiply4x4x4x4(rot, rotation);
+	rotation = newRotation;
 }
 
 void Mesh::resetTransformations() {
 	scale = 1.0f;
 	translation = Vector3f::Zero();
-	rotation = Vector3f::Zero();
+	Utils::SetIdentity4x4(rotation);
 }

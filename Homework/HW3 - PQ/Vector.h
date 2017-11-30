@@ -74,6 +74,14 @@ public:
 		setMagnitude(1);
 	}
 
+	T* asArray() {
+		T* result = new T[SIZE];
+		for (int i = 0; i < SIZE; i++) {
+			result[i] = components[i];
+		}
+		return result;
+	}
+
 	// Vector addition operator overload 
 	Vector<T, SIZE> operator +(Vector<T, SIZE>& anotherVector) {
 		Vector<T, SIZE> result = Vector<T, SIZE>();
