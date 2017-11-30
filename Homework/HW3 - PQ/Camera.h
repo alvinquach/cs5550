@@ -64,8 +64,5 @@ private:
 	static Vector3f LookDelta, EyeDelta;
 	static Vector3f Look, Eye, u, v, n;
 	static float* ModelViewMatrix;
-	static void Yaw(float angle);
-	static void Pitch(float angle);
-	static void Roll(float angle);
 	static void SetModelViewMatrix();
 };
