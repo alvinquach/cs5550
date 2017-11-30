@@ -77,7 +77,13 @@ Vector2f& Utils::GetScreenCoordnates(Vector3f& point) {
 	float* result = Multiply4x4x4x1(projection, camCoordinates);
 
 	return Vector2f(
-		(result[0] / result[3] + 1) * Window::ScreenWidth / 2,
-		(result[1] / result[3] + 1) * Window::ScreenHeight / 2
+		(1 + result[0] / result[3]) * Window::ScreenWidth / 2,
+		(1 - result[1] / result[3]) * Window::ScreenHeight / 2  // Y-value is inverted to match mouse coordinates.
 	);
 }
+
+//Vector2f& Utils::GetScreenCoordnatesInvertedY(Vector3f& point) {
+//	Vector2f& result = GetScreenCoordnates(point);
+//	result.setY(Window::ScreenHeight - result.getY());
+//	return result;
+//}

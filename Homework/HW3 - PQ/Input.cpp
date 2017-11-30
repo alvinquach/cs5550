@@ -14,8 +14,10 @@ using std::cout;
 using std::endl;
 
 // Initialize variables
+bool Input::SampleMouseOnNextUpdate = false;
 int Input::Modifiers = 0;
 int Input::ActiveButton = -1;
+Vector2f Input::InitialScreenCoordinates = Vector2f::Zero();
 Vector2f Input::InitialMouseCoordinates = Vector2f::Zero();
 Vector2f Input::LastMouseCoordinates = Vector2f::Zero();
 Vector3f Input::InitialTransformation = Vector3f::Zero();
@@ -27,9 +29,10 @@ void Input::Mouse(int button, int state, int x, int y) {
 		if (ActiveButton < 0) {
 			if (button == GLUT_MIDDLE_BUTTON) {
 				Modifiers = glutGetModifiers();
+				SampleMouseOnNextUpdate = true;
 			}
 			ActiveButton = button; // Set active button.
-			LastMouseCoordinates = InitialMouseCoordinates = Vector2f(x, y);
+			
 			Camera::Interrupt();
 		}
 		else if (ActiveButton != GLUT_MIDDLE_BUTTON) {
@@ -47,7 +50,6 @@ void Input::Mouse(int button, int state, int x, int y) {
 		if (button == GLUT_MIDDLE_BUTTON) {
 			Modifiers = 0;
 			ActiveButton = -1; // Reset active button.
-			LastMouseCoordinates = InitialMouseCoordinates = Vector2f::Zero();
 		}
 		else if (button == GLUT_RIGHT_BUTTON && ActiveButton == GLUT_RIGHT_BUTTON) {
 			ActiveButton = -1;
@@ -56,6 +58,11 @@ void Input::Mouse(int button, int state, int x, int y) {
 }
 
 void Input::Motion(int x, int y) {
+
+	if (SampleMouseOnNextUpdate) {
+		LastMouseCoordinates = InitialMouseCoordinates = Vector2f(x, y);
+		SampleMouseOnNextUpdate = false;
+	}
 
 	if (ActiveButton < 0) {
 		return;
@@ -86,10 +93,11 @@ void Input::Motion(int x, int y) {
 		if (deltaX > 0 || deltaY > 0) {
 			ActiveButton = 'g';
 			InitialTransformation = Model::GetMesh().getTranslation();
+			SampleMouseOnNextUpdate = true;
 		}
 	}
 
-	if (ActiveButton == 'g') {
+	else if (ActiveButton == 'g') {
 		Vector2f& asdf = Utils::GetScreenCoordnates(Vector3f::Zero());
 		//cout << asdf.getX() << " " << asdf.getY() << endl;
 		Model::GetMesh().translate(Vector3f(deltaX / 100.0, 0, deltaY / 100.0));
@@ -99,6 +107,16 @@ void Input::Motion(int x, int y) {
 		Vector2f& asdf = Utils::GetScreenCoordnates(Vector3f::Zero());
 		//cout << asdf.getX() << " " << asdf.getY() << endl;
 		Model::GetMesh().rotate(Vector3f(deltaX / 10.0, 0, deltaY / 10.0));
+	}
+
+	else if (ActiveButton == 's') {
+		cout << InitialMouseCoordinates.getX() << " " << InitialMouseCoordinates.getY() << endl;
+		cout << x << " " << y << endl;
+		cout << InitialScreenCoordinates.getX() << " " << InitialScreenCoordinates.getY() << endl;
+		cout << endl;
+		float initialDistance = (InitialMouseCoordinates - InitialScreenCoordinates).getMagnitude();
+		float currentDistance = (Vector2f(x, y) - InitialScreenCoordinates).getMagnitude();
+		Model::GetMesh().setScale(currentDistance / initialDistance * InitialTransformation.getX());
 	}
 
 	LastMouseCoordinates = Vector2f(x, y);
@@ -125,6 +143,7 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 		if (ActiveButton < 0 || ActiveButton == 'r' || ActiveButton == 's') {
 			ResetTransformMode();
 			InitialTransformation = Model::GetMesh().getTranslation();
+			SampleMouseOnNextUpdate = true;
 			ActiveButton = 'g';
 		}
 		break;
@@ -147,6 +166,7 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 		if (ActiveButton < 0 || ActiveButton == 'g' || ActiveButton == 's') {
 			ResetTransformMode();
 			InitialTransformation = Model::GetMesh().getRotation();
+			SampleMouseOnNextUpdate = true;
 			ActiveButton = 'r';
 		}
 		break;
@@ -157,6 +177,8 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 		if (ActiveButton < 0 || ActiveButton == 'g' || ActiveButton == 'r') {
 			ResetTransformMode();
 			InitialTransformation.setX(Model::GetMesh().getScale());
+			InitialScreenCoordinates = Utils::GetScreenCoordnates(Model::GetMesh().getTranslation());
+			SampleMouseOnNextUpdate = true;
 			ActiveButton = 's';
 		}
 		break;
@@ -213,9 +235,11 @@ void Input::ResetTransformMode() {
 		Model::GetMesh().setScale(InitialTransformation.getX());
 		break;
 	}
+	InitialScreenCoordinates = Vector2f::Zero();
 	InitialTransformation = Vector3f::Zero();
 }
 
 void Input::CompleteTransformMode() {
+	InitialScreenCoordinates = Vector2f::Zero();
 	InitialTransformation = Vector3f::Zero();
 }

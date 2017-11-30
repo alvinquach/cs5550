@@ -12,8 +12,10 @@ public:
 	static void ModifiersTest();
 
 private:
+	static bool SampleMouseOnNextUpdate;
 	static int Modifiers;
 	static int ActiveButton;
+	static Vector2f InitialScreenCoordinates;
 	static Vector2f InitialMouseCoordinates;
 	static Vector2f LastMouseCoordinates;
 	static Vector3f InitialTransformation;
