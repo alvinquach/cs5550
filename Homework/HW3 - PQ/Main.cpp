@@ -1,6 +1,6 @@
 #define _USE_MATH_DEFINES
-#include <windows.h>  //suitable when using Windows 95/98/NT
 #include <math.h>
+#include <windows.h>  //suitable when using Windows 95/98/NT
 #include <gl/gl.h>
 #include <gl/glu.h>
 #include "glut.h"

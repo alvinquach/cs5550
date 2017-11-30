@@ -40,7 +40,9 @@ void Mesh::setRotation(Vector3f& translation) {
 void Mesh::applyTransformations() {
 	glTranslatef(translation.getX(), translation.getY(), translation.getZ());
 	glScalef(scale, scale, scale);
-	glRotatef(rotation.getX(), 0, 1, 0);
+	glRotatef(rotation.getY(), 0, 1, 0);
+	glRotatef(rotation.getZ(), 0, 0, 1);
+	glRotatef(rotation.getX(), 1, 0, 0);
 }
 
 void Mesh::translate(Vector3f& delta) {

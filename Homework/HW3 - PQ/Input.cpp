@@ -1,6 +1,8 @@
 // Alvin Quach, 300793745
 // CS5550 F17 - HW3 PQ
 
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include <iostream>
 
 #include "Camera.h"
@@ -123,12 +125,10 @@ void Input::Motion(int x, int y) {
 
 	else if (ActiveButton == 'r') {
 		Vector2f& asdf = Utils::GetScreenCoordnates(Vector3f::Zero());
-		float angle = deltaX / 10.0;
-		Vector3f rot = Vector3f(
-			atan2(y * sin(angle) - x * z * (1 - cos(angle)), 1 - (y2 + z2) * (1 - cos(angle))),
-
-		);
-		Model::GetMesh().rotate(Vector3f(deltaX / 10.0, 0, deltaY / 10.0));
+		float angle = M_PI / 180 * deltaX;
+		Vector3f& rot = 180 / M_PI * Camera::RotateAboutLookDirection(angle);
+		Utils::PrintVector3f(rot);
+		Model::GetMesh().rotate(rot);
 	}
 
 	else if (ActiveButton == 's') {

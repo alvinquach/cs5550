@@ -58,6 +58,10 @@ void Utils::Print4x1(float* matrix) {
 	cout << endl;
 }
 
+void Utils::PrintVector3f(Vector3f & vector) {
+	cout << "(" << vector.getX() << ", " << vector.getY() << ", " << vector.getZ() << ")" << endl;
+}
+
 float Utils::Clamp(float value, float min, float max) {
 	return value < min ? min : value > max ? max : value;
 }

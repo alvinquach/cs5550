@@ -56,7 +56,8 @@ public:
 
 	static Vector3f& GetWorldCoordinatesOf(float x, float y, float distance);
 
-	static Vector3f7 RotateAboutE
+	/// <summary>Returns a Euler representation of a rotation about the camera's n direction by an angle in radians.</summary>
+	static Vector3f& RotateAboutLookDirection(float angle);
 
 	static float GetDistanceFrom(Vector3f& point);
 

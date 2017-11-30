@@ -197,6 +197,31 @@ Vector3f& Camera::GetWorldCoordinatesOf(float x, float y, float distance) {
 	return Eye + distance * (tan(thetaX) * u + tan(thetaY) * v - n);
 }
 
+//Vector3f& Camera::RotateAboutLookDirection(float angle) {
+//	float x = n.getX();
+//	float y = n.getY();
+//	float z = n.getZ();
+//	return Vector3f(
+//		atan2(x * sin(angle) - y * z * (1 - cos(angle)), 1 - (x * x + z * z) * (1 - cos(angle))),
+//		atan2(y * sin(angle) - x * z * (1 - cos(angle)), 1 - (y * y + z * z) * (1 - cos(angle))),
+//		asin(x * y * (1 - cos(angle)) + z * sin(angle))
+//	);
+//}
+
+float* Camera::GetRotationMatrixAboutLookDirection(float angle) {
+	float x = n.getX();
+	float y = n.getY();
+	float z = n.getZ();
+	float cosTheta = cos(angle);
+	float sinTheta = sin(angle);
+	float* result = new float[16];
+	result[0] = cosTheta + x * x * (1 - cosTheta);			result[4] = x * y * (1 - cosTheta) - z * sinTheta;		result[8] = x * z * (1 - cosTheta) + y * sinTheta;		result[12] = 0.0f;
+	result[1] = y * x * (1 - cosTheta) + z * sinTheta;		result[5] = cosTheta + y * y * (1 - cosTheta);			result[9] = y * z * (1 - cosTheta) - x * sinTheta;		result[13] = 0.0f;
+	result[2] = z * x * (1 - cosTheta) - y * sinTheta;		result[6] = z * y * (1 - cosTheta) + x * sinTheta;		result[10] = cosTheta + z * z * (1 - cosTheta);			result[14] = 0.0f;
+	result[3] = 0.0f;										result[7] = 0.0f;										result[11] = 0.0f;										result[15] = 1.0f;
+	return result;
+}
+
 float Camera::GetDistanceFrom(Vector3f& point) {
 	return (Eye - point).getMagnitude();
 }
