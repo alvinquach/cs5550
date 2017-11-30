@@ -80,7 +80,7 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 	// Make the camera focus on the object.
 	case 'f':
 	case 'F':
-		Camera::TransitionTo(Vector3f::Zero(), 5.0f, 15); // TODO use correct vector
+		Camera::TransitionTo(Vector3f::Zero(), 5.0f, 15); // TODO get object size
 		break;
 
 	// Toggle the model to render between gold and plastic materials.
@@ -95,9 +95,21 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 		Camera::PlayAnimation(Vector3f::Zero()); // TODO use correct vector
 		break;
 
+	// Move the camera to face the YZ plane.
+	case 'x':
+	case 'X':
+		Camera::TransitionTo(Vector3f(11.95f, 0.0f, 0.0f), Vector3f::Zero(), 15);
+		break;
+
+	// Move the camera to face the XZ plane.
+	case 'y':
+	case 'Y':
+		Camera::TransitionTo(Vector3f(0.0f, 11.95f, 0.0f), Vector3f::Zero(), 15);
+		break;
+
 	// Move the camera to face the XY plane.
-	case 'v':
-	case 'V':
+	case 'z':
+	case 'Z':
 		Camera::TransitionTo(Vector3f(0.0f, 0.0f, 11.95f), Vector3f::Zero(), 15);
 		break;
 

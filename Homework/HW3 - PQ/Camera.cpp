@@ -48,7 +48,7 @@ void Camera::TransitionTo(Vector3f& look, int duration) {
 
 void Camera::TransitionTo(Vector3f& look, float lookDistance, int duration) {
 	LookDelta = (Look - look) / duration;
-	EyeDelta = (look + lookDistance * n) / duration;
+	EyeDelta = (Eye - look - lookDistance * n) / duration;
 	AnimationCounter = duration;
 }
 
