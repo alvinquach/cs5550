@@ -189,10 +189,14 @@ float* Camera::GetModelViewMatrix() {
 	return ModelViewMatrix;
 }
 
-Vector3f& Camera::GetWorldCoordinates(float x, float y, float distance) {
+Vector3f& Camera::GetWorldCoordinatesOf(float x, float y, float distance) {
 	float aspect = Window::ScreenWidth / Window::ScreenHeight;
 	float tanTheta = tan(M_PI / 180 * FieldOfView / 2);
 	float thetaX = atan((2 * x / Window::ScreenWidth - 1) * aspect * tanTheta);
 	float thetaY = atan((2 * (1 - y / Window::ScreenHeight) - 1) * tanTheta);
 	return Eye + distance * (tan(thetaX) * u + tan(thetaY) * v - n);
+}
+
+float Camera::GetDistanceFrom(Vector3f& point) {
+	return (Eye - point).getMagnitude();
 }

@@ -33,6 +33,8 @@ Vector2f Input::LastMouseCoordinates = Vector2f::Zero();
 /// <summary>Initial transformation of the object.</summary>
 Vector3f Input::InitialTransformation = Vector3f::Zero();
 
+float Input::ViewPlaneDistance = 0.0f;
+
 void Input::Mouse(int button, int state, int x, int y) {
 	float* m = Utils::test();
 	cout << "Mouse Input: (" << button << ", " << state << ", " << x << ", " << y << ")" << endl;
@@ -72,7 +74,8 @@ void Input::Motion(int x, int y) {
 
 	if (SampleMouseOnNextUpdate) {
 		LastMouseCoordinates = InitialMouseCoordinates = Vector2f(x, y);
-		LastWorldCoordinates = Camera::GetWorldCoordinates(x, y, Camera::GetLookDistance());
+		ViewPlaneDistance = Camera::GetDistanceFrom(Model::GetMesh().getTranslation());
+		LastWorldCoordinates = Camera::GetWorldCoordinatesOf(x, y, ViewPlaneDistance);
 		SampleMouseOnNextUpdate = false;
 	}
 
@@ -111,7 +114,7 @@ void Input::Motion(int x, int y) {
 
 	else if (ActiveButton == 'g') {
 		Vector2f& asdf = Utils::GetScreenCoordnates(Vector3f::Zero());
-		Vector3f worldCoord = Camera::GetWorldCoordinates(x, y, Camera::GetLookDistance());
+		Vector3f worldCoord = Camera::GetWorldCoordinatesOf(x, y, ViewPlaneDistance);
 		Model::GetMesh().translate(worldCoord - LastWorldCoordinates);
 		LastWorldCoordinates = worldCoord;
 	}
@@ -151,7 +154,9 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 		if (ActiveButton < 0 || ActiveButton == 'r' || ActiveButton == 's') {
 			ResetTransformMode();
 			InitialTransformation = Model::GetMesh().getTranslation();
-			SampleMouseOnNextUpdate = true;
+			if (ActiveButton < 0) {
+				SampleMouseOnNextUpdate = true;
+			}
 			ActiveButton = 'g';
 		}
 		break;
@@ -174,7 +179,9 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 		if (ActiveButton < 0 || ActiveButton == 'g' || ActiveButton == 's') {
 			ResetTransformMode();
 			InitialTransformation = Model::GetMesh().getRotation();
-			SampleMouseOnNextUpdate = true;
+			if (ActiveButton < 0) {
+				SampleMouseOnNextUpdate = true;
+			}
 			ActiveButton = 'r';
 		}
 		break;
@@ -186,7 +193,9 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 			ResetTransformMode();
 			InitialTransformation.setX(Model::GetMesh().getScale());
 			InitialScreenCoordinates = Utils::GetScreenCoordnates(Model::GetMesh().getTranslation());
-			SampleMouseOnNextUpdate = true;
+			if (ActiveButton < 0) {
+				SampleMouseOnNextUpdate = true;
+			}
 			ActiveButton = 's';
 		}
 		break;

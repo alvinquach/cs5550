@@ -20,6 +20,7 @@ private:
 	static Vector3f LastWorldCoordinates;
 	static Vector2f LastMouseCoordinates;
 	static Vector3f InitialTransformation;
+	static float ViewPlaneDistance;
 	static void ResetTransformMode();
 	static void CompleteTransformMode();
 };

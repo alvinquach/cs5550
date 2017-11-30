@@ -54,7 +54,9 @@ public:
 
 	static float* GetModelViewMatrix();
 
-	static Vector3f& GetWorldCoordinates(float x, float y, float distance);
+	static Vector3f& GetWorldCoordinatesOf(float x, float y, float distance);
+
+	static float GetDistanceFrom(Vector3f& point);
 
 private:
 	static const int AnimationLookTransitionDuration;
