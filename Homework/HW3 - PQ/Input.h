@@ -5,6 +5,7 @@
 class Input {
 
 public:
+	static int GridMode;
 	static void Mouse(int button, int state, int x, int y);
 	static void Motion(int x, int y);
 	static void Keyboard(unsigned char key, int mouseX, int mouseY);

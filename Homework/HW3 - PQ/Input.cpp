@@ -14,6 +14,7 @@ using std::cout;
 using std::endl;
 
 // Initialize variables
+int Input::GridMode = 0;
 bool Input::SampleMouseOnNextUpdate = false;
 int Input::Modifiers = 0;
 int Input::ActiveButton = -1;
@@ -100,6 +101,7 @@ void Input::Motion(int x, int y) {
 
 		// If invalid modifiers or no modifers were pressed...
 		else {
+			GridMode = 0;
 			Camera::Pivot(deltaY * 0.005, deltaX * -0.005);
 		}
 	}
@@ -210,18 +212,21 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 	case 'x':
 	case 'X':
 		Camera::TransitionTo(Vector3f(11.95f, 0.0f, 0.0f), Vector3f::Zero(), 15);
+		GridMode = 1;
 		break;
 
 	// Move the camera to face the XZ plane.
 	case 'y':
 	case 'Y':
 		Camera::TransitionTo(Vector3f(0.0f, 11.95f, 0.0f), Vector3f::Zero(), 15);
+		GridMode = 0;
 		break;
 
 	// Move the camera to face the XY plane.
 	case 'z':
 	case 'Z':
 		Camera::TransitionTo(Vector3f(0.0f, 0.0f, 11.95f), Vector3f::Zero(), 15);
+		GridMode = 2;
 		break;
 
 	default:

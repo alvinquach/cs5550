@@ -36,6 +36,7 @@ void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_LIGHT0);
 	Draw::DrawAxes();
+	Draw::DrawGrid(Input::GridMode);
 	Draw::DrawTestObject();
 	glutSwapBuffers();
 }

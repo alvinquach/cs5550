@@ -11,7 +11,8 @@
 #include "Draw.h"
 
 /// <summary>Length of the rendered world axes.</summary>
-float Draw::AxesLength = 100.0;
+float Draw::AxesLength = 10.0f;
+float Draw::GridSpacing = 1.25f;
 
 GLfloat Draw::GoldAmbient[] = { 0.24725f, 0.1995f, 0.0745f, 1.0f };
 GLfloat Draw::GoldDiffuse[] = { 0.75164f, 0.60648f, 0.22648f, 1.0f };
@@ -53,6 +54,53 @@ void Draw::DrawAxes() {
 	// Reenable lighting after drawing axes.
 	glEnable(GL_LIGHTING);
 
+}
+
+void Draw::DrawGrid(int mode) {
+	glDisable(GL_LIGHTING);
+	glBegin(GL_LINES);
+	glColor3f(0.29f, 0.29f, 0.29f);
+
+	float dist = 0.0f;
+	while (true) {
+		if (mode == 0) {
+			glVertex3f(dist, 0, -AxesLength);
+			glVertex3f(dist, 0, AxesLength);
+			glVertex3f(-dist, 0, -AxesLength);
+			glVertex3f(-dist, 0, AxesLength);
+			glVertex3f(AxesLength, 0, dist);
+			glVertex3f(-AxesLength, 0, dist);
+			glVertex3f(AxesLength, 0, -dist);
+			glVertex3f(-AxesLength, 0, -dist);
+		}
+		if (mode == 1) {
+			glVertex3f(0, dist, -AxesLength);
+			glVertex3f(0, dist, AxesLength);
+			glVertex3f(0, -dist, -AxesLength);
+			glVertex3f(0, -dist, AxesLength);
+			glVertex3f(0, AxesLength, dist);
+			glVertex3f(0, -AxesLength, dist);
+			glVertex3f(0, AxesLength, -dist);
+			glVertex3f(0, -AxesLength, -dist);
+		}
+		if (mode == 2) {
+			glVertex3f(dist, -AxesLength, 0);
+			glVertex3f(dist, AxesLength, 0);
+			glVertex3f(-dist, -AxesLength, 0);
+			glVertex3f(-dist, AxesLength, 0);
+			glVertex3f(AxesLength, dist, 0);
+			glVertex3f(-AxesLength, dist, 0);
+			glVertex3f(AxesLength, -dist, 0);
+			glVertex3f(-AxesLength, -dist, 0);
+		}
+		dist += GridSpacing;
+		if (dist > AxesLength) {
+			break;
+		}
+	} 
+
+	glEnd();
+	glEnable(GL_LIGHTING);
 }
 
 void Draw::DrawTestObject() {

@@ -4,6 +4,7 @@ class Draw {
 
 public:
 	static void DrawAxes();
+	static void DrawGrid(int mode);
 	static void DrawTestObject();
 	static void ToggleMaterial();
 
@@ -20,6 +21,7 @@ private:
 	static GLfloat PlasticShininess[];
 
 	static float AxesLength;
+	static float GridSpacing;
 	static int ActiveMaterial;
 
 	static void SetMaterial();
