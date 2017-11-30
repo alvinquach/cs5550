@@ -34,6 +34,9 @@ void Draw::DrawAxes() {
 	glEnd();
 
 	// Reenable lighting after drawing axes.
-	glEnable(GL_LIGHTING); 
+	glEnable(GL_LIGHTING);
+
+	glColor3f(0.4, 0.5, 0.3);
+	glutSolidTeapot(1.0);
 
 }

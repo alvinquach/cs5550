@@ -5,28 +5,48 @@
 #include <gl/glu.h>
 #include "glut.h"
 
+#include"Input.h"
+#include "Window.h"
+
 #include "Main.h"
 
 int main(int argc, char **argv) {
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	Window::SetWindow();
 
-	// TODO Change these to use variables.
-	glutInitWindowSize(1280, 720);
-	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Lab - Manipulate a camera around a teapot");
-
-	glEnable(GL_DEPTH_TEST);
+	Camera::LookAt(Vector3f(4, 4, 4), Vector3f::Zero(), Vector3f::Up());
 
 	// Register callback functions
+	glutMouseFunc(Input::Mouse);
+	glutMotionFunc(Input::Motion);
+	glutPassiveMotionFunc(Input::PassiveMotion);
+	glutKeyboardFunc(Input::Keyboard);
+	glutSpecialFunc(Input::SpecialKeyboard);
 	glutDisplayFunc(display);
+	
+	callTimerFunc();
 
 	glutMainLoop();
 }
 
 void display(void) {
+	//glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	Draw::DrawAxes();
 	glutSwapBuffers();
+}
+
+void timer(int value) {
+	Camera::Update(value);
+	glutPostRedisplay();
+
+	callTimerFunc();
+}
+
+void callTimerFunc() {
+	// Using timer instead of idle to be able to control frame rate.
+	float deltaTime = 1000 / Window::FrameRate;
+	glutTimerFunc(deltaTime, timer, deltaTime);
 }
