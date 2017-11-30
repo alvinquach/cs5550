@@ -21,6 +21,8 @@ public:
 
 	static void TransitionTo(Vector3f& look, int duration);
 
+	static void TransitionTo(Vector3f& look, float lookDistance, int duration);
+
 	static void TransitionTo(Vector3f& eye, Vector3f& look, int duration);
 
 	static void PlayAnimation(Vector3f& target);

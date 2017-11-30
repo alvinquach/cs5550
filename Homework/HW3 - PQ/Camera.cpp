@@ -46,6 +46,12 @@ void Camera::TransitionTo(Vector3f& look, int duration) {
 	AnimationCounter = duration;
 }
 
+void Camera::TransitionTo(Vector3f& look, float lookDistance, int duration) {
+	LookDelta = (Look - look) / duration;
+	EyeDelta = (look + lookDistance * n) / duration;
+	AnimationCounter = duration;
+}
+
 void Camera::TransitionTo(Vector3f& eye, Vector3f& look, int duration) {
 	LookDelta = (Look - look) / duration;
 	EyeDelta = (Eye - eye) / duration;
@@ -53,8 +59,13 @@ void Camera::TransitionTo(Vector3f& eye, Vector3f& look, int duration) {
 }
 
 void Camera::PlayAnimation(Vector3f& target) {
-	LookDelta = (Look - target) / AnimationLookTransitionDuration;
-	AnimationCounter = -AnimationLookTransitionDuration - 1;
+	if (AnimationCounter < 0) {
+		Interrupt();
+	}
+	else {
+		LookDelta = (Look - target) / AnimationLookTransitionDuration;
+		AnimationCounter = -AnimationLookTransitionDuration - 1;
+	}
 }
 
 void Camera::Pivot(float pitch, float yaw) {

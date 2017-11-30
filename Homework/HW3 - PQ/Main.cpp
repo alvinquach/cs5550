@@ -32,9 +32,11 @@ int main(int argc, char **argv) {
 }
 
 void display(void) {
-	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_LIGHT0);
 	Draw::DrawAxes();
+	Draw::DrawTestObject();
 	glutSwapBuffers();
 }
 

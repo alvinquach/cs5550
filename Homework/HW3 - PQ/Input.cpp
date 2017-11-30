@@ -5,6 +5,7 @@
 #include "glut.h"
 
 #include "Camera.h"
+#include "Draw.h"
 #include "Utils.h"
 
 #include "Input.h"
@@ -79,13 +80,13 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 	// Make the camera focus on the object.
 	case 'f':
 	case 'F':
-		Camera::TransitionTo(Vector3f::Zero(), 15); // TODO use correct vector
+		Camera::TransitionTo(Vector3f::Zero(), 5.0f, 15); // TODO use correct vector
 		break;
 
 	// Toggle the model to render between gold and plastic materials.
 	case 'g':
 	case 'G':
-		// TODO Implement this
+		Draw::ToggleMaterial();
 		break;
 
 	// Move the camera along a predefined path.
