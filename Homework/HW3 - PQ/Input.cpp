@@ -123,6 +123,11 @@ void Input::Motion(int x, int y) {
 
 	else if (ActiveButton == 'r') {
 		Vector2f& asdf = Utils::GetScreenCoordnates(Vector3f::Zero());
+		float angle = deltaX / 10.0;
+		Vector3f rot = Vector3f(
+			atan2(y * sin(angle) - x * z * (1 - cos(angle)), 1 - (y2 + z2) * (1 - cos(angle))),
+
+		);
 		Model::GetMesh().rotate(Vector3f(deltaX / 10.0, 0, deltaY / 10.0));
 	}
 

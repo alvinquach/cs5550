@@ -56,6 +56,8 @@ public:
 
 	static Vector3f& GetWorldCoordinatesOf(float x, float y, float distance);
 
+	static Vector3f7 RotateAboutE
+
 	static float GetDistanceFrom(Vector3f& point);
 
 private:
