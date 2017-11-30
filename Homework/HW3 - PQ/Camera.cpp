@@ -24,7 +24,7 @@ Vector3f Camera::Eye = Vector3f::Zero();
 Vector3f Camera::u = Vector3f::Zero();
 Vector3f Camera::v = Vector3f::Zero();
 Vector3f Camera::n = Vector3f::Zero();
-float* Camera::ModelViewMatrix = new float[16];
+float* Camera::ModelViewMatrix = Utils::Identity4x4();
 
 int Camera::AnimationCounter = 0;
 Vector3f Camera::LookDelta = Vector3f::Zero();
@@ -113,6 +113,11 @@ void Camera::Pivot(float pitch, float yaw) {
 	if (lookDistance > 0.0f) {
 		Eye = lookDistance * n + Look;
 	}
+
+	// Delete arrays
+	delete[] rot;
+	delete[] homo;
+	delete[] nRotated;
 	
 	SetModelViewMatrix();
 }
@@ -196,17 +201,6 @@ Vector3f& Camera::GetWorldCoordinatesOf(float x, float y, float distance) {
 	float thetaY = atan((2 * (1 - y / Window::ScreenHeight) - 1) * tanTheta);
 	return Eye + distance * (tan(thetaX) * u + tan(thetaY) * v - n);
 }
-
-//Vector3f& Camera::RotateAboutLookDirection(float angle) {
-//	float x = n.getX();
-//	float y = n.getY();
-//	float z = n.getZ();
-//	return Vector3f(
-//		atan2(x * sin(angle) - y * z * (1 - cos(angle)), 1 - (x * x + z * z) * (1 - cos(angle))),
-//		atan2(y * sin(angle) - x * z * (1 - cos(angle)), 1 - (y * y + z * z) * (1 - cos(angle))),
-//		asin(x * y * (1 - cos(angle)) + z * sin(angle))
-//	);
-//}
 
 float* Camera::GetRotationMatrixAboutLookDirection(float angle) {
 	float x = n.getX();

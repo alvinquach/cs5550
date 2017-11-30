@@ -13,7 +13,6 @@ public:
 	static void Print4x1(float* matrix);
 	static void PrintVector3f(Vector3f& vector);
 	static Vector2f& GetScreenCoordnates(Vector3f& point);
-	//static Vector2f& GetScreenCoordnatesInvertedY(Vector3f& point);
 	static float Clamp(float value, float min, float max);
 	static float* test();
 };

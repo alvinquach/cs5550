@@ -108,19 +108,17 @@ Vector2f& Utils::GetScreenCoordnates(Vector3f& point) {
 	GLfloat projection[16];
 	glGetFloatv(GL_PROJECTION_MATRIX, projection);
 
-	float* result = Multiply4x4x4x1(projection, camCoordinates);
+	float* multiplied = Multiply4x4x4x1(projection, camCoordinates);
 
-	// delete[] homo;
-	// delete[] camCoordinates;
-
-	return Vector2f(
-		(1 + result[0] / result[3]) * Window::ScreenWidth / 2,
-		(1 - result[1] / result[3]) * Window::ScreenHeight / 2  // Y-value is inverted to match mouse coordinates.
+	Vector2f& result = Vector2f(
+		(1 + multiplied[0] / multiplied[3]) * Window::ScreenWidth / 2,
+		(1 - multiplied[1] / multiplied[3]) * Window::ScreenHeight / 2  // Y-value is inverted to match mouse coordinates.
 	);
-}
 
-//Vector2f& Utils::GetScreenCoordnatesInvertedY(Vector3f& point) {
-//	Vector2f& result = GetScreenCoordnates(point);
-//	result.setY(Window::ScreenHeight - result.getY());
-//	return result;
-//}
+	// Delete arrays
+	delete[] homo;
+	delete[] camCoordinates;
+	delete[] multiplied;
+
+	return result;
+}
