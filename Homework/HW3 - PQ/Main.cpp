@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	Window::SetWindow();
 
-	Camera::LookAt(Vector3f(4, 4, 4), Vector3f::Zero(), Vector3f::Up());
+	Camera::LookAt(Vector3f(6.9f, 6.9f, 6.9f), Vector3f::Zero());
 
 	// Register callback functions
 	glutMouseFunc(Input::Mouse);

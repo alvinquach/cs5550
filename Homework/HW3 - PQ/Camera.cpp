@@ -12,6 +12,9 @@ const float Camera::FieldOfView = 30.0;
 const float Camera::NearZClipPlane = 0.1;
 const float Camera::FarZClipPlane = 100.0;
 
+// Number of frames
+const int Camera::AnimationLookTransitionDuration = 45;
+
 // Initialize variables.
 Vector3f Camera::Look = Vector3f::Zero();
 Vector3f Camera::Eye = Vector3f::Zero();
@@ -19,20 +22,39 @@ Vector3f Camera::u = Vector3f::Zero();
 Vector3f Camera::v = Vector3f::Zero();
 Vector3f Camera::n = Vector3f::Zero();
 
-void Camera::LookAt(Vector3f& eye, Vector3f& look, Vector3f& up) {
+int Camera::AnimationCounter = 0;
+Vector3f Camera::LookDelta = Vector3f::Zero();
+Vector3f Camera::EyeDelta = Vector3f::Zero();
+
+void Camera::LookAt(Vector3f& eye, Vector3f& look) {
 	Eye = eye;
 	Look = look;
-	n = eye - look;
-	u = Vector3f::Cross(up, n);
+	LookAt();
+}
+
+void Camera::LookAt() {
+	n = Eye - Look;
+	u = Vector3f::Cross(Vector3f::Up(), n);
 	n.normalize();
 	u.normalize();
 	v = Vector3f::Cross(n, u);
 	SetModelViewMatrix();
 }
 
-void Camera::LookAt(Vector3f& eye, Vector3f& look, Vector3f& up, float duration) {
-	LookAt(eye, look, up);
-	// TODO Implement duration
+void Camera::TransitionTo(Vector3f& look, int duration) {
+	EyeDelta = LookDelta = (Look - look) / duration;
+	AnimationCounter = duration;
+}
+
+void Camera::TransitionTo(Vector3f& eye, Vector3f& look, int duration) {
+	LookDelta = (Look - look) / duration;
+	EyeDelta = (Eye - eye) / duration;
+	AnimationCounter = duration;
+}
+
+void Camera::PlayAnimation(Vector3f& target) {
+	LookDelta = (Look - target) / AnimationLookTransitionDuration;
+	AnimationCounter = -AnimationLookTransitionDuration - 1;
 }
 
 void Camera::Pivot(float pitch, float yaw) {
@@ -66,7 +88,6 @@ void Camera::Pivot(float pitch, float yaw) {
 	Camera::u = Vector3f::Cross(Vector3f::Up(), n);
 	Camera::u.normalize();
 	Camera::v = Vector3f::Cross(n, Camera::u);
-	float gay = v.getMagnitude();
 
 	// If the look distance (distance between eye and look) is greater than zero, then recalculate the position of the camera.
 	float lookDistance = (Eye - Look).getMagnitude();
@@ -114,11 +135,26 @@ void Camera::Zoom(float amount) {
 }
 
 void Camera::Interrupt() {
-	//SetModelViewMatrix();
+	AnimationCounter = 0;
+	EyeDelta = Vector3f::Zero();
+	LookDelta = Vector3f::Zero();
 }
 
 void Camera::Update(float deltaTime) {
-	//SetModelViewMatrix();
+	if (AnimationCounter < 0) {
+		if (AnimationCounter < -1) {
+			Look = Look - LookDelta;
+			LookAt();
+			AnimationCounter++;
+		}
+		Pivot(0.0f, deltaTime / 1000);
+	}
+	else if (AnimationCounter > 0) {
+		Eye = Eye - EyeDelta;
+		Look = Look - LookDelta;
+		LookAt();
+		AnimationCounter--;
+	}
 }
 
 void Camera::SetModelViewMatrix() {

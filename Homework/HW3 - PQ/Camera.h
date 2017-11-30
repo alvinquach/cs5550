@@ -15,9 +15,15 @@ public:
 	/// <summary>Distance of the far-Z clipping plane from the camera.</summary>
 	static const float FarZClipPlane;
 
-	static void LookAt(Vector3f& eye, Vector3f& look, Vector3f& up);
+	static void LookAt(Vector3f& eye, Vector3f& look);
 
-	static void LookAt(Vector3f& eye, Vector3f& look, Vector3f& up, float duration);
+	static void LookAt();
+
+	static void TransitionTo(Vector3f& look, int duration);
+
+	static void TransitionTo(Vector3f& eye, Vector3f& look, int duration);
+
+	static void PlayAnimation(Vector3f& target);
 
 	/// <summary>Pivots the camera about its focus point, relative to the camera's local axes.</summary>
 	static void Pivot(float pitch, float yaw);
@@ -43,6 +49,9 @@ public:
 	static void Update(float deltaTime);
 
 private:
+	static const int AnimationLookTransitionDuration;
+	static int AnimationCounter;
+	static Vector3f LookDelta, EyeDelta;
 	static Vector3f Look, Eye, u, v, n;
 	static void Yaw(float angle);
 	static void Pitch(float angle);

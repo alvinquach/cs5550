@@ -68,13 +68,45 @@ void Input::PassiveMotion(int x, int y) {
 }
 
 void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
-	cout << "Keyboard Input: (" << key << ", " << mouseX << ", " << mouseY << ")" << endl;
-	ModifiersTest();
+	switch (key) {
+
+	// Clear the screen and make the program ready to create a new model.
+	case 'c':
+	case 'C':
+		// TODO Implement this
+		break;
+
+	// Make the camera focus on the object.
+	case 'f':
+	case 'F':
+		Camera::TransitionTo(Vector3f::Zero(), 15); // TODO use correct vector
+		break;
+
+	// Toggle the model to render between gold and plastic materials.
+	case 'g':
+	case 'G':
+		// TODO Implement this
+		break;
+
+	// Move the camera along a predefined path.
+	case 'm':
+	case 'M':
+		Camera::PlayAnimation(Vector3f::Zero()); // TODO use correct vector
+		break;
+
+	// Move the camera to face the XY plane.
+	case 'v':
+	case 'V':
+		Camera::TransitionTo(Vector3f(0.0f, 0.0f, 11.95f), Vector3f::Zero(), 15);
+		break;
+
+	default:
+		break;
+	}
 }
 
 void Input::SpecialKeyboard(int key, int mouseX, int mouseY) {
-	cout << "Special Input: (" << key << ", " << mouseX << ", " << mouseY << ")" << endl;
-	ModifiersTest();
+	
 }
 
 void Input::ModifiersTest() {

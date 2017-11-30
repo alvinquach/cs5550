@@ -12,7 +12,7 @@
 
 const string Window::WindowName = "CS5550 - Homework 2 Programming - by Alvin Quach";
 const float Window::ScreenWidth = 960.0;
-const float Window::ScreenHeight = 540.0;
+const float Window::ScreenHeight = 720.0;
 const int Window::ScreenPositionX = 50;
 const int Window::ScreenPositionY = 50;
 const float Window::FrameRate = 60.0;
