@@ -6,6 +6,11 @@
 
 #include "camera.h"
 
+
+#include <iostream>
+using std::cout;
+using std::endl;
+
 const float Camera::FieldOfView = 45.0;
 const float Camera::NearZClipPlane = 0.1;
 const float Camera::FarZClipPlane = 100.0;
@@ -24,6 +29,10 @@ float* Camera::ModelViewMatrix = new float[16];
 int Camera::AnimationCounter = 0;
 Vector3f Camera::LookDelta = Vector3f::Zero();
 Vector3f Camera::EyeDelta = Vector3f::Zero();
+
+float Camera::GetLookDistance() {
+	return (Look - Eye).getMagnitude();
+}
 
 void Camera::LookAt(Vector3f& eye, Vector3f& look) {
 	Eye = eye;
@@ -180,15 +189,10 @@ float* Camera::GetModelViewMatrix() {
 	return ModelViewMatrix;
 }
 
-float* Camera::GetProjectionMatrix() {
-	float N = NearZClipPlane;
-	float F = FarZClipPlane;
-	float vert = tan(M_PI / 360 * FieldOfView);
-	float horz = Window::ScreenWidth / Window::ScreenHeight * vert;
-	float* p = new float[16];
-	p[0] = 1 / horz;	p[4] = 0.0f;		p[8] = 0.0f;					p[12] = 0.0f;
-	p[1] = 0.0f;		p[5] = 1 / vert;	p[9] = 0.0f;					p[13] = 0.0f;
-	p[2] = 0.0f;		p[6] = 0.0f;		p[10] = -(F + N) / (F - N);		p[14] = -2 * F * N / (F - N);
-	p[3] = 0.0f;		p[7] = 0.0f;		p[11] = -1.0f;					p[15] = 1.0f;
-	return p;
+Vector3f& Camera::GetWorldCoordinates(float x, float y, float distance) {
+	float aspect = Window::ScreenWidth / Window::ScreenHeight;
+	float tanTheta = tan(M_PI / 180 * FieldOfView / 2);
+	float thetaX = atan((2 * x / Window::ScreenWidth - 1) * aspect * tanTheta);
+	float thetaY = atan((2 * (1 - y / Window::ScreenHeight) - 1) * tanTheta);
+	return Eye + distance * (tan(thetaX) * u + tan(thetaY) * v - n);
 }

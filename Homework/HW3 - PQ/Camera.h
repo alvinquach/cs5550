@@ -15,6 +15,8 @@ public:
 	/// <summary>Distance of the far-Z clipping plane from the camera.</summary>
 	static const float FarZClipPlane;
 
+	static float GetLookDistance();
+
 	static void LookAt(Vector3f& eye, Vector3f& look);
 
 	static void LookAt();
@@ -51,7 +53,8 @@ public:
 	static void Update(float deltaTime);
 
 	static float* GetModelViewMatrix();
-	static float* GetProjectionMatrix();
+
+	static Vector3f& GetWorldCoordinates(float x, float y, float distance);
 
 private:
 	static const int AnimationLookTransitionDuration;

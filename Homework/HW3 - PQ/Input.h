@@ -17,6 +17,7 @@ private:
 	static int ActiveButton;
 	static Vector2f InitialScreenCoordinates;
 	static Vector2f InitialMouseCoordinates;
+	static Vector3f LastWorldCoordinates;
 	static Vector2f LastMouseCoordinates;
 	static Vector3f InitialTransformation;
 	static void ResetTransformMode();

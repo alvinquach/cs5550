@@ -17,9 +17,20 @@ using std::endl;
 bool Input::SampleMouseOnNextUpdate = false;
 int Input::Modifiers = 0;
 int Input::ActiveButton = -1;
+
+/// <summary>Initial coordinates of the object on the screen.</summary>
 Vector2f Input::InitialScreenCoordinates = Vector2f::Zero();
+
+/// <summary>Initial coordinates of the mouse on the screen.</summary>
 Vector2f Input::InitialMouseCoordinates = Vector2f::Zero();
+
+/// <summary>Latest coordinates of the mouse in the world.</summary>
+Vector3f Input::LastWorldCoordinates = Vector3f::Zero();
+
+/// <summary>Latest coordinates of the mouse on the screen.</summary>
 Vector2f Input::LastMouseCoordinates = Vector2f::Zero();
+
+/// <summary>Initial transformation of the object.</summary>
 Vector3f Input::InitialTransformation = Vector3f::Zero();
 
 void Input::Mouse(int button, int state, int x, int y) {
@@ -47,7 +58,7 @@ void Input::Mouse(int button, int state, int x, int y) {
 		}
 	}
 	else if (state == GLUT_UP) {
-		if (button == GLUT_MIDDLE_BUTTON) {
+		if (button == GLUT_MIDDLE_BUTTON && ActiveButton == GLUT_MIDDLE_BUTTON) {
 			Modifiers = 0;
 			ActiveButton = -1; // Reset active button.
 		}
@@ -61,6 +72,7 @@ void Input::Motion(int x, int y) {
 
 	if (SampleMouseOnNextUpdate) {
 		LastMouseCoordinates = InitialMouseCoordinates = Vector2f(x, y);
+		LastWorldCoordinates = Camera::GetWorldCoordinates(x, y, Camera::GetLookDistance());
 		SampleMouseOnNextUpdate = false;
 	}
 
@@ -99,21 +111,17 @@ void Input::Motion(int x, int y) {
 
 	else if (ActiveButton == 'g') {
 		Vector2f& asdf = Utils::GetScreenCoordnates(Vector3f::Zero());
-		//cout << asdf.getX() << " " << asdf.getY() << endl;
-		Model::GetMesh().translate(Vector3f(deltaX / 100.0, 0, deltaY / 100.0));
+		Vector3f worldCoord = Camera::GetWorldCoordinates(x, y, Camera::GetLookDistance());
+		Model::GetMesh().translate(worldCoord - LastWorldCoordinates);
+		LastWorldCoordinates = worldCoord;
 	}
 
 	else if (ActiveButton == 'r') {
 		Vector2f& asdf = Utils::GetScreenCoordnates(Vector3f::Zero());
-		//cout << asdf.getX() << " " << asdf.getY() << endl;
 		Model::GetMesh().rotate(Vector3f(deltaX / 10.0, 0, deltaY / 10.0));
 	}
 
 	else if (ActiveButton == 's') {
-		cout << InitialMouseCoordinates.getX() << " " << InitialMouseCoordinates.getY() << endl;
-		cout << x << " " << y << endl;
-		cout << InitialScreenCoordinates.getX() << " " << InitialScreenCoordinates.getY() << endl;
-		cout << endl;
 		float initialDistance = (InitialMouseCoordinates - InitialScreenCoordinates).getMagnitude();
 		float currentDistance = (Vector2f(x, y) - InitialScreenCoordinates).getMagnitude();
 		Model::GetMesh().setScale(currentDistance / initialDistance * InitialTransformation.getX());
@@ -224,6 +232,7 @@ void Input::ModifiersTest() {
 }
 
 void Input::ResetTransformMode() {
+	cout << "RESET" << endl;
 	switch (ActiveButton) {
 	case 'g':
 		Model::GetMesh().setTranslation(InitialTransformation);
