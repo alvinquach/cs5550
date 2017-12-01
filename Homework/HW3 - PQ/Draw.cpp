@@ -129,7 +129,7 @@ void Draw::DrawMesh(Mesh& mesh) {
 		Face& face = faces[f];
 		for (int v = 0; v < (int)face.vertices.size(); v++) {
 			Vertex& vertexInfo = face.vertices[v];
-			Vector3f normal = normals[vertexInfo.normalIndex];
+			Vector3f normal = mesh.getScale() * normals[vertexInfo.normalIndex];
 			Vector3f vertex = vertices[vertexInfo.vertexIndex];
 
 			glNormal3f(normal.getX(), normal.getY(), normal.getZ());
