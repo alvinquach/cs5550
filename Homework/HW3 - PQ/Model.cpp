@@ -26,6 +26,7 @@ void Model::RevolveSpline(Spline& spline, int slices) {
 
 	vector<Vector3f>& points = spline.getPoints();
 	int pointCount = (int)points.size();
+	bool reverseNormals = false;
 
 	for (int i = 0; i <= slices; i++) {
 
@@ -77,7 +78,14 @@ void Model::RevolveSpline(Spline& spline, int slices) {
 					for (int k = 0; k < 4; k++) {
 						vertices.push_back(ModelMesh.vertices[vert[k]]);
 					}
-					Vector3f& normal = Utils::NewellsMethod(vertices);
+					Vector3f& normal = Utils::NewellsMethod(vertices, reverseNormals);
+
+					// Check for reversed normals.
+					if (i == 1 && j == 1 && Vector3f::Dot(ModelMesh.vertices[0], normal) < 0) {
+						normal.setMagnitude(-1.0f);
+						reverseNormals = true;
+					}
+
 					ModelMesh.normals.push_back(normal);
 
 					// Create the face and add it to the mesh.

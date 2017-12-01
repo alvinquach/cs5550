@@ -142,7 +142,7 @@ void Utils::AddPointToSpline(Vector3f& start, Vector3f& end, Spline& spline) {
 	spline.getPoints().push_back(pHit);
 }
 
-Vector3f Utils::NewellsMethod(vector<Vector3f>& vertices) {
+Vector3f Utils::NewellsMethod(vector<Vector3f>& vertices, bool reverse) {
 	float x = 0.0f;
 	float y = 0.0f;
 	float z = 0.0f;
@@ -155,6 +155,6 @@ Vector3f Utils::NewellsMethod(vector<Vector3f>& vertices) {
 		z += (vertex.getX() - nextVertex.getX()) * (vertex.getY() + nextVertex.getY());
 	}
 	Vector3f result = Vector3f(x, y, z);
-	result.normalize();
+	result.setMagnitude(reverse ? -1.0f : 1.0f);
 	return result;
 }
