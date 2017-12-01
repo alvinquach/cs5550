@@ -3,7 +3,7 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include <iostream>
+#include <windows.h>
 
 #include "Camera.h"
 #include "Draw.h"
@@ -11,9 +11,6 @@
 #include "Utils.h"
 
 #include "Input.h"
-
-using std::cout;
-using std::endl;
 
 // Initialize variables
 int Input::GridMode = 0; // 0 = XZ, 1 = YZ, 2 = XY
@@ -39,7 +36,6 @@ float* Input::InitialTransformation = Utils::Identity4x4();
 float Input::ViewPlaneDistance = 0.0f;
 
 void Input::Mouse(int button, int state, int x, int y) {
-	cout << "Mouse Input: (" << button << ", " << state << ", " << x << ", " << y << ")" << endl;
 	if (state == GLUT_DOWN) {
 		if (ActiveButton < 0) {
 			if (button == GLUT_MIDDLE_BUTTON) {
@@ -269,21 +265,7 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 	}
 }
 
-void Input::ModifiersTest() {
-	cout << Modifiers << endl;
-	if (Modifiers & GLUT_ACTIVE_SHIFT) {
-		cout << "Shift pressed." << endl;
-	}
-	if (Modifiers & GLUT_ACTIVE_CTRL) {
-		cout << "Ctrl pressed." << endl;
-	}
-	if (Modifiers & GLUT_ACTIVE_ALT) {
-		cout << "Alt pressed." << endl;
-	}
-}
-
 void Input::ResetTransformMode() {
-	cout << "RESET" << endl;
 	switch (ActiveButton) {
 	case 'g':
 		Model::GetMesh().setTranslation(Vector3f(InitialTransformation[0], InitialTransformation[1], InitialTransformation[2]));
