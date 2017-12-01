@@ -24,7 +24,6 @@ int main(int argc, char **argv) {
 	glutMotionFunc(Input::Motion);
 	glutPassiveMotionFunc(Input::Motion);
 	glutKeyboardFunc(Input::Keyboard);
-	glutSpecialFunc(Input::SpecialKeyboard);
 	glutDisplayFunc(display);
 	
 	callTimerFunc();

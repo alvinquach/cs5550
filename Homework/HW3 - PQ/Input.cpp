@@ -156,6 +156,14 @@ void Input::Motion(int x, int y) {
 void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 	switch (key) {
 
+	// Do the same as left click when in transform/edit Mode.
+	case ' ':
+		if (OperationMode && ActiveButton != GLUT_MIDDLE_BUTTON) {
+			CompleteTransformMode();
+			ActiveButton = -1;
+		}
+		break;
+
 	// Clear the screen and make the program ready to create a new model.
 	case 'c':
 	case 'C':
@@ -166,7 +174,9 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 	// Make the camera focus on the object.
 	case 'f':
 	case 'F':
-		Camera::TransitionTo(Model::GetMesh().getTranslation(), 5.0f, 15); // TODO get object size
+		if (ActiveButton < 0) {
+			Camera::TransitionTo(Model::GetMesh().getTranslation(), 5.0f, 15); // TODO get object size
+		}
 		break;
 
 	// Enter translate mode.
@@ -179,6 +189,7 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 				SampleMouseOnNextUpdate = true;
 			}
 			ActiveButton = 'g';
+			Camera::Interrupt();
 		}
 		break;
 
@@ -191,7 +202,9 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 	// Move the camera along a predefined path.
 	case 'm':
 	case 'M':
-		Camera::PlayAnimation(Model::GetMesh().getTranslation());
+		if (ActiveButton < 0) {
+			Camera::PlayAnimation(Model::GetMesh().getTranslation());
+		}
 		break;
 
 	// Reset object transformations
@@ -211,6 +224,7 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 				SampleMouseOnNextUpdate = true;
 			}
 			ActiveButton = 'r';
+			Camera::Interrupt();
 		}
 		break;
 
@@ -225,6 +239,7 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 				SampleMouseOnNextUpdate = true;
 			}
 			ActiveButton = 's';
+			Camera::Interrupt();
 		}
 		break;
 
@@ -252,10 +267,6 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 	default:
 		break;
 	}
-}
-
-void Input::SpecialKeyboard(int key, int mouseX, int mouseY) {
-	
 }
 
 void Input::ModifiersTest() {
