@@ -1,5 +1,5 @@
 // Alvin Quach, 300793745
-// CS5550 F17 - HW2 PQ
+// CS5550 F17 - HW3 PQ
 
 #include "Vector3f.h"
 #include <math.h>

@@ -1,3 +1,6 @@
+// Alvin Quach, 300793745
+// CS5550 F17 - HW3 PQ
+
 #pragma once
 #include "Vector2f.h"
 #include "Vector3f.h"

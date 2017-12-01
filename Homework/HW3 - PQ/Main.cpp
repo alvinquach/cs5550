@@ -1,3 +1,6 @@
+// Alvin Quach, 300793745
+// CS5550 F17 - HW3 PQ
+
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <windows.h>  //suitable when using Windows 95/98/NT
