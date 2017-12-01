@@ -112,23 +112,33 @@ void Draw::DrawSpline(Spline& spline) {
 }
 
 void Draw::DrawMesh(Mesh& mesh) {
+
+	// Set the material for the object.
+	SetMaterial();
+
+	// Transform the object.
+	glPushMatrix();
+	Model::GetMesh().applyTransformations();
+
 	vector<Vector3f>& vertices = mesh.vertices;
 	vector<Vector3f>& normals = mesh.normals;
 	vector<Face>& faces = mesh.faces;
+
 	for (int f = 0; f < (int)faces.size(); f++) {
 		glBegin(GL_POLYGON);
 		Face& face = faces[f];
 		for (int v = 0; v < (int)face.vertices.size(); v++) {
-			//Vector3f normal = normals[face.vertices[v].normalIndex];
-			int vertexIndex = face.vertices[v].vertexIndex;
-			if (vertexIndex >= (int)vertices.size()) {
-				continue;
-			}
-			Vector3f vertex = vertices[vertexIndex];
+			Vertex& vertexInfo = face.vertices[v];
+			Vector3f normal = normals[vertexInfo.normalIndex];
+			Vector3f vertex = vertices[vertexInfo.vertexIndex];
+
+			glNormal3f(normal.getX(), normal.getY(), normal.getZ());
 			glVertex3f(vertex.getX(), vertex.getY(), vertex.getZ());
 		}
 		glEnd();
 	}
+
+	glPopMatrix();
 }
 
 void Draw::DrawTestObject() {

@@ -1,7 +1,11 @@
 #pragma once
+#include <vector>
+
 #include "Spline.h"
 #include "Vector2f.h"
 #include "Vector3f.h"
+
+using std::vector;
 
 class Utils {
 public:
@@ -16,6 +20,6 @@ public:
 	static void PrintVector3f(Vector3f& vector);
 	static Vector2f& GetScreenCoordnates(Vector3f& point);
 	static void AddPointToSpline(Vector3f& start, Vector3f& end, Spline& spline);
-	static Vector3f& NewellsMethod(Vector3f* vertices);
+	static Vector3f NewellsMethod(vector<Vector3f>& vertices);
 	static float* test();
 };

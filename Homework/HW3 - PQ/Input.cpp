@@ -53,8 +53,8 @@ void Input::Mouse(int button, int state, int x, int y) {
 				Vector3f& start = Camera::GetEyePosition();
 				Vector3f& end = Camera::GetWorldCoordinatesOf(x, y, Camera::FarZClipPlane);
 				Utils::AddPointToSpline(start, end, Model::GetSpline());
-				if (button == GLUT_RIGHT_BUTTON) {
-					Model::RevolveSpline(Model::GetSpline(), 16);
+				if (button == GLUT_RIGHT_BUTTON && (int)Model::GetSpline().getPoints().size() > 1) {
+					Model::RevolveSpline(Model::GetSpline(), Model::RevolutionSliceCount);
 					OperationMode = 1;
 				}
 				return;
@@ -159,7 +159,8 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 	// Clear the screen and make the program ready to create a new model.
 	case 'c':
 	case 'C':
-		// TODO Implement this
+		Model::Reset();
+		OperationMode = 0;
 		break;
 
 	// Make the camera focus on the object.

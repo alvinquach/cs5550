@@ -5,6 +5,7 @@
 
 #include "Model.h"
 
+int Model::RevolutionSliceCount = 128;
 Mesh& Model::ModelMesh = Mesh();
 Spline& Model::ModelSpline = Spline();
 
@@ -21,14 +22,14 @@ Spline& Model::GetSpline() {
 	return ModelSpline;
 }
 
-void Model::RevolveSpline(Spline& spline, int count) {
+void Model::RevolveSpline(Spline& spline, int slices) {
 
 	vector<Vector3f>& points = spline.getPoints();
 	int pointCount = (int)points.size();
 
-	for (int i = 0; i <= count; i++) {
+	for (int i = 0; i <= slices; i++) {
 
-		float theta = 2 * M_PI / count * i;
+		float theta = 2 * M_PI / slices * i;
 		float cosTheta = cos(theta);
 		float sinTheta = sin(theta);
 
@@ -44,7 +45,7 @@ void Model::RevolveSpline(Spline& spline, int count) {
 				ModelMesh.vertices.push_back(point);
 			}
 			else {
-				if (i < count) {
+				if (i < slices) {
 
 					// Rotate and insert vertices into list.
 					float* homo = new float[4];
@@ -62,15 +63,28 @@ void Model::RevolveSpline(Spline& spline, int count) {
 
 				// Set face vertices and normals
 				if (j > 0) {
-					int vert1 = j - 1 + (i == count ? 0 : i) * pointCount;
-					int vert2 = j - 1 + (i - 1) * pointCount;
-					int vert3 = j + (i - 1) * pointCount;
-					int vert4 = j + (i == count ? 0 : i) * pointCount;
+
+					// Calculate the vertex indices.
+					int vert[4] = { 
+						j - 1 + (i == slices ? 0 : i) * pointCount,
+						j - 1 + (i - 1) * pointCount,
+						j + (i - 1) * pointCount,
+						j + (i == slices ? 0 : i) * pointCount
+					};
+
+					// Calculate the normals for the face.
+					vector<Vector3f> vertices;
+					for (int k = 0; k < 4; k++) {
+						vertices.push_back(ModelMesh.vertices[vert[k]]);
+					}
+					Vector3f& normal = Utils::NewellsMethod(vertices);
+					ModelMesh.normals.push_back(normal);
+
+					// Create the face and add it to the mesh.
 					Face face = Face();
-					face.vertices.push_back({ vert1, 0 });
-					face.vertices.push_back({ vert2, 0 });
-					face.vertices.push_back({ vert3, 0 });
-					face.vertices.push_back({ vert4, 0 });
+					for (int k = 0; k < 4; k++) {
+						face.vertices.push_back({ vert[k], (int)ModelMesh.normals.size() - 1 });
+					}
 					ModelMesh.faces.push_back(face);
 				}
 			}
