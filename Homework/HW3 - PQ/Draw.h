@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 
+#include "Mesh.h"
 #include "Spline.h"
 #include "Vector3f.h"
 
@@ -12,6 +13,7 @@ public:
 	static void DrawAxes();
 	static void DrawGrid(int mode);
 	static void DrawSpline(Spline& spline);
+	static void DrawMesh(Mesh& mesh);
 	static void DrawTestObject();
 	static void ToggleMaterial();
 

@@ -38,7 +38,12 @@ void display(void) {
 	glEnable(GL_LIGHT0);
 	Draw::DrawAxes();
 	Draw::DrawGrid(Input::GridMode);
-	Draw::DrawSpline(Model::GetSpline());
+	if (!Input::OperationMode) {
+		Draw::DrawSpline(Model::GetSpline());
+	}
+	else {
+		Draw::DrawMesh(Model::GetMesh());
+	}
 	glutSwapBuffers();
 }
 

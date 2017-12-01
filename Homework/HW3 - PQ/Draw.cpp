@@ -111,6 +111,26 @@ void Draw::DrawSpline(Spline& spline) {
 	glEnable(GL_LIGHTING);
 }
 
+void Draw::DrawMesh(Mesh& mesh) {
+	vector<Vector3f>& vertices = mesh.vertices;
+	vector<Vector3f>& normals = mesh.normals;
+	vector<Face>& faces = mesh.faces;
+	for (int f = 0; f < (int)faces.size(); f++) {
+		glBegin(GL_POLYGON);
+		Face& face = faces[f];
+		for (int v = 0; v < (int)face.vertices.size(); v++) {
+			//Vector3f normal = normals[face.vertices[v].normalIndex];
+			int vertexIndex = face.vertices[v].vertexIndex;
+			if (vertexIndex >= (int)vertices.size()) {
+				continue;
+			}
+			Vector3f vertex = vertices[vertexIndex];
+			glVertex3f(vertex.getX(), vertex.getY(), vertex.getZ());
+		}
+		glEnd();
+	}
+}
+
 void Draw::DrawTestObject() {
 	SetMaterial();
 	glPushMatrix();

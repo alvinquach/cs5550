@@ -54,7 +54,8 @@ void Input::Mouse(int button, int state, int x, int y) {
 				Vector3f& end = Camera::GetWorldCoordinatesOf(x, y, Camera::FarZClipPlane);
 				Utils::AddPointToSpline(start, end, Model::GetSpline());
 				if (button == GLUT_RIGHT_BUTTON) {
-					// TODO Terminate
+					Model::RevolveSpline(Model::GetSpline(), 16);
+					OperationMode = 1;
 				}
 				return;
 			}
