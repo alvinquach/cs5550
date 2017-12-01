@@ -1,3 +1,5 @@
+Latest code can be found at: https://github.com/alvinquach/cs5550/tree/master/Homework/HW3%20-%20PQ
+
 ## Compiling the Project
 
 To compile this project in VC++, make sure all the .h files are added under Header Files, and all the .cpp files are added under Source Files. 
