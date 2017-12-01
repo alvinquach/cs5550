@@ -18,6 +18,10 @@ float* Utils::test() {
 	return m;
 }
 
+float Utils::Clamp(float value, float min, float max) {
+	return value < min ? min : value > max ? max : value;
+}
+
 void Utils::CopyMatrix(float* from, float* to, int size) {
 	for (int i = 0; i < size; i++) {
 		to[i] = from[i];
@@ -92,10 +96,6 @@ void Utils::PrintVector3f(Vector3f & vector) {
 	cout << "(" << vector.getX() << ", " << vector.getY() << ", " << vector.getZ() << ")" << endl;
 }
 
-float Utils::Clamp(float value, float min, float max) {
-	return value < min ? min : value > max ? max : value;
-}
-
 Vector2f& Utils::GetScreenCoordnates(Vector3f& point) {
 	float* homo = new float[4];
 	homo[0] = point.getX();
@@ -121,4 +121,26 @@ Vector2f& Utils::GetScreenCoordnates(Vector3f& point) {
 	delete[] multiplied;
 
 	return result;
+}
+
+void Utils::AddPointToSpline(Vector3f& start, Vector3f& end, Spline& spline) {
+	cout << "AddPointToSpline: ";
+	Vector3f& n = Vector3f::Forward();
+	Vector3f& c = end - start;
+	c.normalize();
+	float nc = Vector3f::Dot(n, c);
+	if (!(nc > 0.0f || nc < 0.0f)) {
+		cout << "n dot c is 0" << endl;
+		return;
+	}
+	float tHit = Vector3f::Dot(n, -1 * start) / nc;
+	Vector3f& pHit = start + tHit * c;
+	cout << endl << "  distance: " << Vector3f::Distance(pHit, start) << endl;
+	if (Vector3f::Distance(pHit, start) > Vector3f::Distance(end, start)) {
+		return;
+	}
+	cout << "  ";
+	PrintVector3f(pHit);
+	cout << endl;
+	spline.getPoints().push_back(pHit);
 }

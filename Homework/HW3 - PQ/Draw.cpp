@@ -59,8 +59,7 @@ void Draw::DrawAxes() {
 void Draw::DrawGrid(int mode) {
 	glDisable(GL_LIGHTING);
 	glBegin(GL_LINES);
-	glColor3f(0.29f, 0.29f, 0.29f);
-
+	glColor3f(0.29f, 0.29f, 0.29f); // Same color as in Blender
 	float dist = 0.0f;
 	while (true) {
 		if (mode == 0) {
@@ -103,6 +102,15 @@ void Draw::DrawGrid(int mode) {
 	glEnable(GL_LIGHTING);
 }
 
+void Draw::DrawSpline(Spline& spline) {
+	glDisable(GL_LIGHTING);
+	glColor3f(0, 0, 0);
+	DrawPoints(spline.getPoints(), GL_LINE_STRIP);
+	glPointSize(3.0f);
+	DrawPoints(spline.getPoints(), GL_POINTS);
+	glEnable(GL_LIGHTING);
+}
+
 void Draw::DrawTestObject() {
 	SetMaterial();
 	glPushMatrix();
@@ -124,6 +132,15 @@ void Draw::SetMaterial() {
 		glMaterialfv(GL_FRONT, GL_SPECULAR, PlasticSpecular);
 		glMaterialfv(GL_FRONT, GL_SHININESS, PlasticShininess);
 	}
+}
+
+void Draw::DrawPoints(vector<Vector3f>& points, GLenum mode) {
+	glBegin(mode);
+	for (int i = 0; i < (int)points.size(); i++) {
+		Vector3f& point = points[i];
+		glVertex3f(point.getX(), point.getY(), point.getZ());
+	}
+	glEnd();
 }
 
 void Draw::ToggleMaterial() {

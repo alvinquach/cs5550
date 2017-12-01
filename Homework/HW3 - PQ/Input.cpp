@@ -16,7 +16,8 @@ using std::cout;
 using std::endl;
 
 // Initialize variables
-int Input::GridMode = 0;
+int Input::GridMode = 0; // 0 = XZ, 1 = YZ, 2 = XY
+int Input::OperationMode = 0; // 0 = Vertex Insertion Mode, 1 = Transform/Edit Mode
 bool Input::SampleMouseOnNextUpdate = false;
 int Input::Modifiers = 0;
 int Input::ActiveButton = -1;
@@ -38,7 +39,6 @@ float* Input::InitialTransformation = Utils::Identity4x4();
 float Input::ViewPlaneDistance = 0.0f;
 
 void Input::Mouse(int button, int state, int x, int y) {
-	float* m = Utils::test();
 	cout << "Mouse Input: (" << button << ", " << state << ", " << x << ", " << y << ")" << endl;
 	if (state == GLUT_DOWN) {
 		if (ActiveButton < 0) {
@@ -46,7 +46,16 @@ void Input::Mouse(int button, int state, int x, int y) {
 				Modifiers = glutGetModifiers();
 				SampleMouseOnNextUpdate = true;
 			}
-			if (button == GLUT_LEFT_BUTTON) {
+			else if (OperationMode && button == GLUT_LEFT_BUTTON) {
+				return;
+			}
+			else if (!OperationMode && (button == GLUT_RIGHT_BUTTON || button == GLUT_LEFT_BUTTON)) {
+				Vector3f& start = Camera::GetEyePosition();
+				Vector3f& end = Camera::GetWorldCoordinatesOf(x, y, Camera::FarZClipPlane);
+				Utils::AddPointToSpline(start, end, Model::GetSpline());
+				if (button == GLUT_RIGHT_BUTTON) {
+					// TODO Terminate
+				}
 				return;
 			}
 			ActiveButton = button; // Set active button.
@@ -54,13 +63,15 @@ void Input::Mouse(int button, int state, int x, int y) {
 			Camera::Interrupt();
 		}
 		else if (ActiveButton != GLUT_MIDDLE_BUTTON) {
-			if (button == GLUT_RIGHT_BUTTON) {
-				ResetTransformMode();
-				ActiveButton = -1;
-			}
-			else if (button == GLUT_LEFT_BUTTON) {
-				CompleteTransformMode();
-				ActiveButton = -1;
+			if (OperationMode) {
+				if (button == GLUT_RIGHT_BUTTON) {
+					ResetTransformMode();
+					ActiveButton = -1;
+				}
+				else if (button == GLUT_LEFT_BUTTON) {
+					CompleteTransformMode();
+					ActiveButton = -1;
+				}
 			}
 		}
 	}
@@ -111,7 +122,7 @@ void Input::Motion(int x, int y) {
 	}
 
 	else if (ActiveButton == GLUT_RIGHT_BUTTON) {
-		if (deltaX > 0 || deltaY > 0) {
+		if (OperationMode && (deltaX > 0 || deltaY > 0)) {
 			ActiveButton = 'g';
 			Utils::CopyMatrix(Model::GetMesh().getTranslation().asArray(), InitialTransformation, 3);
 			SampleMouseOnNextUpdate = true;

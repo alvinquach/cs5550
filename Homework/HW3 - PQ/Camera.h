@@ -17,6 +17,8 @@ public:
 
 	static float GetLookDistance();
 
+	static Vector3f& GetEyePosition();
+
 	static void LookAt(Vector3f& eye, Vector3f& look);
 
 	static void LookAt();
@@ -54,7 +56,7 @@ public:
 
 	static float* GetModelViewMatrix();
 
-	static Vector3f& GetWorldCoordinatesOf(float x, float y, float distance);
+	static Vector3f GetWorldCoordinatesOf(float x, float y, float distance);
 
 	/// <summary>Returns a Euler representation of a rotation about the camera's n direction by an angle in radians.</summary>
 	static float* GetRotationMatrixAboutLookDirection(float angle);

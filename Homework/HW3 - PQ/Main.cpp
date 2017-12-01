@@ -5,7 +5,8 @@
 #include <gl/glu.h>
 #include "glut.h"
 
-#include"Input.h"
+#include "Input.h"
+#include "Model.h"
 #include "Window.h"
 
 #include "Main.h"
@@ -37,7 +38,7 @@ void display(void) {
 	glEnable(GL_LIGHT0);
 	Draw::DrawAxes();
 	Draw::DrawGrid(Input::GridMode);
-	Draw::DrawTestObject();
+	Draw::DrawSpline(Model::GetSpline());
 	glutSwapBuffers();
 }
 
