@@ -32,6 +32,9 @@ public:
 	float getY();
 	void setY(float y);
 
+	/// <summary>Returns the angle between the vector and the positive x-axis.</summary>
+	float angle();
+
 	/// <summary>Returns a unit vector with the same direction as this vector.</summary>
 	Vector2f unitVector();
 

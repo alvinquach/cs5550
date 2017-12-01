@@ -21,6 +21,7 @@ void Window::SetWindow() {
 	glutCreateWindow(WindowName.c_str());
 
 	glMatrixMode(GL_PROJECTION);
+	glClearColor(0.22f, 0.22f, 0.22f, 0.0f); // Same background color as blender.
 	glLoadIdentity();
 	gluPerspective(Camera::FieldOfView, ScreenWidth / ScreenHeight, Camera::NearZClipPlane, Camera::FarZClipPlane);
 }

@@ -125,8 +125,9 @@ void Input::Motion(int x, int y) {
 	}
 
 	else if (ActiveButton == 'r') {
-		float angle = M_PI / 180 * deltaX;
-		float* rot = Camera::GetRotationMatrixAboutLookDirection(angle);
+		float ang1 = (Vector2f(x, y) - InitialScreenCoordinates).angle();
+		float ang2 = (LastMouseCoordinates - InitialScreenCoordinates).angle();
+		float* rot = Camera::GetRotationMatrixAboutLookDirection(ang2 - ang1);
 		Model::GetMesh().rotate(rot);
 		delete[] rot;
 	}
@@ -192,6 +193,7 @@ void Input::Keyboard(unsigned char key, int mouseX, int mouseY) {
 		if (ActiveButton < 0 || ActiveButton == 'g' || ActiveButton == 's') {
 			ResetTransformMode();
 			Utils::CopyMatrix(Model::GetMesh().getRotation(), InitialTransformation, 16);
+			InitialScreenCoordinates = Utils::GetScreenCoordnates(Model::GetMesh().getTranslation());
 			if (ActiveButton < 0) {
 				SampleMouseOnNextUpdate = true;
 			}

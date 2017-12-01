@@ -209,6 +209,7 @@ float* Camera::GetRotationMatrixAboutLookDirection(float angle) {
 	float cosTheta = cos(angle);
 	float sinTheta = sin(angle);
 	float* result = new float[16];
+	// See: https://en.wikipedia.org/wiki/Rotation_matrix#Rotation_matrix_from_axis_and_angle
 	result[0] = cosTheta + x * x * (1 - cosTheta);			result[4] = x * y * (1 - cosTheta) - z * sinTheta;		result[8] = x * z * (1 - cosTheta) + y * sinTheta;		result[12] = 0.0f;
 	result[1] = y * x * (1 - cosTheta) + z * sinTheta;		result[5] = cosTheta + y * y * (1 - cosTheta);			result[9] = y * z * (1 - cosTheta) - x * sinTheta;		result[13] = 0.0f;
 	result[2] = z * x * (1 - cosTheta) - y * sinTheta;		result[6] = z * y * (1 - cosTheta) + x * sinTheta;		result[10] = cosTheta + z * z * (1 - cosTheta);			result[14] = 0.0f;

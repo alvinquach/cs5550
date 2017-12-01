@@ -50,6 +50,10 @@ void Vector2f::setY(float y) {
 	components[1] = y;
 }
 
+float Vector2f::angle() {
+	return atan2(components[1], components[0]);
+}
+
 Vector2f Vector2f::unitVector() {
 	float magnitude = getMagnitude();
 	return Vector2f(components[0] / magnitude, components[1] / magnitude);
