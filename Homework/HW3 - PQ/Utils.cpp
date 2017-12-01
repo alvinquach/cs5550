@@ -124,23 +124,20 @@ Vector2f& Utils::GetScreenCoordnates(Vector3f& point) {
 }
 
 void Utils::AddPointToSpline(Vector3f& start, Vector3f& end, Spline& spline) {
-	cout << "AddPointToSpline: ";
 	Vector3f& n = Vector3f::Forward();
 	Vector3f& c = end - start;
 	c.normalize();
 	float nc = Vector3f::Dot(n, c);
 	if (!(nc > 0.0f || nc < 0.0f)) {
-		cout << "n dot c is 0" << endl;
 		return;
 	}
 	float tHit = Vector3f::Dot(n, -1 * start) / nc;
+	if (tHit < 0) {
+		return;
+	}
 	Vector3f& pHit = start + tHit * c;
-	cout << endl << "  distance: " << Vector3f::Distance(pHit, start) << endl;
 	if (Vector3f::Distance(pHit, start) > Vector3f::Distance(end, start)) {
 		return;
 	}
-	cout << "  ";
-	PrintVector3f(pHit);
-	cout << endl;
 	spline.getPoints().push_back(pHit);
 }
